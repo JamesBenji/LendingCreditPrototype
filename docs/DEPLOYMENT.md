@@ -184,6 +184,81 @@ sudo /opt/eab-credit/current/.venv/bin/python \
 
 Open the domain, refresh and assess all three examples. Check UI changes, DTI and tooltips. Record source commit, artifact hashes and verification directory in the deployment record. New model outcomes must be reviewed locally first.
 
+## Recover an update stopped by the memory check
+
+During the mobile update, the installer successfully installed the new Python dependencies and passed pip check, then stopped with:
+
+~~~text
+Less than 350 MB available before model preflight; inspect other services or VM sizing first.
+~~~
+
+The old application was still running. The current symlink remained on **6527f59086ab-8285d330**; the prepared candidate was **88d83bc006e6-ce96cd7f**. Uploading an archive does not activate it. A fresh public HTTP request also returned the original frontend assets, explaining why mobile tap help was unavailable.
+
+The candidate already has an installed Python environment, so no new upload or GitHub checkout is needed. Rerunning the installer unchanged will refuse the existing release directory. Do not delete the prepared release or bypass its prediction checks by changing the symlink alone.
+
+The recovery below deliberately stops the old app briefly to release memory, requires the same 350 MB preflight headroom, validates artifacts/predictions and runs backend tests, then activates the candidate. It preserves nginx and certificate files, checks HTTPS before and after restart, and requires 100 MB remaining VM headroom. If a command fails, its error handler attempts to restore the previous symlink and restart that service. Confirm restoration from the output/domain if this occurs.
+
+Run this entire block in the **GCP browser terminal** for this incident. For another prepared release, change only the candidate and reports paths to that release's exact ID:
+
+~~~sh
+sudo bash <<'SH'
+set -Eeuo pipefail
+candidate=/opt/eab-credit/releases/88d83bc006e6-ce96cd7f
+previous=$(readlink -f /opt/eab-credit/current)
+reports=/opt/eab-credit/verification/88d83bc006e6-ce96cd7f
+[ -x "$candidate/.venv/bin/python" ]
+[ -d "$previous" ]
+exec > >(tee -a "$reports/recovery.log") 2>&1
+restore_previous() {
+  status=$?
+  trap - ERR
+  set +e
+  ln -sfn "$previous" /opt/eab-credit/current
+  systemctl restart eab-credit
+  echo "Recovery failed; previous release restarted. See $reports/recovery.log"
+  exit "$status"
+}
+trap restore_previous ERR
+systemctl stop eab-credit
+free -m
+available_kib=$(awk '/MemAvailable:/ {print $2}' /proc/meminfo)
+if [ "$available_kib" -lt 350000 ]; then
+  echo "Still below 350 MB available after stopping the app."
+  false
+fi
+export MODEL_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1
+"$candidate/.venv/bin/python" "$candidate/scripts/check_release.py" --output "$reports/recovery-preflight.json"
+(cd "$candidate/flask_app" && ../.venv/bin/python -m unittest discover -s tests -v)
+nginx -t
+ln -sfn "$candidate" /opt/eab-credit/current
+systemctl restart eab-credit
+"$candidate/.venv/bin/python" "$candidate/scripts/smoke_http.py" https://eab-credit.preview.james-benjamin.com --output "$reports/recovery-http.json"
+systemctl restart eab-credit
+"$candidate/.venv/bin/python" "$candidate/scripts/smoke_http.py" https://eab-credit.preview.james-benjamin.com --output "$reports/recovery-http-after-restart.json"
+free -m > "$reports/recovery-memory.txt"
+systemctl show eab-credit -p MemoryCurrent -p MemoryPeak -p MemoryMax > "$reports/recovery-service-memory.txt"
+if [ "$(awk '/MemAvailable:/ {print $2}' /proc/meminfo)" -lt 100000 ]; then
+  echo "Less than 100 MB headroom after activation."
+  false
+fi
+trap - ERR
+readlink -f /opt/eab-credit/current
+echo "Mobile update activated. Refresh the phone browser."
+SH
+~~~
+
+Successful output ends with **Mobile update activated** and a current path ending in **88d83bc006e6-ce96cd7f**. Refresh the phone browser and tap an information icon. If it fails, share the error and inspect:
+
+~~~sh
+sudo tail -n 80 /opt/eab-credit/verification/88d83bc006e6-ce96cd7f/recovery.log
+readlink -f /opt/eab-credit/current
+curl -fsS https://eab-credit.preview.james-benjamin.com/api/health
+~~~
+
+If available memory is still below 350 MB after stopping the app, the recovery stops and restarts the prior release. Inspect other processes and actual VM resources before retrying or changing machine size. No resize, swap configuration or training is performed by this recovery.
+
+Recovery execution/success has not yet been confirmed. The original failed installer log remains intact; recovery creates separate log, preflight, HTTP and memory reports in the same verification directory.
+
 ## Logs, restart and rollback
 
 ~~~sh
@@ -220,7 +295,7 @@ Leave HTTPS nginx settings intact during code rollback. Do not copy the old rele
 
 Local checks passed: 27 backend tests, 6 DTI tests, frontend lint/build, exact synthetic parity and invalid requests, plus Gunicorn HTTP before/after restart. See [Python compatibility](evidence/python313-compatibility.json), [local HTTP](evidence/local-wsgi-http.json), [runtime inspection](evidence/runtime-inspection.json) and [Linux wheels](evidence/linux-wheel-availability.json). The final initial archive's 98 file hashes and extracted-code parity were checked locally; the older [extracted report](evidence/extracted-bundle-check.json) covers the 97-file preview.
 
-Local process peak was about 156 MiB on Mac ARM64, not measured whole-VM Linux usage. The installer requires 350 MB available before preflight, preflight peak at most 600 MiB and 100 MB headroom after activation. Debian execution, VM resources, hosted checks, certificate issuance/renewal and rollback remain owner-operated checks whose outputs have not been received. No full VM reboot has been verified.
+Local process peak was about 156 MiB on Mac ARM64, not measured whole-VM Linux usage. The installer requires 350 MB available before preflight, preflight peak at most 600 MiB and 100 MB headroom after activation. Owner output now confirms dependency installation and pip check on the VM, followed by the preflight memory-gate failure. A public HTTPS fetch succeeded and showed the original frontend. Debian model execution, exact VM memory, hosted prediction checks, renewal and recovery success still need recorded results. No full VM reboot has been verified.
 
 The installer update passed local shell syntax checks, both nginx preserve/install branch checks, invalid-option rejection and syntax checks for the documented shell commands. Both HTTP restart checks use the selected URL. These checks do not execute nginx, Certbot or systemd on the VM; model and prediction code are unchanged.
 
