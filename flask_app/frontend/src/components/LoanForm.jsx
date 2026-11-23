@@ -9,6 +9,7 @@ import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip
 import { MathFormula } from "@/components/ui/math-formula"
 import { calculateDti } from "@/lib/debt-to-income"
 import applicationExamples from "@/lib/application-examples.json"
+import { useMobile } from "@/lib/use-mobile"
 
 // ── SAP-style section panel ───────────────────────────────────────────────────
 function Section({ title, children, cols = 3 }) {
@@ -39,14 +40,14 @@ function Field({ label, tip, hint, error, children, span = 1 }) {
   const id = useId()
   return (
     <div className={`flex flex-col gap-2 col-span-${span}`}>
-      <div className="flex items-center gap-1.5">
+      <div className="field-label flex items-center gap-1.5">
         <Label id={`${id}-label`} htmlFor={id}>{label}</Label>
         <Tooltip>
           <TooltipTrigger asChild>
             <button
               type="button"
               aria-label={`About ${label}`}
-              className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="info-trigger inline-flex shrink-0 items-center justify-center w-4 h-4 rounded-full bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <Info className="w-2.5 h-2.5" />
             </button>
@@ -70,6 +71,18 @@ function Field({ label, tip, hint, error, children, span = 1 }) {
 
 // ── SelectField helper ────────────────────────────────────────────────────────
 function SelectField({ value, onChange, options, ...props }) {
+  const mobile = useMobile()
+  if (mobile) {
+    return (
+      <select {...props} className="mobile-native-select" value={value} onChange={(event) => onChange(event.target.value)}>
+        {options.map((option) => {
+          const val = typeof option === "string" ? option : option.value
+          const label = typeof option === "string" ? option : option.label
+          return <option key={val} value={val}>{label}</option>
+        })}
+      </select>
+    )
+  }
   return (
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger {...props}><SelectValue /></SelectTrigger>
@@ -141,6 +154,8 @@ export default function LoanForm({ options, onResult }) {
       e.currentTarget.querySelector('[aria-invalid="true"]')?.focus()
       return
     }
+    // Dismiss the keyboard before loading or displaying a result.
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
     setLoading(true)
     setError(null)
     try {
@@ -163,7 +178,7 @@ export default function LoanForm({ options, onResult }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="application-layout" aria-busy={loading}>
+    <form onSubmit={handleSubmit} className="application-layout" aria-busy={loading} autoComplete="off">
       <div className="input-panel">
         <div key={inputVersion} className="input-scroll" role="region" aria-label="Application inputs" tabIndex={0}>
 
@@ -403,11 +418,11 @@ export default function LoanForm({ options, onResult }) {
         <div className="assessment-intro">
           <h2 id="assessment-title" className="text-xl font-semibold text-primary">Assessment</h2>
         </div>
-        <Button type="submit" size="lg" disabled={loading} className="w-full h-12 px-4 text-base font-bold shrink-0">
+        <Button type="submit" size="lg" disabled={loading} className="assessment-submit w-full h-12 px-4 text-base font-bold shrink-0">
           {loading ? "Assessing…" : "Assess Application →"}
         </Button>
-        {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
-        <details className="group w-full border-t border-border pt-3">
+        {error && <p role="alert" className="assessment-error text-sm text-destructive">{error}</p>}
+        <details className="application-examples group w-full border-t border-border pt-3">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-base font-semibold uppercase tracking-wide text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
             Examples
             <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
@@ -428,8 +443,15 @@ export default function LoanForm({ options, onResult }) {
         </details>
       </aside>
 
+      <div className="mobile-assessment-action">
+        {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
+        <Button type="submit" size="lg" disabled={loading} className="w-full h-12 text-base font-bold">
+          {loading ? "Assessing…" : "Assess Application →"}
+        </Button>
+      </div>
+
       {exampleNotice && (
-        <div key={inputVersion} role="status" className="fixed top-4 left-4 right-4 sm:left-auto z-50 max-w-[calc(100vw-2rem)] sm:max-w-[26rem] rounded-md border-2 border-primary bg-white px-4 py-3 text-base font-medium text-primary shadow-lg">
+        <div key={inputVersion} role="status" className="example-notice fixed top-4 left-4 right-4 sm:left-auto z-50 max-w-[calc(100vw-2rem)] sm:max-w-[26rem] rounded-md border-2 border-primary bg-white px-4 py-3 text-base font-medium text-primary shadow-lg">
           Example loaded and set. Click Assess Application.
         </div>
       )}

@@ -32,12 +32,12 @@ function Section({ title, help, children }) {
 
 function Metric({ label, value, note, help, color = "text-primary", noteColor = "text-muted-foreground", inlineNote = false }) {
   return (
-    <div className="min-w-0 px-4 py-4">
-      <div className="flex items-center gap-2">
+    <div className={"result-metric min-w-0 px-4 py-4" + (inlineNote ? " result-metric-inline" : "")}>
+      <div className="result-metric-label flex items-center gap-2">
         <p className="text-base font-semibold text-muted-foreground">{label}</p>
         {help && <InfoTooltip title={label}>{help}</InfoTooltip>}
       </div>
-      <div className={inlineNote ? "mt-2 flex items-baseline gap-3" : "mt-2"}>
+      <div className={inlineNote ? "result-value-line mt-2 flex items-baseline gap-3" : "result-value-line mt-2"}>
         <p className={`text-2xl font-bold tabular-nums ${color}`}>{value}</p>
         {note && <p className={`${inlineNote ? "whitespace-nowrap" : "mt-1"} text-sm ${noteColor}`}>{note}</p>}
       </div>

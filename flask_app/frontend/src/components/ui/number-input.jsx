@@ -28,6 +28,7 @@ export function NumberInput({ id, onChange, ...props }) {
         {...props}
         id={id}
         type="number"
+        inputMode={Number.isInteger(Number(props.step ?? 1)) ? "numeric" : "decimal"}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
         className={error ? "border-destructive focus-visible:ring-destructive" : undefined}

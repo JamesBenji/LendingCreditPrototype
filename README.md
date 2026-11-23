@@ -59,6 +59,8 @@ Open the URL printed by Vite; its /api proxy reaches Flask on port 5001. The Pyt
 
 Examples → Set fills a complete synthetic application and recalculates DTI. Assess Application then sends the request. Preset outcomes are regression-tested against the actual artifacts.
 
+On phones, the page scrolls as one document so the browser can reveal fields above the keyboard. Inputs are full width, dropdowns use native controls, and field help opens on tap in a closable panel. Desktop retains its bounded layout. Mobile checks cover portrait/landscape sizes and a reduced viewport; an actual iOS/Android keyboard still needs a device check.
+
 ## Check and reproduce
 
 ~~~sh

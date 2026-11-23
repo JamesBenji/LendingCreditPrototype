@@ -15,19 +15,23 @@ export default function App() {
       .then(setOptions)
   }, [])
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+  }, [result])
+
   return (
     <TooltipProvider delayDuration={200}>
       <div className="app-shell bg-[#f5f6f7] flex flex-col">
 
         {/* ── SAP-style Shell Header ── */}
-        <header className="bg-primary text-primary-foreground h-16 flex items-center px-4 sm:px-6 shrink-0 shadow-sm">
+        <header className="portal-header bg-primary text-primary-foreground h-16 flex items-center px-4 sm:px-6 shrink-0 shadow-sm">
           <img src="/eab-credit-logo.png" alt="EAB Credit" className="h-12 w-20 object-contain shrink-0" />
           <span aria-hidden="true" className="mx-4 sm:mx-6 h-8 w-px bg-white/25 shrink-0" />
           <span className="min-w-0 text-lg sm:text-2xl font-semibold tracking-tight leading-tight text-white">Loan Officer Portal</span>
         </header>
 
         {/* ── Page Title Bar ── */}
-        <div className="bg-white border-b border-border px-4 sm:px-8 py-3 flex flex-wrap items-center justify-between gap-3 shrink-0">
+        <div className="page-title-bar bg-white border-b border-border px-4 sm:px-8 py-3 flex flex-wrap items-center justify-between gap-3 shrink-0">
           <h1 className="text-xl font-semibold text-foreground">
             {result ? "Assessment Result" : "New Loan Application"}
           </h1>
