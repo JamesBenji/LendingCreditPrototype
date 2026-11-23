@@ -2,6 +2,8 @@
 
 James Benjamin operates deployment through the GCP browser terminal. The assistant prepared the release and supplied commands without VM access. This record separates observed output from selected setup and checks awaiting recorded results.
 
+For subsequent updates, the owner can upload only the tar archive and has no GitHub checkout on the server. The archive contains the current installer, built frontend, backend, artifacts and verification files. The VM extracts and runs that bundled installer; no separate installer upload or GitHub download is required.
+
 ## Initial release
 
 | Item | Recorded value |

@@ -13,6 +13,8 @@ The React frontend collects application and credit information. Flask validates 
 - [Deployment guide](docs/DEPLOYMENT.md): owner-operated GCP setup, domain/HTTPS, release updates preserving TLS, verification and rollback.
 - [Deployment record](docs/DEPLOYMENT_LOG.md): initial release identity, VM details, reported setup and checks awaiting recorded output.
 
+VM updates require uploading just the release tar archive through the GCP browser terminal. It includes its installer; no GitHub checkout or separate script upload is needed on the server.
+
 The audit starts at commit **d8643c8e1f3aa3c34ba95279291706a7ac96d5eb**. Documentation/deployment additions are not a new training run.
 
 ## What the evidence shows

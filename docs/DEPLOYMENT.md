@@ -1,6 +1,6 @@
 # EAB Credit — deployment and updates
 
-Demo URL: **https://eab-credit.preview.james-benjamin.com**. James Benjamin administers the VM through the GCP browser terminal. Visitors use the domain directly; they do not need an SSH tunnel. See the [deployment record](DEPLOYMENT_LOG.md) for observed setup and checks awaiting recorded results.
+Demo URL: **https://eab-credit.preview.james-benjamin.com**. James Benjamin administers the VM through the GCP browser terminal and uploads only a release tar archive. The server has no GitHub checkout; the installer is included in the archive. Visitors use the domain directly; they do not need an SSH tunnel. See the [deployment record](DEPLOYMENT_LOG.md) for observed setup and checks awaiting recorded results.
 
 ## Environment and architecture
 
@@ -114,18 +114,18 @@ The new codebase must retain or deliberately update files/artifacts expected by 
 
 If model artifacts or scoring logic change intentionally, regenerate deploy/smoke-fixtures.json from reviewed local synthetic outputs, update artifact hashes/tests/compatibility evidence, and commit before packaging. Do not change fixtures to hide unexplained differences. Preserve original thesis evidence tied to its inspected commit; evaluate a new model separately.
 
-### 2. Upload the new archive AND updated installer
+### 2. Upload only the new tar archive
 
-Upload both with the GCP browser terminal file-upload action, or use your existing SCP authentication method:
+Upload the new archive with the GCP browser terminal file-upload action. It already contains deploy/install-vm.sh; do not upload a second file or clone a GitHub repository on the server. If using SCP instead, transfer only the archive:
 
 ~~~sh
-scp release-bundles/eab-credit-NEW_COMMIT.tar.gz deploy/install-vm.sh \
+scp release-bundles/eab-credit-NEW_COMMIT.tar.gz \
   jamesbenjamin450@34.72.123.66:/home/jamesbenjamin450/
 ~~~
 
-Replace NEW_COMMIT with the filename printed by packaging. The browser upload option needs no local SSH connection. Archives are ignored by Git, so pulling GitHub on the VM does not retrieve a built release.
+Replace NEW_COMMIT with the filename printed by packaging. The commands below assume the uploaded archive is in /home/jamesbenjamin450. The browser upload option needs no local SSH connection. Git is used only on the development computer; no server-side checkout is required.
 
-**Use the current installer.** The original 6527f59 installer overwrites nginx settings. The updated installer supports PRESERVE_NGINX=1 and SMOKE_BASE_URL for preserving HTTPS and checking the public URL.
+Always extract the installer from the new archive. The original 6527f59 installer overwrites nginx settings. Current archives include an installer supporting PRESERVE_NGINX=1 and SMOKE_BASE_URL. Do not reuse a leftover initial installer from the home directory.
 
 ### 3. Back up on the VM
 
@@ -147,12 +147,16 @@ Record the printed backup path. It contains private certificate keys and must st
 
 ### 4. Install while preserving HTTPS
 
-Use the new archive filename and packaging checksum:
+Set the new archive filename and packaging checksum, then verify the archive, extract its installer and run it. The && operators stop the sequence if verification or extraction fails:
 
 ~~~sh
+release_bundle=~/eab-credit-NEW_COMMIT.tar.gz
+release_sha=NEW_SHA256
+printf '%s  %s\n' "$release_sha" "$release_bundle" | sha256sum -c - && \
+tar -xOf "$release_bundle" deploy/install-vm.sh > ~/install-vm.sh && \
 sudo PRESERVE_NGINX=1 \
   SMOKE_BASE_URL=https://eab-credit.preview.james-benjamin.com \
-  bash ~/install-vm.sh ~/eab-credit-NEW_COMMIT.tar.gz NEW_SHA256
+  bash ~/install-vm.sh "$release_bundle" "$release_sha"
 ~~~
 
 Replace both placeholders. This retains the live nginx site and domain/TLS settings, installs a separate release, and switches the current symlink after local preflight. It verifies frontend, exact predictions and invalid requests through HTTPS before/after restart. Public DNS/HTTPS must already work from the VM; Certbot may have changed the original loopback listener, hence the explicit public URL.
