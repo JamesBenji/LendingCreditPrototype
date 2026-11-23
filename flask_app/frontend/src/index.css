@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 213 50% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 213 50% 10%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --primary: 213 54% 24%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 213 20% 93%;
+    --secondary-foreground: 213 50% 15%;
+    --muted: 213 20% 93%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 213 20% 93%;
+    --accent-foreground: 213 50% 15%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 213 54% 40%;
+    --radius: 0.5rem;
+    --font-sans: 'Noto Sans', system-ui, sans-serif;
+  }
+
+  /* Root font size — the single knob that scales everything.
+     All Tailwind text-* classes use rem, so they all scale with this. */
+  html {
+    font-size: 18px;
+  }
+}
+
+@layer base {
+  * { @apply border-border box-border; }
+  body {
+    @apply bg-background text-foreground m-0;
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+}
