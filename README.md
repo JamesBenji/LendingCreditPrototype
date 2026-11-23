@@ -6,6 +6,7 @@ The React frontend collects application and credit information. Flask validates 
 
 ## Study and defend the project
 
+- [Session handoff](docs/SESSION_HANDOFF.md): final UI behavior, research interpretation, verified work and outstanding deployment evidence.
 - [Defense guide](docs/DEFENSE_GUIDE.md): business/research framing, every field, request-to-response trace, training, evaluation, artifacts, opening speech, demo and examiner questions.
 - [Runtime evidence](docs/evidence/runtime-inspection.json): inspected commit, artifact hashes, versions, feature usage, synthetic traces and local resource measurements.
 - [Reproduced metrics](docs/evidence/reproduced-metrics.json): frozen-model evaluation on the cached dataset, without retraining.

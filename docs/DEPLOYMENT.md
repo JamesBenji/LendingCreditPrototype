@@ -37,6 +37,20 @@ The frontend and API share one origin. Gunicorn runs one synchronous worker as a
 | /etc/letsencrypt/ | Certificates and renewal configuration; stays on VM |
 | /opt/eab-credit/verification/RELEASE_ID/ | Install logs, tests, manifest, resource reports |
 
+## Caching and frontend refresh
+
+The nginx template has the following response policies; the live site retains them when its domain/Certbot edits preserve the location blocks:
+
+| Resource | Policy | Effect |
+|---|---|---|
+| /assets/ JS, CSS and fonts | public, max-age=31536000, immutable | Browser caches for one year; content changes generate new hashed filenames |
+| HTML/page routes | no-cache | HTML can be stored, but must be revalidated before reuse |
+| /api/ responses | no-store | Assessment responses are not stored by HTTP caches |
+
+No nginx proxy cache, service worker or application prediction cache is configured. Flask loads trusted model artifacts once per worker and retains them in process memory; this is not a cache of applicant responses.
+
+An already-open browser tab continues running its loaded JavaScript until refreshed. When investigating an update, compare the active release and served HTML's JS/CSS filenames with the candidate's frontend-dist/index.html. If a fresh server request serves the old files, refreshing or clearing browser data will not activate the uploaded candidate. That was the observed mobile-update incident below.
+
 ## Initial setup
 
 The owner confirmed SCP upload. Terminal output showed the archive in /home/jamesbenjamin450. Initial installation commands supplied for the GCP browser terminal were:
