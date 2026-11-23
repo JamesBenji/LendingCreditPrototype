@@ -10,7 +10,8 @@ The React frontend collects application and credit information. Flask validates 
 - [Runtime evidence](docs/evidence/runtime-inspection.json): inspected commit, artifact hashes, versions, feature usage, synthetic traces and local resource measurements.
 - [Reproduced metrics](docs/evidence/reproduced-metrics.json): frozen-model evaluation on the cached dataset, without retraining.
 - [Saved notebook outputs](docs/evidence/notebook-outputs.json): historical notebook evidence, explicitly separated from reproduced results.
-- [Deployment guide](docs/DEPLOYMENT.md): prepared nginx/Gunicorn/systemd setup, compatibility evidence, SSH-tunnel access, verification and rollback; GCP activation awaits instance/SSH details.
+- [Deployment guide](docs/DEPLOYMENT.md): owner-operated GCP setup, domain/HTTPS, release updates preserving TLS, verification and rollback.
+- [Deployment record](docs/DEPLOYMENT_LOG.md): initial release identity, VM details, reported setup and checks awaiting recorded output.
 
 The audit starts at commit **d8643c8e1f3aa3c34ba95279291706a7ac96d5eb**. Documentation/deployment additions are not a new training run.
 

@@ -2,6 +2,12 @@
 # Run on the authorized Debian Trixie VM after uploading a trusted bundle.
 set -Eeuo pipefail
 if ! [ -v WHEELHOUSE ]; then WHEELHOUSE=""; fi
+PRESERVE_NGINX=${PRESERVE_NGINX:-0}
+SMOKE_BASE_URL=${SMOKE_BASE_URL:-http://127.0.0.1:8080}
+if [[ "$PRESERVE_NGINX" != 0 && "$PRESERVE_NGINX" != 1 ]]; then
+  echo "PRESERVE_NGINX must be 0 or 1." >&2
+  exit 2
+fi
 
 if [ "$#" -ne 2 ] || [ "$EUID" -ne 0 ]; then
   echo "Usage: sudo bash install-vm.sh /tmp/eab-credit-COMMIT.tar.gz SHA256" >&2
@@ -16,6 +22,10 @@ if ! [[ "$expected_sha" =~ ^[a-fA-F0-9]{64}$ ]]; then
 fi
 printf '%s  %s\n' "$expected_sha" "$bundle" | sha256sum -c -
 . /etc/os-release
+if [ "$PRESERVE_NGINX" -eq 1 ] && { [ ! -s /etc/nginx/sites-available/eab-credit ] || [ ! -e /etc/nginx/sites-enabled/eab-credit ]; }; then
+  echo "PRESERVE_NGINX=1 requires an existing configured and enabled EAB nginx site." >&2
+  exit 2
+fi
 if [ "$VERSION_CODENAME" != trixie ] || [ "$(uname -m)" != x86_64 ]; then
   echo "This pinned release targets Debian Trixie x86_64; verify another platform separately." >&2
   exit 2
@@ -150,8 +160,10 @@ for pair in "unit:/etc/systemd/system/eab-credit.service" "nginx:/etc/nginx/site
 done
 config_touched=1
 install -m 0644 "$release_dir/deploy/eab-credit.service" /etc/systemd/system/eab-credit.service
-install -m 0644 "$release_dir/deploy/nginx.conf" /etc/nginx/sites-available/eab-credit
-ln -sfn /etc/nginx/sites-available/eab-credit /etc/nginx/sites-enabled/eab-credit
+if [ "$PRESERVE_NGINX" -eq 0 ]; then
+  install -m 0644 "$release_dir/deploy/nginx.conf" /etc/nginx/sites-available/eab-credit
+  ln -sfn /etc/nginx/sites-available/eab-credit /etc/nginx/sites-enabled/eab-credit
+fi
 nginx -t
 activated=1
 set_current "$release_dir"
@@ -159,9 +171,9 @@ systemctl daemon-reload
 systemctl enable eab-credit
 systemctl restart eab-credit
 systemctl reload nginx
-"$release_dir/.venv/bin/python" "$release_dir/scripts/smoke_http.py" http://127.0.0.1:8080 --output "$log_dir/http-first-start.json"
+"$release_dir/.venv/bin/python" "$release_dir/scripts/smoke_http.py" "$SMOKE_BASE_URL" --output "$log_dir/http-first-start.json"
 systemctl restart eab-credit
-"$release_dir/.venv/bin/python" "$release_dir/scripts/smoke_http.py" http://127.0.0.1:8080 --output "$log_dir/http-after-restart.json"
+"$release_dir/.venv/bin/python" "$release_dir/scripts/smoke_http.py" "$SMOKE_BASE_URL" --output "$log_dir/http-after-restart.json"
 systemctl show eab-credit -p ActiveState -p MainPID -p MemoryCurrent -p MemoryPeak -p MemoryMax > "$log_dir/service-resources.txt"
 ps -eo pid,ppid,rss,comm,args | awk '/gunicorn|nginx/ && !/awk/' > "$log_dir/process-memory.txt"
 free -m > "$log_dir/memory-after.txt"
@@ -172,5 +184,5 @@ if [ "$available_after_kib" -lt 100000 ]; then
 fi
 df -h / > "$log_dir/disk.txt"
 ss -ltnp > "$log_dir/listeners.txt"
-echo "Verified private demo: forward local port 8080 to this VM's 127.0.0.1:8080."
+echo "Verified demo at $SMOKE_BASE_URL (loopback URLs require a tunnel for remote browsers)."
 echo "No firewall rules or paid resources were changed. Evidence: $log_dir"

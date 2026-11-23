@@ -1,162 +1,223 @@
-# Private single-VM thesis demo deployment
+# EAB Credit — deployment and updates
 
-## Status and evidence
+Demo URL: **https://eab-credit.preview.james-benjamin.com**. James Benjamin administers the VM through the GCP browser terminal. Visitors use the domain directly; they do not need an SSH tunnel. See the [deployment record](DEPLOYMENT_LOG.md) for observed setup and checks awaiting recorded results.
 
-**Prepared locally; not deployed to GCP yet.** Instance identity and an authorized SSH method have not been supplied. No GCP instance, address, firewall rule or paid resource has been created/changed. The inspected research/application commit is **d8643c8e1f3aa3c34ba95279291706a7ac96d5eb**; the prepared deployment commit is recorded by the bundle manifest when packaging. Artifact hashes remain those in [runtime evidence](evidence/runtime-inspection.json).
+## Environment and architecture
 
-| Check | Result / boundary |
+| Item | Value |
 |---|---|
-| Existing Python 3.9 artifact inspection | Passed; reproduced full-feature XGBoost metrics and synthetic outputs |
-| Isolated Python 3.13.9 + NumPy 2.2.6 compatibility | Passed exact synthetic response parity; no load warnings; app debug false; [report](evidence/python313-compatibility.json) |
-| Local production Gunicorn HTTP | Health, options, all three exact predictions and structured invalid 400 passed; [report](evidence/local-wsgi-http.json) |
-| Local production restart | Gunicorn restarted and the same checks passed again; [first start](evidence/local-wsgi-http-first-start.json) versus [post-restart](evidence/local-wsgi-http.json) |
-| Extracted release bundle | All 97 packaged file hashes checked; isolated extracted code passed exact WSGI parity and invalid-request checks; [report](evidence/extracted-bundle-check.json) |
-| Python 3.13 backend suite | All 27 backend tests also passed in the compatible Python 3.13 environment |
-| Linux x86_64/Python 3.13 wheel availability | All 20 pinned binary wheels downloaded, ~82 MiB total; CPU-only XGBoost has no NVIDIA dependency; [manifest](evidence/linux-wheel-availability.json) |
-| Debian execution / Linux CPU-only artifact load | **Pending authorized VM access**; downloaded wheels are not an executed Linux test |
-| nginx config / systemd service on target | **Pending VM access**; shell/Python syntax checked locally, nginx itself is not installed locally |
-| Actual e2-micro memory, disk, startup/restart | **Pending VM access**; do not claim target fit from Mac measurements |
-| Public examiner URL / HTTPS | Not configured; initial demo is SSH-tunnel only |
+| Instance | instance-20260709-161649 |
+| Target OS / architecture | Debian Trixie / x86_64 |
+| Target machine | e2-micro, 2 vCPUs, 1 GB RAM, 30 GB disk |
+| Account / home | jamesbenjamin450 / /home/jamesbenjamin450 |
+| External IP | 34.72.123.66 |
+| Internal IP | 10.128.0.2 — do not use in public DNS |
+| Domain | eab-credit.preview.james-benjamin.com |
+| Project / zone | Not recorded |
 
-Local resource measurements: original artifact process ~145.9 MiB peak / 1.43 s startup / 2.73 ms p95 direct scoring. Python 3.13 compatibility process ~155.7 MiB peak / **25.1 s first cold import** / 2.75 ms p95 Flask-client scoring. The second measurement is Mac ARM64 with standard XGBoost 2.1.4, not the Linux CPU-only build. These measurements suggest a single-worker 1 GB demo is plausible; they do not measure the VM OS, agents, nginx and Gunicorn master together. No training belongs on the VM.
-
-## Architecture and operational changes
+Confirm whether the external IP is static. An ephemeral address can change after stopping/starting the VM; reserving/promoting it can affect billing. Update DNS if the address changes.
 
 ~~~text
-Browser http://127.0.0.1:8080
-        → encrypted SSH forwarding
-        → VM nginx 127.0.0.1:8080
-            → built frontend files
-            → /api/* → Gunicorn 127.0.0.1:5001
-                         → Flask → trusted saved artifacts
+Browser → domain → VM:443 → nginx (TLS)
+                             ├─ built frontend static files
+                             └─ /api/* → 127.0.0.1:5001
+                                          Gunicorn → Flask → saved model
 ~~~
 
-The existing React/Vite app fits static hosting and already uses same-origin /api paths. Build it on the development machine. The VM serves frontend-dist; it does not need Node, Vite, the training notebook or the dataset.
+The frontend and API share one origin. Gunicorn runs one synchronous worker as an unprivileged user, managed by systemd, with one model/BLAS/OpenMP thread and a 650 MiB memory cap. Build frontend assets on the development computer. Do not train on the VM.
 
-- [nginx.conf](../deploy/nginx.conf) binds only loopback port 8080 and preserves /api in proxy requests. Hashed assets are cached; HTML/API responses are not cached. API body limit is 16 KiB.
-- [eab-credit.service](../deploy/eab-credit.service) runs one sync Gunicorn worker as an unprivileged service user, one model/BLAS/OpenMP thread, a 60-second worker timeout and a 650 MiB service cap.
-- [wsgi.py](../flask_app/wsgi.py) changes inference parallelism only. It does not fit an estimator, modify trees/calibrator or write artifacts. Fixture parity verifies the behavior change is operational, not predictive.
-- /api/health was added to confirm successful module/artifact startup without an expensive score. The development-server main block is not used by Gunicorn.
-- [deploy/requirements.txt](../deploy/requirements.txt) pins the tested Python 3.13-compatible shared packages and production WSGI server. Linux uses xgboost-cpu 2.1.4 instead of standard XGBoost/NCCL; the module/model version remains 2.1.4. Actual Linux parity is a pre-activation gate.
+| VM path | Purpose |
+|---|---|
+| /opt/eab-credit/releases/ | Separate releases with their own Python environments |
+| /opt/eab-credit/current | Symlink to active release |
+| /opt/eab-credit/current/frontend-dist/ | Built frontend |
+| /opt/eab-credit/current/lending_artifacts/ | Model, calibrator, metadata |
+| /etc/systemd/system/eab-credit.service | Gunicorn service |
+| /etc/nginx/sites-available/eab-credit | Live domain and HTTPS configuration |
+| /etc/letsencrypt/ | Certificates and renewal configuration; stays on VM |
+| /opt/eab-credit/verification/RELEASE_ID/ | Install logs, tests, manifest, resource reports |
 
-The original broad research/app requirements remain for the inspected project; use the deployment-specific pins on Trixie. Standard Python 3.13 cannot normally install the original local NumPy 2.0.2 wheel, so the isolated test uses 2.2.6. Scikit-learn remains 1.6.1 and the calibrator/artifacts are unchanged.
+## Initial setup
 
-The installer does not alter unrelated nginx sites. A Debian nginx default site or other existing listeners may remain; inspect the recorded listeners/config on the VM. The EAB application itself is bound to loopback. A pre-existing unrelated process on 5001 is not killed.
-
-## Prepare a committed bundle off the VM
-
-Review and commit the deployment source so its identity is reproducible. Local preview bundles may be built with --allow-dirty, but the VM installer rejects them.
+The owner confirmed SCP upload. Terminal output showed the archive in /home/jamesbenjamin450. Initial installation commands supplied for the GCP browser terminal were:
 
 ~~~sh
-# In the checkout; npm dependencies already installed, otherwise npm ci first.
+curl -fL \
+  https://raw.githubusercontent.com/JamesBenji/LendingCreditPrototype/6527f59086ab6b7943ca8085982ec3ec0f84efea/deploy/install-vm.sh \
+  -o ~/install-vm.sh
+sudo bash ~/install-vm.sh \
+  ~/eab-credit-6527f59086ab.tar.gz \
+  8285d330ed14d93cfa093e93450bbb6cf140be00176aac084542dd5856923fb2
+~~~
+
+The installer checks integrity and Python/model compatibility, installs nginx and binary-only runtime packages, runs backend tests and exact synthetic predictions, activates the release, checks HTTP before/after service restart, and records resources. The archive excludes training data/notebook, Node modules and the local virtual environment. Installation results have not been supplied to this checkout.
+
+### Domain and HTTPS setup
+
+These are the selected setup steps; completion output for DNS, firewall and certificates has not been provided.
+
+1. In the DNS zone for **james-benjamin.com**, create an **A** record named **eab-credit.preview**, pointing to **34.72.123.66**. Remove conflicting records for this hostname. If using Cloudflare, use DNS-only while establishing direct certificate issuance.
+2. In the VM's VPC, allow ingress TCP **80,443** from **0.0.0.0/0**, targeting the VM's **eab-web** network tag. Keep port 5001 private. Actual rule name/tag assignment is not recorded.
+3. Edit the live nginx site, retaining its existing root and location/proxy blocks. Before Certbot its header should be:
+
+~~~nginx
+server {
+    listen 127.0.0.1:8080;
+    listen 80;
+    server_name eab-credit.preview.james-benjamin.com;
+    # Existing root and location blocks follow.
+}
+~~~
+
+Validate and reload, then check the HTTP domain loads:
+
+~~~sh
+sudo nginx -t
+sudo systemctl reload nginx
+~~~
+
+Install Certbot, issue the certificate, configure HTTP redirection and test renewal:
+
+~~~sh
+sudo apt-get update
+sudo apt-get install -y certbot python3-certbot-nginx
+sudo certbot --nginx -d eab-credit.preview.james-benjamin.com --redirect
+sudo certbot renew --dry-run
+systemctl list-timers --all | grep certbot
+~~~
+
+Certbot adds HTTPS listeners, certificate paths and redirects. Do not replace the resulting nginx file with the repository's original loopback template. Keep port 80 reachable for HTTP certificate validation/renewal. The public demo has no application login; use synthetic inputs.
+
+## Update the codebase tomorrow
+
+Build locally. Upload through the browser terminal or SCP. Install through the GCP browser terminal. Expect a short service interruption during activation/restart.
+
+### 1. Prepare and test locally
+
+If changes are already on GitHub, start with a clean checkout:
+
+~~~sh
+git pull --ff-only origin main
+~~~
+
+If making changes locally, commit the reviewed changes before packaging. From the repository root with the installed environments:
+
+~~~sh
+(cd flask_app && ../.venv/bin/python -m unittest discover -s tests -v)
+(cd flask_app/frontend && npm ci && node --test src/lib/debt-to-income.test.js && npm run lint)
 .venv/bin/python scripts/package_release.py
 ~~~
 
-The command rebuilds the frontend, bundles only serving code/tests, static output, trusted artifacts, configuration and evidence, and prints bundle SHA-256/source commit. It excludes the dataset, notebook, Node modules, virtual environment and local .mcp.json. Files are individually hashed in deployment-manifest.json. Bundle output is ignored under release-bundles/.
+Packaging builds the frontend and prints the **new archive filename, source commit and SHA-256**, also writing a checksum file beside it. Use the new values, not the initial release checksum. Do not deploy an --allow-dirty preview.
 
-The downloaded Linux wheels are in /private/tmp/eab-credit-linux-wheels on the audit machine. They are not committed. They can be transferred as an optional offline wheelhouse to avoid Python downloads on the VM. OS packages still require repository access or preinstallation; a private VM without outbound access must be inspected before installing. Do not allocate Cloud NAT or an external address automatically.
+The new codebase must retain or deliberately update files/artifacts expected by scripts/package_release.py. An arbitrary source ZIP lacks the built assets and integrity manifest. The VM needs neither Node nor the training dataset.
 
-## Authorized VM installation
+If model artifacts or scoring logic change intentionally, regenerate deploy/smoke-fixtures.json from reviewed local synthetic outputs, update artifact hashes/tests/compatibility evidence, and commit before packaging. Do not change fixtures to hide unexplained differences. Preserve original thesis evidence tied to its inspected commit; evaluate a new model separately.
 
-Needed connection information: GCP project, instance name, zone and an existing SSH method (gcloud/IAP with an authorized login, or SSH host/user using an existing agent/key). Do not paste private keys, passwords or tokens. Confirm the SSH account can use sudo for systemd/nginx setup.
+### 2. Upload the new archive AND updated installer
 
-For a normal SSH alias/host, after authorization:
+Upload both with the GCP browser terminal file-upload action, or use your existing SCP authentication method:
 
 ~~~sh
-scp release-bundles/eab-credit-COMMIT.tar.gz deploy/install-vm.sh USER@HOST:/tmp/
-ssh USER@HOST
-sudo bash /tmp/install-vm.sh /tmp/eab-credit-COMMIT.tar.gz BUNDLE_SHA256
+scp release-bundles/eab-credit-NEW_COMMIT.tar.gz deploy/install-vm.sh \
+  jamesbenjamin450@34.72.123.66:/home/jamesbenjamin450/
 ~~~
 
-For gcloud/IAP, use the supplied project/zone/instance with gcloud compute scp and gcloud compute ssh --tunnel-through-iap. The audit environment currently has no gcloud executable; an existing SSH agent/alias may avoid another local SDK installation.
+Replace NEW_COMMIT with the filename printed by packaging. The browser upload option needs no local SSH connection. Archives are ignored by Git, so pulling GitHub on the VM does not retrieve a built release.
 
-An optional wheelhouse install uses:
+**Use the current installer.** The original 6527f59 installer overwrites nginx settings. The updated installer supports PRESERVE_NGINX=1 and SMOKE_BASE_URL for preserving HTTPS and checking the public URL.
 
-~~~sh
-sudo WHEELHOUSE=/tmp/eab-credit-linux-wheels \
-  bash /tmp/install-vm.sh /tmp/eab-credit-COMMIT.tar.gz BUNDLE_SHA256
-~~~
+### 3. Back up on the VM
 
-The [installer](../deploy/install-vm.sh):
-
-1. Validates outer checksum, safe archive paths, committed manifest and individual file hashes; requires Debian Trixie x86_64/Python 3.13.
-2. Installs minimal OS runtime packages and binary-only Python dependencies into a release-local venv; no source builds/training.
-3. Requires 350 MB available before model preflight, verifies artifact hashes, exact three-fixture WSGI parity and invalid requests, measures process peak, and runs backend tests.
-4. Rejects a preflight process peak over 600 MiB; switches the current symlink atomically only after validation and nginx syntax checking.
-5. Starts/enables the single-worker service and reloads the dedicated nginx site.
-6. Runs full same-origin HTTP verification, restarts the service and repeats it. Records service/process memory, disk, listeners and VM headroom; less than 100 MB available after checks fails the sizing gate.
-7. Restores the prior activation/configuration on activation failure where a prior release exists. Keeps evidence and releases for inspection.
-
-These memory buffers are chosen demo safeguards, not a load-test guarantee. If a 1 GB VM fails the measured gates, first retain one worker/thread, CPU-only packages and no training/build workload. If that minimal setup still does not fit, use measured peak + OS headroom to justify the next practical shared-core memory size (e2-small, 2 GB); request approval before changing paid resources. No resize is performed by the scripts.
-
-## Reach the private demo
+Confirm the existing HTTPS application works, then create a dated private backup:
 
 ~~~sh
-ssh -N -L 127.0.0.1:8080:127.0.0.1:8080 USER@HOST
-~~~
-
-Then open **http://127.0.0.1:8080** locally. HTTP runs inside an encrypted SSH tunnel, so no public app port or domain is required. Keep the tunnel open. Existing SSH/IAP access must already be authorized; no new firewall rule is assumed.
-
-With IAP:
-
-~~~sh
-gcloud compute ssh INSTANCE --project PROJECT --zone ZONE --tunnel-through-iap \
-  -- -N -L 127.0.0.1:8080:127.0.0.1:8080
-~~~
-
-## Hosted verification and operations
-
-Once the VM is reachable, run the HTTP check through the tunnel too, comparing with the same local fixtures:
-
-~~~sh
-.venv/bin/python scripts/smoke_http.py http://127.0.0.1:8080 \
-  --output docs/evidence/hosted-http.json
-~~~
-
-It checks frontend HTML, hashed JS/CSS, logo/favicon, options, three exact response matches and a structured invalid 400. This is HTTP integration verification, not a browser pixel test. A final browser demonstration should confirm Set/Assess, DTI updates, tooltips and layout through the actual tunnel.
-
-On the VM:
-
-~~~sh
-sudo systemctl status eab-credit nginx
-sudo journalctl -u eab-credit -n 100 --no-pager
-sudo tail -n 100 /var/log/nginx/eab-credit.error.log
-sudo systemctl restart eab-credit
+curl -fsS https://eab-credit.preview.james-benjamin.com/api/health
 sudo nginx -t
-sudo systemctl reload nginx
+backup_dir="/opt/eab-credit/backups/$(date -u +%Y%m%dT%H%M%SZ)"
+sudo install -d -m 0700 "$backup_dir"
+sudo cp -a /etc/nginx/sites-available/eab-credit "$backup_dir/nginx.conf"
+sudo cp -a /etc/systemd/system/eab-credit.service "$backup_dir/eab-credit.service"
+sudo cp -a /etc/letsencrypt "$backup_dir/letsencrypt"
+readlink -f /opt/eab-credit/current | sudo tee "$backup_dir/previous-release.txt"
+echo "$backup_dir"
+~~~
+
+Record the printed backup path. It contains private certificate keys and must stay private on the VM. The installer also saves the previous site/unit configuration and release path.
+
+### 4. Install while preserving HTTPS
+
+Use the new archive filename and packaging checksum:
+
+~~~sh
+sudo PRESERVE_NGINX=1 \
+  SMOKE_BASE_URL=https://eab-credit.preview.james-benjamin.com \
+  bash ~/install-vm.sh ~/eab-credit-NEW_COMMIT.tar.gz NEW_SHA256
+~~~
+
+Replace both placeholders. This retains the live nginx site and domain/TLS settings, installs a separate release, and switches the current symlink after local preflight. It verifies frontend, exact predictions and invalid requests through HTTPS before/after restart. Public DNS/HTTPS must already work from the VM; Certbot may have changed the original loopback listener, hence the explicit public URL.
+
+Runtime pins live in deploy/requirements.txt: Python 3.13-compatible libraries, CPU-only XGBoost 2.1.4 and Gunicorn. Dependency changes need fresh compatibility checks. No DNS/firewall/resource changes are made by the installer.
+
+### 5. Confirm and record
+
+~~~sh
+sudo systemctl status eab-credit nginx --no-pager
+curl -fsS https://eab-credit.preview.james-benjamin.com/api/health
+cat /opt/eab-credit/current/deployment-manifest.json
 sudo systemctl show eab-credit -p MemoryCurrent -p MemoryPeak -p MemoryMax
 free -m
 df -h /
 ~~~
 
-Verification records are under /opt/eab-credit/verification/RELEASE_ID/: manifest, preflight, pip freeze, first-start and post-restart HTTP results, service/process memory, before/after free memory, disk, listeners and previous-release.txt. Record the source commit and artifact hashes from manifest.json in your deployment report. Service enablement is configured; a full VM reboot is not claimed unless actually performed.
+The installer already runs the full HTTP test. For troubleshooting or verification after another change:
 
-## Rollback
+~~~sh
+sudo /opt/eab-credit/current/.venv/bin/python \
+  /opt/eab-credit/current/scripts/smoke_http.py \
+  https://eab-credit.preview.james-benjamin.com
+~~~
 
-Read previous-release.txt for the last activated path. Do not remove releases before the demonstration.
+Open the domain, refresh and assess all three examples. Check UI changes, DTI and tooltips. Record source commit, artifact hashes and verification directory in the deployment record. New model outcomes must be reviewed locally first.
+
+## Logs, restart and rollback
+
+~~~sh
+sudo journalctl -u eab-credit -n 100 --no-pager
+sudo tail -n 100 /var/log/nginx/eab-credit.error.log
+sudo systemctl restart eab-credit
+sudo nginx -t
+sudo systemctl reload nginx
+sudo certbot certificates
+~~~
+
+If activation fails, the installer attempts to restore the preceding release/configuration. Inspect install.log and check the domain before assuming rollback succeeded. Keep previous releases through the demonstration.
+
+For manual code rollback, use the exact previous release path saved in your backup. Replace PREVIOUS_RELEASE_ID:
 
 ~~~sh
 sudo systemctl stop eab-credit
-sudo ln -s /opt/eab-credit/releases/PREVIOUS_RELEASE /opt/eab-credit/rollback-link
+sudo ln -s /opt/eab-credit/releases/PREVIOUS_RELEASE_ID /opt/eab-credit/rollback-link
 sudo mv -Tf /opt/eab-credit/rollback-link /opt/eab-credit/current
-sudo install -m 0644 /opt/eab-credit/current/deploy/eab-credit.service /etc/systemd/system/eab-credit.service
-sudo install -m 0644 /opt/eab-credit/current/deploy/nginx.conf /etc/nginx/sites-available/eab-credit
+sudo install -m 0644 /opt/eab-credit/current/deploy/eab-credit.service \
+  /etc/systemd/system/eab-credit.service
 sudo systemctl daemon-reload
 sudo nginx -t
 sudo systemctl restart eab-credit
-sudo systemctl reload nginx
-sudo /opt/eab-credit/current/.venv/bin/python /opt/eab-credit/current/scripts/smoke_http.py http://127.0.0.1:8080
+curl -fsS https://eab-credit.preview.james-benjamin.com/api/health
+sudo /opt/eab-credit/current/.venv/bin/python \
+  /opt/eab-credit/current/scripts/smoke_http.py \
+  https://eab-credit.preview.james-benjamin.com
 ~~~
 
-Use an existing previous release, not a literal placeholder. Installer-created .before backups preserve the preceding actual unit/site configuration. On the first deployment there is no earlier application to restore; stop/disable the dedicated service instead, retain its evidence and correct the failure before activation.
+Leave HTTPS nginx settings intact during code rollback. Do not copy the old release's deploy/nginx.conf onto the live site. If nginx itself needs restoration, restore the dated VM backup, validate and reload. Restore certificate files only if changed or damaged.
 
-## Public examiner access without a domain
+## Evidence and limitations
 
-Initial access stays tunneled. Before changing networking or spending on resources, choose an explicit access plan:
+Local checks passed: 27 backend tests, 6 DTI tests, frontend lint/build, exact synthetic parity and invalid requests, plus Gunicorn HTTP before/after restart. See [Python compatibility](evidence/python313-compatibility.json), [local HTTP](evidence/local-wsgi-http.json), [runtime inspection](evidence/runtime-inspection.json) and [Linux wheels](evidence/linux-wheel-availability.json). The final initial archive's 98 file hashes and extracted-code parity were checked locally; the older [extracted report](evidence/extracted-bundle-check.json) covers the 97-file preview.
 
-- Keep the private tunnel and screen-share, or grant separately authorized SSH/IAP access.
-- A temporary authenticated HTTPS tunnel provider can supply a public hostname without a VM domain or inbound app firewall rule. It introduces another service; choose its access controls and lifetime explicitly.
-- An existing public IP can be restricted to examiner IPs, but trusted HTTPS needs a certificate/client supporting IP-address certificates or a domain. Check current CA/client availability; do not assume IP certificates are impossible or automatically supported. A self-signed certificate encrypts traffic but creates trust warnings and is inconvenient for examiners.
-- An owned domain with a standard certificate/renewal workflow is the conventional public option. Domain/address purchases, firewall changes and any paid resource allocation require an explicit plan first.
+Local process peak was about 156 MiB on Mac ARM64, not measured whole-VM Linux usage. The installer requires 350 MB available before preflight, preflight peak at most 600 MiB and 100 MB headroom after activation. Debian execution, VM resources, hosted checks, certificate issuance/renewal and rollback remain owner-operated checks whose outputs have not been received. No full VM reboot has been verified.
 
-Do not send passwords over plain public HTTP or expose an unauthenticated endpoint accidentally. Keep inputs synthetic. Actual public access/HTTPS, hosted predictions, VM fit and rollback execution remain unverified until authorized deployment is performed.
+The installer update passed local shell syntax checks, both nginx preserve/install branch checks, invalid-option rejection and syntax checks for the documented shell commands. Both HTTP restart checks use the selected URL. These checks do not execute nginx, Certbot or systemd on the VM; model and prediction code are unchanged.
+
+If the minimal one-worker CPU-only setup fails memory gates, inspect other processes first, then size the next machine from measured peak and OS headroom. Do not train/build on this VM or add workers to solve memory shortage.
