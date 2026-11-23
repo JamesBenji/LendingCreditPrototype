@@ -3,6 +3,8 @@ import pathlib
 import numpy as np
 import pandas as pd
 import joblib
+from application_schema import PURPOSE_OPTIONS, validate_application
+from repayment import calculate_repayment
 
 # ---------------------------------------------------------------------------
 # Paths — artifacts live one level up from this file
@@ -25,6 +27,7 @@ DEFAULTS = _meta["defaults"]
 LGD = _meta["LGD_measured_net"]          # 0.5898 — measured on training data
 FUNDING_COST = _meta["FUNDING_COST_assumed"]      # 0.04
 OPERATING_MARGIN = _meta["OPERATING_MARGIN_assumed"]  # 0.025
+RATE_CAP = 0.40
 
 # ---------------------------------------------------------------------------
 # Decision thresholds
@@ -84,32 +87,28 @@ def _build_row(form_values: dict) -> pd.DataFrame:
     """
     row = dict(DEFAULTS)
     row.update({k: v for k, v in form_values.items() if k in row})
+    # Match training-time feature engineering after applying the current inputs.
+    # A default ratio would otherwise describe a different loan and income.
+    annual_inc = float(row["annual_inc"])
+    row["loan_to_income"] = float(row["loan_amnt"]) / annual_inc if annual_inc else np.nan
     return pd.DataFrame([row], columns=FEATURE_COLS)
 
 
-def _top_risk_drivers(form_values: dict, loan_amnt: float) -> list[dict]:
+def _top_risk_drivers(row_values: dict) -> list[dict]:
     """
     Return up to 3 interpretable risk factors where the customer deviates
     most from the typical borrower in the risky direction.
     """
-    # Compute derived fields the form doesn't directly provide
-    annual_inc = float(form_values.get("annual_inc") or DEFAULTS.get("annual_inc") or 1)
-    lti = loan_amnt / annual_inc if annual_inc else None
-
-    enriched = dict(form_values)
-    if lti is not None:
-        enriched["loan_to_income"] = lti
-
     scored = []
     for feat, label in DRIVER_LABELS.items():
-        val = enriched.get(feat)
-        if val is None:
-            val = DEFAULTS.get(feat)
+        val = row_values.get(feat)
         if val is None:
             continue
         try:
             val = float(val)
         except (TypeError, ValueError):
+            continue
+        if not np.isfinite(val):
             continue
 
         typical = _TYPICAL.get(feat)
@@ -196,14 +195,20 @@ def score(form_values: dict) -> dict:
         decision, risk_tier, risk_drivers,
         loan_amnt, lgd_pct, funding_cost_pct, operating_margin_pct
     """
-    loan_amnt = float(form_values.get("loan_amnt") or DEFAULTS.get("loan_amnt") or 0)
-
+    form_values = validate_application(form_values)
     row = _build_row(form_values)
+    row_values = row.iloc[0].to_dict()
+    loan_amnt = float(row_values["loan_amnt"])
     raw_pd = _xgb.predict_proba(row)[:, 1]
     pd_prob = float(_platt.predict_proba(_logit(raw_pd))[:, 1][0])
 
     el_rate = pd_prob * LGD
-    suggested_rate = float(np.clip(FUNDING_COST + OPERATING_MARGIN + el_rate, 0, 0.40))
+    uncapped_rate = FUNDING_COST + OPERATING_MARGIN + el_rate
+    suggested_rate = float(np.clip(uncapped_rate, 0, RATE_CAP))
+    suggested_rate_pct = round(suggested_rate * 100, 2)
+    # Repayments must use the same rate and term that the officer sees.
+    term_months = int(row_values["term"].split()[0])
+    repayment = calculate_repayment(loan_amnt, suggested_rate_pct, term_months)
     el_dollars = el_rate * loan_amnt
 
     if pd_prob < THRESHOLDS["approve"]:
@@ -216,17 +221,22 @@ def score(form_values: dict) -> dict:
         decision = "Decline"
         risk_tier = "High Risk"
 
-    risk_drivers = _top_risk_drivers(form_values, loan_amnt)
+    risk_drivers = _top_risk_drivers(row_values)
 
     return {
         "pd_pct": round(pd_prob * 100, 1),
         "el_rate_pct": round(el_rate * 100, 1),
         "el_dollars": round(el_dollars, 2),
-        "suggested_rate_pct": round(suggested_rate * 100, 2),
+        "suggested_rate_pct": suggested_rate_pct,
+        **repayment,
+        "pricing_capped": uncapped_rate > RATE_CAP,
+        "rate_cap_pct": round(RATE_CAP * 100, 2),
+        "uncapped_suggested_rate_pct": round(uncapped_rate * 100, 2),
         "decision": decision,
         "risk_tier": risk_tier,
         "risk_drivers": risk_drivers,
         "loan_amnt": loan_amnt,
+        "purpose_label": next(option["label"] for option in PURPOSE_OPTIONS if option["value"] == row_values["purpose"]),
         "lgd_pct": round(LGD * 100, 2),
         "funding_cost_pct": round(FUNDING_COST * 100, 2),
         "operating_margin_pct": round(OPERATING_MARGIN * 100, 2),

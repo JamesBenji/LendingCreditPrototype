@@ -1,43 +1,16 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from werkzeug.exceptions import BadRequest
 import predictor
+
+from application_schema import (
+    TERM_OPTIONS, EMP_LENGTH_OPTIONS, HOME_OWNERSHIP_OPTIONS,
+    VERIFICATION_OPTIONS, APPLICATION_TYPE_OPTIONS, PURPOSE_OPTIONS,
+    ApplicationValidationError,
+)
 
 app = Flask(__name__)
 CORS(app)
-
-# ---------------------------------------------------------------------------
-# Dropdown option lists (single source of truth for the React frontend)
-# ---------------------------------------------------------------------------
-TERM_OPTIONS = ["36 months", "60 months"]
-
-EMP_LENGTH_OPTIONS = [
-    "< 1 year", "1 year", "2 years", "3 years", "4 years",
-    "5 years", "6 years", "7 years", "8 years", "9 years", "10+ years",
-]
-
-HOME_OWNERSHIP_OPTIONS = ["RENT", "OWN", "MORTGAGE", "OTHER"]
-
-VERIFICATION_OPTIONS = ["Not Verified", "Verified", "Source Verified"]
-
-APPLICATION_TYPE_OPTIONS = ["Individual", "Joint App"]
-
-PURPOSE_OPTIONS = [
-    {"value": "debt_consolidation",  "label": "Debt Consolidation"},
-    {"value": "credit_card",         "label": "Credit Card"},
-    {"value": "home_improvement",    "label": "Home Improvement"},
-    {"value": "other",               "label": "Other"},
-    {"value": "major_purchase",      "label": "Major Purchase"},
-    {"value": "small_business",      "label": "Small Business"},
-    {"value": "car",                 "label": "Car"},
-    {"value": "medical",             "label": "Medical"},
-    {"value": "moving",              "label": "Moving"},
-    {"value": "vacation",            "label": "Vacation"},
-    {"value": "house",               "label": "House"},
-    {"value": "wedding",             "label": "Wedding"},
-    {"value": "renewable_energy",    "label": "Renewable Energy"},
-    {"value": "educational",         "label": "Educational"},
-]
-
 
 # ---------------------------------------------------------------------------
 # API routes
@@ -60,46 +33,16 @@ def options():
 @app.route("/api/score", methods=["POST"])
 def score():
     """Accept a JSON object of form values and return the risk assessment."""
-    data = request.get_json(force=True)
-
-    form_values = {
-        "loan_amnt":             _float(data.get("loan_amnt")),
-        "term":                  data.get("term"),
-        "purpose":               data.get("purpose"),
-        "annual_inc":            _float(data.get("annual_inc")),
-        "emp_length":            data.get("emp_length"),
-        "home_ownership":        data.get("home_ownership"),
-        "verification_status":   data.get("verification_status"),
-        "application_type":      data.get("application_type"),
-        "fico_avg":              _float(data.get("fico_avg")),
-        "dti":                   _float(data.get("dti")),
-        "revol_util":            _float(data.get("revol_util")),
-        "mths_since_recent_inq": _float(data.get("mths_since_recent_inq")),
-        "delinq_2yrs":           _float(data.get("delinq_2yrs")),
-        "open_acc":              _float(data.get("open_acc")),
-        "pub_rec":               _float(data.get("pub_rec")),
-    }
-    form_values = {k: v for k, v in form_values.items() if v is not None}
-
-    result = predictor.score(form_values)
-
-    # Resolve purpose label for display
-    purpose_label = next(
-        (p["label"] for p in PURPOSE_OPTIONS if p["value"] == form_values.get("purpose")),
-        form_values.get("purpose", ""),
-    )
-    result["purpose_label"] = purpose_label
-
-    return jsonify(result)
-
-
-def _float(value):
-    if value is None or str(value).strip() == "":
-        return None
+    if not request.is_json:
+        return jsonify(error="Send the application as JSON."), 415
     try:
-        return float(value)
-    except (TypeError, ValueError):
-        return None
+        data = request.get_json()
+    except BadRequest:
+        return jsonify(error="The application contains invalid JSON."), 400
+    try:
+        return jsonify(predictor.score(data))
+    except ApplicationValidationError as error:
+        return jsonify(error=str(error), field_errors=error.errors), 400
 
 
 if __name__ == "__main__":

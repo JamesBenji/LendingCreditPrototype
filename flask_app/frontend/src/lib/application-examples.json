@@ -1,0 +1,71 @@
+[
+  {
+    "id": "successful",
+    "title": "Successful",
+    "expectedDecision": "Approve",
+    "expectedRiskTier": "Low Risk",
+    "monthlyDebtPayments": "400.00",
+    "form": {
+      "loan_amnt": "5500",
+      "term": "36 months",
+      "purpose": "debt_consolidation",
+      "annual_inc": "96000",
+      "emp_length": "10+ years",
+      "home_ownership": "MORTGAGE",
+      "verification_status": "Verified",
+      "application_type": "Individual",
+      "fico_avg": "800",
+      "revol_util": "10.0",
+      "mths_since_recent_inq": "24",
+      "delinq_2yrs": "0",
+      "open_acc": "8",
+      "pub_rec": "0"
+    }
+  },
+  {
+    "id": "risky",
+    "title": "Risky",
+    "expectedDecision": "Refer to Senior Officer",
+    "expectedRiskTier": "Medium Risk",
+    "monthlyDebtPayments": "938.67",
+    "form": {
+      "loan_amnt": "12000",
+      "term": "36 months",
+      "purpose": "debt_consolidation",
+      "annual_inc": "64000",
+      "emp_length": "10+ years",
+      "home_ownership": "MORTGAGE",
+      "verification_status": "Source Verified",
+      "application_type": "Individual",
+      "fico_avg": "692",
+      "revol_util": "55.0",
+      "mths_since_recent_inq": "5",
+      "delinq_2yrs": "0",
+      "open_acc": "11",
+      "pub_rec": "0"
+    }
+  },
+  {
+    "id": "declined",
+    "title": "Declined",
+    "expectedDecision": "Decline",
+    "expectedRiskTier": "High Risk",
+    "monthlyDebtPayments": "1500.00",
+    "form": {
+      "loan_amnt": "30000",
+      "term": "60 months",
+      "purpose": "small_business",
+      "annual_inc": "36000",
+      "emp_length": "1 year",
+      "home_ownership": "RENT",
+      "verification_status": "Not Verified",
+      "application_type": "Individual",
+      "fico_avg": "600",
+      "revol_util": "95.0",
+      "mths_since_recent_inq": "0",
+      "delinq_2yrs": "3",
+      "open_acc": "16",
+      "pub_rec": "2"
+    }
+  }
+]
