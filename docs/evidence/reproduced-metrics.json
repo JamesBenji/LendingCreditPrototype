@@ -1,0 +1,134 @@
+{
+  "inspected_commit": "d8643c8e1f3aa3c34ba95279291706a7ac96d5eb",
+  "artifact_sha256": {
+    "xgb_risk_model.joblib": "010b7dfacd50189d28f23fed014a593a9e72c7e6d78a643d9812074f17ddfef8",
+    "platt_calibrator.joblib": "5872828eccbe7c8d1b0037170bf6e641dc3740fd80c441a15aba98dc080de2b2",
+    "metadata.json": "3a2fdc018f180b349d37763d296f6906ebce329b5b77a6f6106120ad8f8c9512"
+  },
+  "versions": {
+    "numpy": "2.0.2",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "xgboost": "2.1.4",
+    "joblib": "1.5.3"
+  },
+  "method": "Sampling and cleaning from notebook cells 6/8/10/16/18; saved artifacts only; no estimator fit called",
+  "source_csv_sha256": "55c16f75120f897683f02e7aabcf080d0e4a20c4832feb1d592cfa941bd62a2d",
+  "rows": 107625,
+  "splits": {
+    "train": {
+      "rows": 75337,
+      "first_issue_month": "2007-07",
+      "last_issue_month": "2016-04",
+      "default_rate": 0.1859776736530523
+    },
+    "validation": {
+      "rows": 16144,
+      "first_issue_month": "2016-04",
+      "last_issue_month": "2017-02",
+      "default_rate": 0.2503097125867195
+    },
+    "test": {
+      "rows": 16144,
+      "first_issue_month": "2017-02",
+      "last_issue_month": "2018-12",
+      "default_rate": 0.21487859266600595
+    }
+  },
+  "metrics": {
+    "validation": {
+      "raw": {
+        "roc_auc": 0.6939444620590692,
+        "average_precision": 0.4267219500889189,
+        "brier": 0.17586321467574612,
+        "ece_10_quantile_bins": 0.06708478247834512,
+        "lift_top_10_pct": 2.0470303306842164,
+        "precision_at_70_pct_recall": 0.35784190715181935,
+        "mean_predicted_pd": 0.18322491645812988
+      },
+      "calibrated": {
+        "roc_auc": 0.6939444620590692,
+        "average_precision": 0.4267219500889189,
+        "brier": 0.17069806582400684,
+        "ece_10_quantile_bins": 0.009511679102650978,
+        "lift_top_10_pct": 2.0470303306842164,
+        "precision_at_70_pct_recall": 0.35784190715181935,
+        "mean_predicted_pd": 0.25032692581420457
+      }
+    },
+    "test": {
+      "raw": {
+        "roc_auc": 0.6828235319536293,
+        "average_precision": 0.36013359135174167,
+        "brier": 0.1582757158575552,
+        "ece_10_quantile_bins": 0.03627689777711006,
+        "lift_top_10_pct": 2.073157079360725,
+        "precision_at_70_pct_recall": 0.2988816517143911,
+        "mean_predicted_pd": 0.1786016970872879
+      },
+      "calibrated": {
+        "roc_auc": 0.6828235319536293,
+        "average_precision": 0.3601335913517417,
+        "brier": 0.1582712675778958,
+        "ece_10_quantile_bins": 0.03179226320135342,
+        "lift_top_10_pct": 2.073157079360725,
+        "precision_at_70_pct_recall": 0.2988816517143911,
+        "mean_predicted_pd": 0.24412539420159954
+      }
+    }
+  },
+  "post_hoc_default_filling_diagnostic": {
+    "description": "Saved model; same test loans; 40 uncollected features replaced with training defaults. Collected features retain dataset values/missingness. UI rounding and API eligibility are not simulated. Not part of the original notebook evaluation.",
+    "defaulted_features": [
+      "acc_now_delinq",
+      "acc_open_past_24mths",
+      "avg_cur_bal",
+      "bc_open_to_buy",
+      "bc_util",
+      "chargeoff_within_12_mths",
+      "collections_12_mths_ex_med",
+      "credit_history_years",
+      "delinq_amnt",
+      "inq_last_6mths",
+      "mo_sin_old_rev_tl_op",
+      "mo_sin_rcnt_rev_tl_op",
+      "mo_sin_rcnt_tl",
+      "mort_acc",
+      "num_accts_ever_120_pd",
+      "num_actv_bc_tl",
+      "num_actv_rev_tl",
+      "num_bc_sats",
+      "num_bc_tl",
+      "num_il_tl",
+      "num_op_rev_tl",
+      "num_rev_accts",
+      "num_rev_tl_bal_gt_0",
+      "num_sats",
+      "num_tl_120dpd_2m",
+      "num_tl_30dpd",
+      "num_tl_90g_dpd_24m",
+      "pct_tl_nvr_dlq",
+      "percent_bc_gt_75",
+      "pub_rec_bankruptcies",
+      "revol_bal",
+      "tax_liens",
+      "tot_coll_amt",
+      "tot_cur_bal",
+      "tot_hi_cred_lim",
+      "total_acc",
+      "total_bal_ex_mort",
+      "total_bc_limit",
+      "total_il_high_credit_limit",
+      "total_rev_hi_lim"
+    ],
+    "metrics": {
+      "roc_auc": 0.6696573141769052,
+      "average_precision": 0.3379086787352273,
+      "brier": 0.1592774442625737,
+      "ece_10_quantile_bins": 0.022121588553167558,
+      "lift_top_10_pct": 1.8684364220107785,
+      "precision_at_70_pct_recall": 0.29676632092739474,
+      "mean_predicted_pd": 0.22444986160644753
+    }
+  }
+}

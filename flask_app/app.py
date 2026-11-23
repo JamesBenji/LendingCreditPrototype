@@ -45,5 +45,11 @@ def score():
         return jsonify(error=str(error), field_errors=error.errors), 400
 
 
+@app.route("/api/health", methods=["GET"])
+def health():
+    # Imports must succeed before this route can serve; no expensive prediction.
+    return jsonify(status="ok")
+
+
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=False, port=5001)

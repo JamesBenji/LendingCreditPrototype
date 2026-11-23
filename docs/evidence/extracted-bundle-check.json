@@ -1,0 +1,38 @@
+{
+  "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.9",
+  "research_commit": "d8643c8e1f3aa3c34ba95279291706a7ac96d5eb",
+  "artifact_sha256": {
+    "metadata.json": "3a2fdc018f180b349d37763d296f6906ebce329b5b77a6f6106120ad8f8c9512",
+    "platt_calibrator.joblib": "5872828eccbe7c8d1b0037170bf6e641dc3740fd80c441a15aba98dc080de2b2",
+    "xgb_risk_model.joblib": "010b7dfacd50189d28f23fed014a593a9e72c7e6d78a643d9812074f17ddfef8"
+  },
+  "versions": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "xgboost": "2.1.4",
+    "xgboost-cpu": null,
+    "joblib": "1.5.3",
+    "Flask": "3.1.3",
+    "flask-cors": "6.0.5",
+    "gunicorn": "23.0.0",
+    "scipy": "1.15.3"
+  },
+  "model_threads": 1,
+  "startup_seconds": 0.9189607919979608,
+  "process_peak_rss_mib": 155.984375,
+  "flask_client_latency_ms": {
+    "p50": 1.5550414973404258,
+    "p95": 1.783593745494727,
+    "iterations": 50
+  },
+  "fixture_parity": [
+    "Successful",
+    "Risky",
+    "Declined"
+  ],
+  "invalid_requests": "400/400/415 passed",
+  "load_warnings": [],
+  "xgboost_module_version": "2.1.4"
+}

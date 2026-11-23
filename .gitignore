@@ -42,3 +42,4 @@ flask_app/frontend/.vite/
 *.swo
 
 # Model artifacts are committed intentionally (runtime dependency)
+release-bundles/

@@ -1,0 +1,123 @@
+{
+  "target": "Linux x86_64, CPython 3.13, manylinux-compatible with Debian Trixie",
+  "status": "Downloaded and metadata-checked; not executed on Linux yet",
+  "wheel_count": 20,
+  "total_bytes": 85968169,
+  "xgboost_cpu_dependencies": [
+    "Requires-Dist: numpy",
+    "Requires-Dist: scipy",
+    "Requires-Dist: dask; extra == 'dask'",
+    "Requires-Dist: distributed; extra == 'dask'",
+    "Requires-Dist: pandas; extra == 'dask'",
+    "Requires-Dist: datatable; extra == 'datatable'",
+    "Requires-Dist: pandas>=1.2; extra == 'pandas'",
+    "Requires-Dist: graphviz; extra == 'plotting'",
+    "Requires-Dist: matplotlib; extra == 'plotting'",
+    "Requires-Dist: cloudpickle; extra == 'pyspark'",
+    "Requires-Dist: pyspark; extra == 'pyspark'",
+    "Requires-Dist: scikit-learn; extra == 'pyspark'",
+    "Requires-Dist: scikit-learn; extra == 'scikit-learn'"
+  ],
+  "files": [
+    {
+      "filename": "blinker-1.9.0-py3-none-any.whl",
+      "bytes": 8458,
+      "sha256": "ba0efaa9080b619ff2f3459d1d500c57bddea4a6b424b60a91141db6fd2f08bc"
+    },
+    {
+      "filename": "click-8.5.1-py3-none-any.whl",
+      "bytes": 126163,
+      "sha256": "8bb5376d2006950386f8c6427613334a2acadc5f559cb80e638d00b4df957e37"
+    },
+    {
+      "filename": "flask-3.1.3-py3-none-any.whl",
+      "bytes": 103424,
+      "sha256": "f4bcbefc124291925f1a26446da31a5178f9483862233b23c0c96a20701f670c"
+    },
+    {
+      "filename": "flask_cors-6.0.5-py3-none-any.whl",
+      "bytes": 16692,
+      "sha256": "68fcf75693e961f3af26683b23c4b9a8fb6b64de17d20d0c37b95e8de7ab2ed8"
+    },
+    {
+      "filename": "gunicorn-23.0.0-py3-none-any.whl",
+      "bytes": 85029,
+      "sha256": "ec400d38950de4dfd418cff8328b2c8faed0edb0d517d3394e457c317908ca4d"
+    },
+    {
+      "filename": "itsdangerous-2.2.0-py3-none-any.whl",
+      "bytes": 16234,
+      "sha256": "c6242fc49e35958c8b15141343aa660db5fc54d4f13a1db01a3f5891b98700ef"
+    },
+    {
+      "filename": "jinja2-3.1.6-py3-none-any.whl",
+      "bytes": 134899,
+      "sha256": "85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67"
+    },
+    {
+      "filename": "joblib-1.5.3-py3-none-any.whl",
+      "bytes": 309071,
+      "sha256": "5fc3c5039fc5ca8c0276333a188bbd59d6b7ab37fe6632daa76bc7f9ec18e713"
+    },
+    {
+      "filename": "markupsafe-3.0.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 23017,
+      "sha256": "434139499bb20b502ed3baa1f169e618f924a97e7a777fea1a49446d80106cf6"
+    },
+    {
+      "filename": "numpy-2.2.6-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "bytes": 16526072,
+      "sha256": "1bc23a79bfabc5d056d106f9befb8d50c31ced2fbc70eedb8155aec74a45798f"
+    },
+    {
+      "filename": "packaging-26.3-py3-none-any.whl",
+      "bytes": 129956,
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+    },
+    {
+      "filename": "pandas-2.3.3-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 12306371,
+      "sha256": "318d77e0e42a628c04dc56bcef4b40de67918f7041c2b061af1da41dcff670ac"
+    },
+    {
+      "filename": "python_dateutil-4.0.0-py3-none-any.whl",
+      "bytes": 92853,
+      "sha256": "a5e246f79eb80475e691bf93862cead98decd8a498cf53ba0516fcdc0f50dc1c"
+    },
+    {
+      "filename": "pytz-2026.6-py2.py3-none-any.whl",
+      "bytes": 506321,
+      "sha256": "7fed3fee8fd6bd4a2b7b75a8d56021d0624127bf69bd5691f115db929ac570b3"
+    },
+    {
+      "filename": "scikit_learn-1.6.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "bytes": 13171776,
+      "sha256": "e8ca8cb270fee8f1f76fa9bfd5c3507d60c6438bbee5687f81042e2bb98e5a97"
+    },
+    {
+      "filename": "scipy-1.15.3-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "bytes": 37269716,
+      "sha256": "c9deabd6d547aee2c9a81dee6cc96c6d7e9a9b1953f74850c179f91fdc729cb7"
+    },
+    {
+      "filename": "threadpoolctl-3.8.0-py3-none-any.whl",
+      "bytes": 32091,
+      "sha256": "f1b49c82704d50f13ffae019c727b0fa4f6791a58f48f06a09c45face1be66da"
+    },
+    {
+      "filename": "tzdata-2026.6-py2.py3-none-any.whl",
+      "bytes": 348210,
+      "sha256": "0a10eec6e13ef16b627fabed9a5f2ba61a62b1c67f327305f4e7e412a70b4aec"
+    },
+    {
+      "filename": "werkzeug-3.1.9-py3-none-any.whl",
+      "bytes": 228700,
+      "sha256": "6392e50c78460ba618e5b21f08a71f59c99ce99cdc6cf6e3dd7e6ccca8754fab"
+    },
+    {
+      "filename": "xgboost_cpu-2.1.4-py3-none-manylinux2014_x86_64.whl",
+      "bytes": 4533116,
+      "sha256": "ac3281127b2f77f6c62e8699216b0974a1c4a442ee6162eb94256c01df7cd1f5"
+    }
+  ]
+}

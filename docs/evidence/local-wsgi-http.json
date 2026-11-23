@@ -1,0 +1,176 @@
+{
+  "base_url": "http://127.0.0.1:5010",
+  "research_commit": "d8643c8e1f3aa3c34ba95279291706a7ac96d5eb",
+  "checks": [
+    "health",
+    "options",
+    "Successful prediction parity",
+    "Risky prediction parity",
+    "Declined prediction parity",
+    "invalid request: structured 400"
+  ],
+  "cases": [
+    {
+      "name": "Successful",
+      "request": {
+        "loan_amnt": "5500",
+        "term": "36 months",
+        "purpose": "debt_consolidation",
+        "annual_inc": "96000",
+        "emp_length": "10+ years",
+        "home_ownership": "MORTGAGE",
+        "verification_status": "Verified",
+        "application_type": "Individual",
+        "fico_avg": "800",
+        "revol_util": "10.0",
+        "mths_since_recent_inq": "24",
+        "delinq_2yrs": "0",
+        "open_acc": "8",
+        "pub_rec": "0",
+        "dti": "5.0"
+      },
+      "response": {
+        "decision": "Approve",
+        "el_dollars": 204.68,
+        "el_rate_pct": 3.7,
+        "final_payment": 177.94,
+        "funding_cost_pct": 4.0,
+        "lgd_pct": 58.98,
+        "loan_amnt": 5500.0,
+        "monthly_payment": 178.04,
+        "operating_margin_pct": 2.5,
+        "pd_pct": 6.3,
+        "pricing_capped": false,
+        "purpose_label": "Debt Consolidation",
+        "rate_cap_pct": 40.0,
+        "risk_drivers": [],
+        "risk_tier": "Low Risk",
+        "suggested_rate_pct": 10.22,
+        "term_months": 36,
+        "total_interest": 909.34,
+        "total_repayment": 6409.34,
+        "uncapped_suggested_rate_pct": 10.22
+      },
+      "elapsed_ms": 4.031917007523589
+    },
+    {
+      "name": "Risky",
+      "request": {
+        "loan_amnt": "12000",
+        "term": "36 months",
+        "purpose": "debt_consolidation",
+        "annual_inc": "64000",
+        "emp_length": "10+ years",
+        "home_ownership": "MORTGAGE",
+        "verification_status": "Source Verified",
+        "application_type": "Individual",
+        "fico_avg": "692",
+        "revol_util": "55.0",
+        "mths_since_recent_inq": "5",
+        "delinq_2yrs": "0",
+        "open_acc": "11",
+        "pub_rec": "0",
+        "dti": "17.6"
+      },
+      "response": {
+        "decision": "Refer to Senior Officer",
+        "el_dollars": 1133.66,
+        "el_rate_pct": 9.4,
+        "final_payment": 421.51,
+        "funding_cost_pct": 4.0,
+        "lgd_pct": 58.98,
+        "loan_amnt": 12000.0,
+        "monthly_payment": 421.59,
+        "operating_margin_pct": 2.5,
+        "pd_pct": 16.0,
+        "pricing_capped": false,
+        "purpose_label": "Debt Consolidation",
+        "rate_cap_pct": 40.0,
+        "risk_drivers": [
+          {
+            "label": "Debt-to-Income Ratio (DTI)",
+            "typical_str": "17.6%",
+            "unit": "",
+            "value_str": "17.6%"
+          }
+        ],
+        "risk_tier": "Medium Risk",
+        "suggested_rate_pct": 15.95,
+        "term_months": 36,
+        "total_interest": 3177.16,
+        "total_repayment": 15177.16,
+        "uncapped_suggested_rate_pct": 15.95
+      },
+      "elapsed_ms": 3.2001250074245036
+    },
+    {
+      "name": "Declined",
+      "request": {
+        "loan_amnt": "30000",
+        "term": "60 months",
+        "purpose": "small_business",
+        "annual_inc": "36000",
+        "emp_length": "1 year",
+        "home_ownership": "RENT",
+        "verification_status": "Not Verified",
+        "application_type": "Individual",
+        "fico_avg": "600",
+        "revol_util": "95.0",
+        "mths_since_recent_inq": "0",
+        "delinq_2yrs": "3",
+        "open_acc": "16",
+        "pub_rec": "2",
+        "dti": "50.0"
+      },
+      "response": {
+        "decision": "Decline",
+        "el_dollars": 13115.71,
+        "el_rate_pct": 43.7,
+        "final_payment": 1162.37,
+        "funding_cost_pct": 4.0,
+        "lgd_pct": 58.98,
+        "loan_amnt": 30000.0,
+        "monthly_payment": 1162.55,
+        "operating_margin_pct": 2.5,
+        "pd_pct": 74.1,
+        "pricing_capped": true,
+        "purpose_label": "Small Business",
+        "rate_cap_pct": 40.0,
+        "risk_drivers": [
+          {
+            "label": "Loan-to-Income Ratio (LTI)",
+            "typical_str": "0.20",
+            "unit": "",
+            "value_str": "0.83"
+          },
+          {
+            "label": "Delinquencies in Last 2 Years",
+            "typical_str": "0",
+            "unit": "",
+            "value_str": "3"
+          },
+          {
+            "label": "Public Records",
+            "typical_str": "0",
+            "unit": "",
+            "value_str": "2"
+          }
+        ],
+        "risk_tier": "High Risk",
+        "suggested_rate_pct": 40.0,
+        "term_months": 60,
+        "total_interest": 39752.82,
+        "total_repayment": 69752.82,
+        "uncapped_suggested_rate_pct": 50.22
+      },
+      "elapsed_ms": 2.6404170057503507
+    }
+  ],
+  "invalid_response": {
+    "error": "Loan amount must be between 500 and 40,000. Annual income must be at least 1,000.",
+    "field_errors": {
+      "annual_inc": "Annual income must be at least 1,000.",
+      "loan_amnt": "Loan amount must be between 500 and 40,000."
+    }
+  }
+}

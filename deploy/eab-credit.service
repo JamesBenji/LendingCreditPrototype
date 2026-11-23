@@ -1,0 +1,31 @@
+[Unit]
+Description=EAB Credit thesis demo (Gunicorn)
+After=network.target
+
+[Service]
+Type=simple
+User=eab-credit
+Group=eab-credit
+WorkingDirectory=/opt/eab-credit/current/flask_app
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=MODEL_THREADS=1
+Environment=OMP_NUM_THREADS=1
+Environment=OPENBLAS_NUM_THREADS=1
+Environment=MKL_NUM_THREADS=1
+ExecStart=/opt/eab-credit/current/.venv/bin/gunicorn --bind 127.0.0.1:5001 --workers 1 --worker-class sync --timeout 60 --access-logfile - --error-logfile - wsgi:app
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+UMask=0027
+MemoryMax=650M
+
+[Install]
+WantedBy=multi-user.target
