@@ -26,6 +26,8 @@ npx playwright install chromium
 npm run test:browser
 ```
 
+Browser checks are optional local checks. GitHub Actions does not install or run Playwright.
+
 The [browser checker][browser] starts and closes a static preview on port 4327. It visits all chapters at 360, 768 and 1440 pixels, scans all 42 pages with axe, and checks search, filters, keyboard navigation, print, no-JavaScript content and absence of API requests. Screenshots and JSON reports go into the ignored reports directory. Automated checks do not replace a human screen-reader or real-device review.
 
 ## Content and structured data
@@ -68,7 +70,7 @@ The full 151-field audit is unresolved. Obtain the exact raw header, authoritati
 
 Open repository **Settings → Pages → Build and deployment → Source** and select **GitHub Actions**. If environment protection is enabled, permit the github-pages environment to deploy from main.
 
-Merge into main or run the dedicated [workflow][workflow] on main. Pull requests build and test without deployment. The workflow installs the lockfile with Node 22.21.1, runs tests and static checks, builds, runs browser checks and uploads only this project’s static output. Official upload/deploy Pages actions publish it. Only the deploy job receives pages write and id-token write permissions.
+Merge into main or run the dedicated [workflow][workflow] on main. Pull requests build and test without deployment. The workflow installs the lockfile with Node 22.21.1, runs tests and static checks, builds and uploads only this project’s static output. Official upload/deploy Pages actions publish it. Only the deploy job receives pages write and id-token write permissions.
 
 Expected URL: <https://jamesbenji.github.io/LendingCreditPrototype/>.
 

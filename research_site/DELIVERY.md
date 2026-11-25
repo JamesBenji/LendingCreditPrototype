@@ -19,7 +19,7 @@ Implemented on feature/technical-research-site. The independent [research_site/]
 
 ## Pages deployment
 
-[Dedicated workflow](https://github.com/JamesBenji/LendingCreditPrototype/blob/feature/technical-research-site/.github/workflows/research-site-pages.yml) installs Node 22.21.1, uses the lockfile, runs tests/static checks/build/browser checks, uploads only the research static output and deploys with official GitHub Pages actions. Only the deploy job receives pages write and id-token write permissions. Pull requests do not deploy.
+[Dedicated workflow](https://github.com/JamesBenji/LendingCreditPrototype/blob/feature/technical-research-site/.github/workflows/research-site-pages.yml) installs Node 22.21.1, uses the lockfile, runs tests/static checks/build, uploads only the research static output and deploys with official GitHub Pages actions. Only the deploy job receives pages write and id-token write permissions. Pull requests do not deploy. Browser checks remain available locally and are not part of GitHub Actions.
 
 Expected URL: <https://jamesbenji.github.io/LendingCreditPrototype/>. Every route and asset uses /LendingCreditPrototype/.
 
