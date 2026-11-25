@@ -1,0 +1,67 @@
+---
+import Publication from "../layouts/Publication.astro";
+import AuditTable from "../components/AuditTable.astro";
+import { getRegisters } from "../lib/registers.mjs";
+
+export function getStaticPaths() {
+  const registers = {
+    evidence: [
+      "Evidence register",
+      "Every claim keeps its evidence class, source locator and limitation.",
+    ],
+    fields: [
+      "Field audit",
+      "64 loaded fields and three engineered fields. Missing authoritative definitions and timing stay explicit.",
+    ],
+    limitations: [
+      "Limitations register",
+      "Affected claims, severity, bias, mitigation and unresolved work.",
+    ],
+    timeline: [
+      "Experiment ledger",
+      "Ordered questions, evidence, decisions, consequences and uncertainty.",
+    ],
+    sources: [
+      "Source map",
+      "Commit-pinned repository links with clear file and directory destinations.",
+    ],
+    glossary: [
+      "Glossary",
+      "Plain definitions and links to chapters that explain them.",
+    ],
+  };
+  return Object.entries(registers).map(([register, [title, summary]]) => ({
+    params: { register },
+    props: { register, title, summary },
+  }));
+}
+const { register, title, summary } = Astro.props;
+const tables = getRegisters(register);
+---
+
+<Publication
+  title={title}
+  summary={summary}
+  headings={tables.map((t) => ({ id: t.id, label: t.title }))}
+>
+  <p class="register-intro">
+    All records are visible without JavaScript. Filters search displayed records
+    locally. GitHub source links open in a new tab.
+  </p>
+  {
+    register === "evidence" && (
+      <aside class="callout">
+        <>
+          <strong>Recorded reproduction is not a new site audit</strong>
+          <p>
+            REPRODUCED refers to committed frozen-model and local verification
+            reports. This site reads those reports without training or serving a
+            model. Notebook comparisons remain saved output; deployment reports
+            remain owner-reported.
+          </p>
+        </>
+      </aside>
+    )
+  }
+  {tables.map((table) => <AuditTable table={table} />)}
+</Publication>

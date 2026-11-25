@@ -1,0 +1,176 @@
+---
+import Publication from "../../layouts/Publication.astro";
+import SourceLink from "../../components/SourceLink.astro";
+import Diagram from "../../components/Diagram.astro";
+import TemporalCV from "../../components/TemporalCV.astro";
+import AuditTable from "../../components/AuditTable.astro";
+import chapters from "../../data/chapters.json";
+import extracted from "../../data/extracted.json";
+import { render } from "../../lib/render.mjs";
+import { base, getRegisters } from "../../lib/registers.mjs";
+export function getStaticPaths() {
+  return chapters.map((chapter) => ({
+    params: { slug: chapter.slug },
+    props: { chapter },
+  }));
+}
+const { chapter } = Astro.props;
+const contentFiles = import.meta.glob("../../content/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+const content = render(contentFiles["../../content/" + chapter.slug + ".md"]);
+const registers = getRegisters(chapter.register);
+const headings = [
+  ...content.headings,
+  ...(chapter.diagram ? [{ id: "reasoning", label: "Reasoning diagram" }] : []),
+  ...registers.map((t) => ({ id: t.id, label: t.title })),
+  ...(chapter.cells.length
+    ? [{ id: "notebook-record", label: "Saved notebook record" }]
+    : []),
+  { id: "chapter-sources", label: "Sources used in this chapter" },
+];
+const records = chapter.cells.map((i) =>
+  extracted.cells.find((c) => c.index === i),
+);
+---
+
+<Publication
+  title={chapter.title}
+  summary={chapter.summary}
+  chapter={chapter}
+  headings={headings}
+>
+  {
+    [1, 26, 31, 32].includes(chapter.number) && (
+      <aside class="callout limitation">
+        <>
+          <strong>
+            {chapter.number === 26
+              ? "Serving performance remains unvalidated"
+              : "Read the evidence boundary"}
+          </strong>
+          <p>
+            {chapter.number === 26
+              ? "Full-feature notebook results do not validate the browser form, which defaults 40 features."
+              : "This is a historical research prototype. Probability, policy and calculated price have separate evidence and limitations."}
+          </p>
+          <a href={base + "limitations/"}>Inspect the limitations register →</a>
+        </>
+      </aside>
+    )
+  }
+  <article class="prose" set:html={content.html} />
+  {
+    chapter.number === 9 && (
+      <figure class="saved-figure">
+        <>
+          <figcaption>
+            <>
+              <strong>
+                How do issue year, LC grade, FICO, debt burden and term relate
+                to default?
+              </strong>
+              <p>
+                Saved notebook figure; accepted resolved sample of 107,625
+                loans. Year is origination year; rate axes show mean charge-off
+                share, count axis shows sampled loans. FICO bands and DTI
+                quintiles group borrower measures. DTI is clipped only for
+                plotting. This motivates temporal evaluation, incumbent
+                comparison and burden hypotheses. Associations and cohort
+                maturity limit interpretation.
+              </p>
+              <SourceLink
+                id="notebook"
+                label="View notebook figure — cell 12, ce0OOCCdbFyK"
+              />
+            </>
+          </figcaption>
+          <p>
+            <a href={base + "figures/eda-cell-12.png"}>
+              Open saved figure at full size
+            </a>
+          </p>
+          <img
+            src={base + "figures/eda-cell-12.png"}
+            width="1700"
+            height="800"
+            alt="Saved six-panel EDA: default by issue year, counts by year, LC grade, FICO band, DTI quintile and term. The year table is also in the textual saved record."
+            loading="lazy"
+          />
+        </>
+      </figure>
+    )
+  }
+  {
+    chapter.diagram && (
+      <section id="reasoning">
+        <h2>Reasoning diagram</h2>
+        <Diagram id={chapter.diagram} />
+        {chapter.number === 18 && <TemporalCV />}
+        {chapter.number === 20 && <Diagram id="comparisons" />}
+      </section>
+    )
+  }
+  {registers.map((table) => <AuditTable table={table} />)}
+  {
+    records.length > 0 && (
+      <section id="notebook-record">
+        <h2>Saved notebook record</h2>
+        <p>
+          Extracted committed notebook records, not a new execution. Text
+          retains saved rounding. Missing plot values are not invented.
+        </p>
+        {records.map((c) => (
+          <section class="cell-record">
+            <h3 id={"cell-" + c.index + "-" + c.id}>
+              Cell {c.index} · {c.id}
+              <a
+                class="header-anchor"
+                href={"#cell-" + c.index + "-" + c.id}
+                aria-label={"Link to cell " + c.index}
+              >
+                #
+              </a>
+            </h3>
+            <p>
+              <SourceLink
+                id="notebook"
+                label={"View notebook — cell " + c.index + ", " + c.id}
+              />
+            </p>
+            {c.text && (
+              <div
+                class="notebook-output"
+                set:html={render("~~~text\n" + c.text + "\n~~~").html}
+              />
+            )}
+            {!c.text && <p>No textual output is stored in this cell.</p>}
+            <details>
+              <summary>Inspect verified source for this cell</summary>
+              <div set:html={render("~~~python\n" + c.source + "\n~~~").html} />
+            </details>
+          </section>
+        ))}
+      </section>
+    )
+  }
+  <section class="sources-used">
+    <h2 id="chapter-sources">
+      Sources used in this chapter<a
+        class="header-anchor"
+        href="#chapter-sources"
+        aria-label="Link to chapter sources">#</a
+      >
+    </h2><ul>
+      {
+        chapter.sources.map((id) => (
+          <li>
+            <SourceLink id={id} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Publication>

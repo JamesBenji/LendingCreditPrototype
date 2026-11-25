@@ -1,0 +1,74 @@
+---
+const { table } = Astro.props;
+const choices = [
+  ...new Set(
+    table.rows.map((r) => r.group || r.severity || r.status).filter(Boolean),
+  ),
+].sort();
+---
+
+<section class="audit-register" data-register={table.id}>
+  <h2 id={table.id}>
+    {table.title}<a
+      href={"#" + table.id}
+      class="header-anchor"
+      aria-label={"Link to " + table.title}>#</a
+    >
+  </h2>
+  <div class="filters" hidden>
+    <label
+      >Filter {table.title}<input
+        type="search"
+        data-filter
+        placeholder="Search this register"
+      /></label
+    >
+    {
+      choices.length > 0 && (
+        <label>
+          Group or evidence class
+          <select data-group>
+            <option value="">All</option>
+            {choices.map((c) => (
+              <option value={c}>{c}</option>
+            ))}
+          </select>
+        </label>
+      )
+    }
+    <p role="status" data-count>{table.rows.length} records</p>
+  </div>
+  <div class="table-scroll" tabindex="0" role="region" aria-label={table.title}>
+    <table>
+      <caption
+        >{table.title} — source-linked records; scroll horizontally for all columns.</caption
+      >
+      <thead
+        ><tr>{table.columns.map((c) => <th scope="col">{c.label}</th>)}</tr
+        ></thead
+      >
+      <tbody
+        >{
+          table.rows.map((row) => (
+            <tr
+              data-group={row.group || row.severity || row.status || ""}
+              data-evidence={
+                typeof row.evidence === "string"
+                  ? row.evidence.match(/data-evidence="([^"]+)/)?.[1]
+                  : undefined
+              }
+            >
+              {table.columns.map((c, i) =>
+                i === 0 ? (
+                  <th scope="row" set:html={String(row[c.key] ?? "")} />
+                ) : (
+                  <td set:html={String(row[c.key] ?? "")} />
+                ),
+              )}
+            </tr>
+          ))
+        }</tbody
+      >
+    </table>
+  </div>
+</section>
