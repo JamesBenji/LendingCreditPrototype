@@ -38,4 +38,4 @@ This rule combines lifetime loss with annual-looking cost terms. It is not a val
 
 A useful model must rank risk, estimate probabilities, transfer to later cohorts and compare with LendingClub’s own assessment. Accuracy alone cannot answer those questions. Pricing needs calibrated probabilities, not just rankings.
 
-The evidence supports historical comparisons and a synthetic engineering trace. It does not establish lawful policy, fairness, profit, reject-inference validity or reduced-form performance. Formal thesis objectives are absent; consolidated objectives are draft interpretations in {{source:defense|Defense guide — draft objectives}}. {{evidence:fairness}}
+The evidence supports historical comparisons and a synthetic engineering trace. It does not establish lawful policy, fairness, profit, reject-inference validity or reduced-form performance. The publication follows the implemented research question in {{source:notebook|Research question — cell 0}}; it does not establish an approved thesis specification. {{evidence:fairness}}

@@ -138,8 +138,8 @@
     "id": "timing",
     "label": "Application-time timing",
     "status": "UNRESOLVED",
-    "source": "defense",
-    "locator": "Leakage and training-serving audit",
+    "source": "overview",
+    "locator": "Research limitations",
     "claim": "Source names and code roles cannot prove when every bureau snapshot was captured.",
     "limitation": "An authoritative version-matched data dictionary and collection-time record are needed."
   },
@@ -156,7 +156,7 @@
     "id": "fairness",
     "label": "Fairness evaluation",
     "status": "UNRESOLVED",
-    "source": "defense",
+    "source": "overview",
     "locator": "Research limitations",
     "claim": "No completed protected-class, proxy or subgroup fairness audit is recorded.",
     "limitation": "Functional tests cannot establish fairness or lawful underwriting."
@@ -165,8 +165,8 @@
     "id": "future",
     "label": "Next experiments",
     "status": "PROPOSED",
-    "source": "defense",
-    "locator": "Leakage and training-serving audit; limitations",
+    "source": "notebook",
+    "locator": "Research questions and conclusions \u2014 cells 0 and 39",
     "claim": "Direct reduced-form evaluation, timing checks and a consistent cash-flow model are needed.",
     "limitation": "These are recommendations, not completed experiments."
   },

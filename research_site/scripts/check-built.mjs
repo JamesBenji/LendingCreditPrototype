@@ -24,6 +24,20 @@ for (const file of html) {
   const $ = load(fs.readFileSync(file, "utf8"));
   assert.equal($("h1").length, 1, "Exactly one primary heading");
   assert($("html").attr("lang") === "en");
+  assert(
+    !/DEFENSE_GUIDE|defense guide|defense audit/i.test($.html()),
+    "Defense guide must not appear in the publication",
+  );
+  assert.equal(
+    $(".evidence-context").length,
+    0,
+    "Evidence tags must have no following subtitle",
+  );
+  $(".evidence > a").each((index, el) => {
+    const label = $(el).clone().find(".external").remove().end().text().trim();
+    assert.equal(label, label.toUpperCase(), "Evidence tag must be uppercase");
+  });
+
   assert.equal($(".masthead .brand").text().trim(), "EAB Credit (LendingClub)");
   assert.equal($(".chapter-menu > summary").text(), "Explore our work");
   assert.equal($(".sources-used").length, 0, "Redundant end-of-part sources");

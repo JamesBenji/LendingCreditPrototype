@@ -10,4 +10,4 @@ Each fold trains on earlier loans and validates on a later block. Later folds ex
 
 ## Selection boundary
 
-Training CV chooses parameters. Validation fits the calibrator and cutoffs. Test records final metrics. Earlier full-sample EDA prevents a fully blinded-test claim. The paired bootstrap also does not include all search, temporal or multiple-comparison uncertainty. {{source:defense|Leakage and training-serving audit}} {{evidence:comparisons}}
+Training CV chooses parameters. Validation fits the calibrator and cutoffs. Test records final metrics. Earlier full-sample EDA prevents a fully blinded-test claim. The paired bootstrap also does not include all search, temporal or multiple-comparison uncertainty. {{source:notebook|EDA and temporal evaluation — cells 12–24}} {{evidence:comparisons}}

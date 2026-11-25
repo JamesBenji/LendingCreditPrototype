@@ -31,7 +31,6 @@ All required repository sources were inspected. Every JSON file in the evidence 
 
 - [README.md](https://github.com/JamesBenji/LendingCreditPrototype/blob/3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868/README.md) — Inspected repository source
 - [Lending_project_v2 (1).ipynb](https://github.com/JamesBenji/LendingCreditPrototype/blob/d8643c8e1f3aa3c34ba95279291706a7ac96d5eb/Lending_project_v2%20%281%29.ipynb) — Historical research notebook
-- [docs/DEFENSE_GUIDE.md](https://github.com/JamesBenji/LendingCreditPrototype/blob/3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868/docs/DEFENSE_GUIDE.md) — Inspected repository source
 - [docs/SESSION_HANDOFF.md](https://github.com/JamesBenji/LendingCreditPrototype/blob/3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868/docs/SESSION_HANDOFF.md) — Inspected repository source
 - [docs/DEPLOYMENT.md](https://github.com/JamesBenji/LendingCreditPrototype/blob/3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868/docs/DEPLOYMENT.md) — Inspected repository source
 - [docs/DEPLOYMENT_LOG.md](https://github.com/JamesBenji/LendingCreditPrototype/blob/3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868/docs/DEPLOYMENT_LOG.md) — Inspected repository source

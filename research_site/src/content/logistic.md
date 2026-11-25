@@ -8,7 +8,7 @@ The intercept is $\beta_0$. Coefficients $\beta$ act on transformed inputs $X$. 
 
 Additive structure is simpler to inspect than interactions in hundreds of trees. Regularisation discourages extreme coefficients. The code sets C=1.0 and max_iter=3000 without explicit class weights. Scaling makes the penalty less dependent on raw units. {{evidence:pipeline}}
 
-A scaled coefficient concerns a standardised unit. One-hot coding, correlation and penalties affect interpretation. Coefficients are not causal and are not exported here, so there is no justified fitted-coefficient table. {{source:defense|Learned parameters and weights}}
+A scaled coefficient concerns a standardised unit. One-hot coding, correlation and penalties affect interpretation. Coefficients are not causal and are not exported here, so there is no justified fitted-coefficient table. {{source:notebook|Logistic model — cell 22}}
 
 ## Result
 

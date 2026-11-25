@@ -20,7 +20,7 @@ The saved sample has 39 DTI values above 100 and 45 incomes below 5,000. DTI is 
 
 ## Analyst leakage limits the result
 
-All these inspections use labels from the full frame before splitting. Training-only preprocessing prevents fitted-state leakage, but analyst choices have seen holdout patterns. A stronger protocol would freeze hypotheses from training-only EDA and use a new untouched cohort. {{source:defense|Holdout used in EDA}} {{evidence:future}}
+All these inspections use labels from the full frame before splitting. Training-only preprocessing prevents fitted-state leakage, but analyst choices have seen holdout patterns. A stronger protocol would freeze hypotheses from training-only EDA and use a new untouched cohort. {{source:notebook|Full-sample EDA before splitting — cells 12–18}} {{evidence:future}}
 
 ## Loan counts show unequal cohort support
 

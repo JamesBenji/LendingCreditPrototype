@@ -17,6 +17,6 @@ Funding is assumed 4%; margin is assumed 2.5%. PD is calibrated model output. LG
 
 ## Simplifications that prevent real pricing
 
-The rule omits interest received before default, prepayment, time value of money, collection costs, capital charge, liquidity premium, acquisition cost, tax, regulatory constraints and competitive demand response. It combines lifetime loss with annual-looking funding and margin terms. A fixed aggregate LGD also misses borrower, term and cohort variation. {{source:defense|Calibration, thresholds and price}}
+The rule omits interest received before default, prepayment, time value of money, collection costs, capital charge, liquidity premium, acquisition cost, tax, regulatory constraints and competitive demand response. It combines lifetime loss with annual-looking funding and margin terms. A fixed aggregate LGD also misses borrower, term and cohort variation. {{source:notebook|Simplified pricing rule — cell 34}}
 
 These omissions can move price in different directions. The rule is illustrative, not a verified profit-maximising or production-ready price. A financially consistent alternative needs default timing, cash flows, discounting, recoveries and costs over the same horizon. {{evidence:future}}

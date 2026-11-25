@@ -39,14 +39,12 @@ export function evidenceLink(id) {
     id +
     '">' +
     (e.status === "ASSUMPTION"
-      ? '<a href="/LendingCreditPrototype/chapters/loss-price/#combine-probability-and-severity" class="source-link">Pricing inputs</a>'
+      ? '<a href="/LendingCreditPrototype/chapters/loss-price/#combine-probability-and-severity" class="source-link">PRICING INPUTS</a>'
       : sourceLink(
           e.status === "NOTEBOOK OUTPUT" ? "notebook" : e.source,
           evidenceName(e.status),
         )) +
-    '<span class="evidence-context"> — ' +
-    escape(readerText(e.label)) +
-    "</span></span>"
+    "</span>"
   );
 }
 export function render(text) {

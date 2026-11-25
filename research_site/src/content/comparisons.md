@@ -12,4 +12,4 @@ Pairing matters because a difficult resampled loan affects both models. Independ
 
 Saved XGBoost-minus-logistic AUC difference is 0.0029. Its 95% interval is −0.0014 to 0.0073. XGBoost has a slightly higher point estimate, but the experiment did not demonstrate an improvement. An interval containing zero is not proof of identical models or equivalence. {{evidence:comparisons}}
 
-Only the two combined-XGBoost intervals exclude zero. They support complementary ranking information in this dataset. Combined XGBoost versus LC logistic changes both model and fields. A matched benchmark would isolate field value better. These intervals ignore some temporal dependence, selection and multiple-testing uncertainty. {{source:defense|Controlled comparison caveat}}
+Only the two combined-XGBoost intervals exclude zero. They support complementary ranking information in this dataset. Combined XGBoost versus LC logistic changes both model and fields. A matched benchmark would isolate field value better. These intervals ignore some temporal dependence, selection and multiple-testing uncertainty. {{source:notebook|Models in the paired comparison — cell 26}}

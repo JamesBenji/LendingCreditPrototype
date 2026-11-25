@@ -18,4 +18,4 @@ Assess drift and recalibrate using mature later outcomes with separate evaluatio
 
 Add outcome monitoring, versioned artifact compatibility checks, recorded VM resources and hosted parity/restart evidence. Confirm certificate renewal and recovery before closing the operational incident. Every item here is proposed or unresolved, not already completed. {{evidence:future}} {{evidence:vm}}
 
-These proposed studies follow the evidence gaps in {{source:defense|Defense guide — limitations}} and {{source:deployment-log|Deployment record — outstanding verification}}. Their completion requires new results linked to new commits, not changing historical evidence labels.
+These proposed studies follow the evidence gaps in {{source:notebook|Research questions and limitations — cells 0 and 39}} and {{source:deployment-log|Deployment record — outstanding verification}}. Their completion requires new results linked to new commits, not changing historical evidence labels.

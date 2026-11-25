@@ -10,4 +10,4 @@ Medians, category modes, encoding groups and scaling parameters learn from a dis
 
 ## Outliers remain a limitation
 
-DTI is clipped for plots, not model inputs. Scaling does not remove extreme values. The research sample keeps low-income and high-DTI cases that the API may reject. This is a serving-population mismatch, not a successful outlier fix. {{source:defense|Preprocessing and engineering}} {{source:schema|Numeric rules|5-16}}
+DTI is clipped for plots, not model inputs. Scaling does not remove extreme values. The research sample keeps low-income and high-DTI cases that the API may reject. This is a serving-population mismatch, not a successful outlier fix. {{source:notebook|Cleaning and EDA — cells 10–13}} {{source:schema|Numeric rules|5-16}}

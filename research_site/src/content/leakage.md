@@ -10,4 +10,4 @@ loan_status reveals the answer. Payments, recoveries and later credit scores occ
 
 ## Limits of the guard
 
-The assertion catches listed direct leakage. It cannot prove every bureau snapshot is from application time. It also cannot prevent analyst exposure to test outcomes in full-sample EDA. A confirmed post-application field would invalidate the clean application-only interpretation and require reevaluation. {{source:defense|Leakage and training-serving audit}} {{evidence:timing}}
+The assertion catches listed direct leakage. It cannot prove every bureau snapshot is from application time. It also cannot prevent analyst exposure to test outcomes in full-sample EDA. A confirmed post-application field would invalidate the clean application-only interpretation and require reevaluation. {{source:notebook|EDA, feature engineering and split — cells 12–18}} {{evidence:timing}}

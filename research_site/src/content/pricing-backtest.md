@@ -6,7 +6,7 @@ Saved top-decile predicted loss is 31.4% while realised loss is 37.7%. The lowes
 
 ## LC grade interpretation
 
-The grade table compares incumbent rates and losses. Grade G has only 181 test loans; grade A has 2,894. Some realised loss shares exceed annual LC rates. Subtracting a lifetime loss share from annual interest is not net profit. Neither that subtraction nor gross scheduled interest validates an economic return. {{source:notebook|Grade table — cell 34}} {{source:defense|Pricing interpretation}}
+The grade table compares incumbent rates and losses. Grade G has only 181 test loans; grade A has 2,894. Some realised loss shares exceed annual LC rates. Subtracting a lifetime loss share from annual interest is not net profit. Neither that subtraction nor gross scheduled interest validates an economic return. {{source:notebook|Grade table — cell 34}} {{source:notebook|Loss and pricing calculation — cell 34}}
 
 ## Sensitivity separates evidence and assumptions
 
