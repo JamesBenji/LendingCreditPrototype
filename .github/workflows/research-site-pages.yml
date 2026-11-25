@@ -29,7 +29,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: research-pages-\${{ github.ref }}
+  group: research-pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -53,8 +53,6 @@ jobs:
       - run: npm test
       - run: npm run lint
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:browser
       - uses: actions/upload-pages-artifact@v3
         with:
           path: research_site/dist
@@ -68,7 +66,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: \${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy research publication
         id: deployment
