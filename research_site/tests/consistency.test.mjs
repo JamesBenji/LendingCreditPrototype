@@ -25,6 +25,8 @@ test("Source links encode spaces, distinguish directories and validate line synt
   assert(sourceURL("frontend").includes("/tree/"));
   assert(sourceURL("predictor", { lines: "83-94" }).endsWith("#L83-L94"));
   assert.throws(() => sourceURL("predictor", { lines: "-1" }));
+  assert.throws(() => sourceURL("predictor", { lines: "0" }));
+  assert.throws(() => sourceURL("predictor", { lines: "10-5" }));
   assert.throws(() => sourceURL("frontend", { lines: "1" }));
   assert.throws(() => sourceURL("missing"));
   assert(sourceLink("api").includes("noopener noreferrer"));

@@ -318,5 +318,69 @@
     "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
     "type": "file",
     "description": "Inspected repository source"
+  },
+  {
+    "id": "research-site",
+    "label": "research_site/",
+    "path": "research_site",
+    "ref": "a98367f4b6f238525af2a61213fbacb55d456e88",
+    "type": "directory",
+    "description": "Standalone static publication; absent from VM release"
+  },
+  {
+    "id": "site-guide",
+    "label": "research_site/README.md",
+    "path": "research_site/README.md",
+    "ref": "a98367f4b6f238525af2a61213fbacb55d456e88",
+    "type": "file",
+    "description": "Local build and evidence-update instructions"
+  },
+  {
+    "id": "pages-workflow",
+    "label": ".github/workflows/research-site-pages.yml",
+    "path": ".github/workflows/research-site-pages.yml",
+    "ref": "a98367f4b6f238525af2a61213fbacb55d456e88",
+    "type": "file",
+    "description": "Independent official GitHub Pages build/deploy workflow"
+  },
+  {
+    "id": "site-test",
+    "label": "research_site/tests/consistency.test.mjs",
+    "path": "research_site/tests/consistency.test.mjs",
+    "ref": "a98367f4b6f238525af2a61213fbacb55d456e88",
+    "type": "file",
+    "description": "Content, feature counts, provenance and source-link tests"
+  },
+  {
+    "id": "site-extract",
+    "label": "research_site/scripts/extract.mjs",
+    "path": "research_site/scripts/extract.mjs",
+    "ref": "a98367f4b6f238525af2a61213fbacb55d456e88",
+    "type": "file",
+    "description": "Deterministic extraction without Python or private raw data"
+  },
+  {
+    "id": "site-browser",
+    "label": "research_site/scripts/browser-check.mjs",
+    "path": "research_site/scripts/browser-check.mjs",
+    "ref": "a98367f4b6f238525af2a61213fbacb55d456e88",
+    "type": "file",
+    "description": "Static preview, responsive, axe and interaction checks"
+  },
+  {
+    "id": "site-content",
+    "label": "research_site/src/content/",
+    "path": "research_site/src/content",
+    "ref": "a98367f4b6f238525af2a61213fbacb55d456e88",
+    "type": "directory",
+    "description": "All 34 authored chapters"
+  },
+  {
+    "id": "site-data",
+    "label": "research_site/src/data/",
+    "path": "research_site/src/data",
+    "ref": "a98367f4b6f238525af2a61213fbacb55d456e88",
+    "type": "directory",
+    "description": "Structured evidence, field and experiment records"
   }
 ]

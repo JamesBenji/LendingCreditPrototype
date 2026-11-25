@@ -19,6 +19,11 @@ export function sourceURL(id, { commit, lines } = {}) {
     throw new Error("Malformed line anchor");
   if (lines && s.type === "directory")
     throw new Error("Directory cannot have lines");
+  if (lines) {
+    const [first, last = first] = lines.split("-").map(Number);
+    if (first < 1 || last < first)
+      throw new Error("Malformed line anchor range");
+  }
   const line = lines ? "#L" + lines.replace("-", "-L") : "";
   return (
     repository +

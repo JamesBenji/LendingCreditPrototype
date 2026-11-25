@@ -21,3 +21,9 @@ The repository provides frozen evaluation and runtime inspection scripts. They n
 ```
 
 The notebook was not retrained for this site. Changes in source or evidence should regenerate extracted records, fail consistency checks and receive an editorial review rather than silently upgrading evidence labels.
+
+## Rebuild this independent publication
+
+The static site has its own checks. {{source:site-guide|View the local build and evidence-update guide}} {{source:site-test|Open the content-consistency tests}} {{source:site-extract|Inspect deterministic extraction}} {{source:site-browser|Open responsive and accessibility checks}} {{source:pages-workflow|View the dedicated Pages workflow}}
+
+These checks validate publication content, links, counts and reading behaviour. They do not retrain the notebook or establish new model-performance evidence. {{evidence:frozen}}
