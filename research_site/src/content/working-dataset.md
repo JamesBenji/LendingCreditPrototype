@@ -12,4 +12,4 @@ Funded principal is fixed at origination. Its grouping with outcome fields descr
 
 ## Definition discipline
 
-Where source semantics are absent, the row reports the inspected numeric role and an unresolved definition. Name-based business hypotheses do not establish units, timing, account scope or causality. {{source:defense|Source-document confirmation}}
+Where source semantics are absent, the row reports the inspected numeric role and an unresolved definition. Name-based business hypotheses do not establish units, timing, account scope or causality. {{source:notebook|Loaded fields — cell 6}}

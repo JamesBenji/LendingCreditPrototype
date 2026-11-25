@@ -8,7 +8,7 @@ A governed study should examine protected-class data under a lawful collection p
 
 ## Explanations and oversight
 
-A borrower needs accurate adverse-action reasons, not heuristic differences from a median. Global importance does not explain a local rejection. Human review, an appeal path, documented policy, regulatory review and independent model-risk assessment are needed. The prototype’s approve/refer/decline strings are illustrative rules. {{source:predictor|Policy and heuristic indicators}} {{source:defense|Responsible-use limitations}}
+A borrower needs accurate adverse-action reasons, not heuristic differences from a median. Global importance does not explain a local rejection. Human review, an appeal path, documented policy, regulatory review and independent model-risk assessment are needed. The prototype’s approve/refer/decline strings are illustrative rules. {{source:predictor|Policy and heuristic indicators}} {{source:overview|Responsible-use limitations}}
 
 ## Data and monitoring
 

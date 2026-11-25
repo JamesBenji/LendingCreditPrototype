@@ -1,6 +1,6 @@
 ## Read limitations alongside results
 
-The registers tie each problem to an affected claim, severity, evidence, likely bias, mitigation and unresolved status. “Unresolved” does not mean hidden or unimportant. It means the record does not show a complete fix. {{source:defense|Evidence boundary and limitations}}
+The registers tie each problem to an affected claim, severity, evidence, likely bias, mitigation and unresolved status. “Unresolved” does not mean hidden or unimportant. It means the record does not show a complete fix. {{source:overview|Recorded research limitations}}
 
 ## Main failure conditions
 

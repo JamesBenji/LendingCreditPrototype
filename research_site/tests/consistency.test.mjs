@@ -112,10 +112,10 @@ test("Evidence links explain what they open", async () => {
   const code = load(evidenceLink("serving"));
   assert.equal(code("a").text().replace(" ↗", ""), "CODE");
   const notebook = load(evidenceLink("comparisons"));
-  assert.equal(notebook("a").text().replace(" ↗", ""), "Notebook");
+  assert.equal(notebook("a").text().replace(" ↗", ""), "NOTEBOOK");
   assert(notebook("a").attr("href").includes("Lending_project_v2"));
   const pricing = load(evidenceLink("cost"));
-  assert.equal(pricing("a").text(), "Pricing inputs");
+  assert.equal(pricing("a").text(), "PRICING INPUTS");
   assert.equal(
     pricing("a").attr("href"),
     "/LendingCreditPrototype/chapters/loss-price/#combine-probability-and-severity",
@@ -132,5 +132,27 @@ test("Reading navigation covers every static page without changing routes", asyn
     const navigation = pageNavigation(readingOrder[index].path);
     assert.equal(navigation.previous, readingOrder[index - 1] || null);
     assert.equal(navigation.next, readingOrder[index + 1] || null);
+  }
+});
+
+test("Evidence tags are uppercase, have no subtitles and exclude the defense guide", async () => {
+  const { evidenceLink } = await import("../src/lib/render.mjs");
+  const { getSource } = await import("../src/lib/sources.mjs");
+  assert.throws(() => getSource("defense"));
+  for (const id of [
+    "pipeline",
+    "frozen",
+    "comparisons",
+    "cost",
+    "timing",
+    "fairness",
+    "future",
+    "vm",
+  ]) {
+    const $ = load(evidenceLink(id));
+    assert.equal($(".evidence-context").length, 0);
+    const label = $("a").clone().find(".external").remove().end().text().trim();
+    assert.equal(label, label.toUpperCase());
+    assert(!$.html().includes("DEFENSE_GUIDE"));
   }
 });

@@ -12,4 +12,4 @@ Compatibility and local HTTP reports support a constrained deployment approach. 
 
 ## What remains to do
 
-The register records each problem, detection, impact, mitigation, remaining risk and recommended next step. It includes absent fairness, unclear dataset timing, full-sample EDA, default-filled features, dependency uncertainty, simplified pricing, no outcome monitoring and the unenforced monotonicity rule. {{source:defense|Research limitations}} {{evidence:future}}
+The register records each problem, detection, impact, mitigation, remaining risk and recommended next step. It includes absent fairness, unclear dataset timing, full-sample EDA, default-filled features, dependency uncertainty, simplified pricing, no outcome monitoring and the unenforced monotonicity rule. {{source:overview|Recorded research limitations}} {{evidence:future}}

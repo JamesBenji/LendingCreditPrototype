@@ -109,3 +109,5 @@ Known gaps remain visible: the 151-field screening record, authoritative definit
 The header reads EAB Credit (LendingClub). The site uses Our Work and Part labels, with Explore our work as the navigation title. Notebook references show cell numbers and open the GitHub notebook view. Source and evidence identifiers remain in the data for validation; readers see descriptive links instead of raw classification names or cell IDs. Pricing inputs links open the explanation of funding cost and margin.
 
 Every page ends its body with Previous and Next controls. The first and last controls are disabled at the reading boundaries. These links work without JavaScript. Per-part source lists and repeated footer statements are removed; inline citations and the dedicated source map remain available.
+
+The defense guide is not included in the publication’s links or source map. Public claims use notebook, implementation and recorded-result references. Evidence tags are uppercase and have no explanatory suffix.

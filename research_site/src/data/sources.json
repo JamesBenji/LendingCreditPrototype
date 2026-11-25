@@ -16,14 +16,6 @@
     "description": "Historical research notebook"
   },
   {
-    "id": "defense",
-    "label": "docs/DEFENSE_GUIDE.md",
-    "path": "docs/DEFENSE_GUIDE.md",
-    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
-    "type": "file",
-    "description": "Inspected repository source"
-  },
-  {
     "id": "handoff",
     "label": "docs/SESSION_HANDOFF.md",
     "path": "docs/SESSION_HANDOFF.md",

@@ -8,7 +8,7 @@ Application logistic tests additive eligible information. Application XGBoost te
 
 Combined logistic and XGBoost add LC pricing to application fields. They test complementary ranking information, not the served application-only model. {{evidence:test-table}}
 
-Combined XGBoost versus LC logistic changes both fields and estimator. It cannot isolate gain to extra fields alone. A matched price-only XGBoost or a paired combined-logistic comparison would separate these effects better. {{source:defense|Controlled-comparison caveat}} {{evidence:comparisons}}
+Combined XGBoost versus LC logistic changes both fields and estimator. It cannot isolate gain to extra fields alone. A matched price-only XGBoost or a paired combined-logistic comparison would separate these effects better. {{source:notebook|Combined model comparison — cell 26}} {{evidence:comparisons}}
 
 ## What the hierarchy cannot prove
 

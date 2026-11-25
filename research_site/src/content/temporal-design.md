@@ -10,4 +10,4 @@ Training fits preprocessing and estimators; temporal CV chooses XGBoost paramete
 
 ## Chronological does not mean unbiased
 
-Shared boundary months show index slicing rather than month-disjoint partitions. Repeated borrower overlap is not audited. Full-sample EDA has already seen test labels, weakening untouched-test language. Censoring, accepted-loan selection and changing underwriting remain. A stricter next study needs mature fixed-window outcomes and entity-aware disjoint periods. {{source:defense|Temporal/entity separation; holdout EDA}} {{evidence:future}}
+Shared boundary months show index slicing rather than month-disjoint partitions. Repeated borrower overlap is not audited. Full-sample EDA has already seen test labels, weakening untouched-test language. Censoring, accepted-loan selection and changing underwriting remain. A stricter next study needs mature fixed-window outcomes and entity-aware disjoint periods. {{source:notebook|Ordered split — cell 18}} {{evidence:future}}

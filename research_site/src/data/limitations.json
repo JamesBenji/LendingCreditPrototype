@@ -300,7 +300,7 @@
     "evidence": "timing",
     "claim": "Source and research framing",
     "severity": "High",
-    "detected": "Defense guide evidence boundary.",
+    "detected": "No authoritative dictionary or approved specification is included in the inspected source record.",
     "bias": "Unknown source/target interpretation.",
     "mitigation": "Hashes and explicit draft objectives.",
     "nextStep": "Obtain authoritative documentation and approved objectives.",

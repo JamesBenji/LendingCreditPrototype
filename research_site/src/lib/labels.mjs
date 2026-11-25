@@ -2,13 +2,13 @@ import extracted from "../data/extracted.json" with { type: "json" };
 
 export const evidenceNames = {
   "CODE-VERIFIED": "CODE",
-  "NOTEBOOK OUTPUT": "Notebook",
-  REPRODUCED: "Results",
-  "OWNER-REPORTED": "Deployment notes",
-  ASSUMPTION: "Pricing inputs",
-  LIMITATION: "Limitation",
-  PROPOSED: "Next steps",
-  UNRESOLVED: "Open question",
+  "NOTEBOOK OUTPUT": "NOTEBOOK",
+  REPRODUCED: "RESULTS",
+  "OWNER-REPORTED": "DEPLOYMENT NOTES",
+  ASSUMPTION: "PRICING INPUTS",
+  LIMITATION: "LIMITATION",
+  PROPOSED: "NEXT STEPS",
+  UNRESOLVED: "OPEN QUESTION",
 };
 
 export function readerText(value) {

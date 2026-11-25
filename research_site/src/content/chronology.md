@@ -10,6 +10,6 @@ Final choices were not inevitable. Logistic remained close to XGBoost. Calibrati
 
 ## Audits and corrections
 
-The defense audit separated frozen reproduction from saved comparisons, identified default-filled serving inputs, clarified gross interest and separated recall-selected cutoffs from application policy. Backend loan-to-income is recomputed after merging current inputs. The optional notebook demo does not do this and is not the current serving path. {{source:defense|Leakage and training-serving audit}} {{source:predictor|Feature preparation|83-94}}
+The implementation audit separated frozen reproduction from saved comparisons, identified default-filled serving inputs, clarified gross interest and separated recall-selected cutoffs from application policy. Backend loan-to-income is recomputed after merging current inputs. The optional notebook demo does not do this and is not the current serving path. {{source:reproduced-metrics|Recorded model evaluation}} {{source:predictor|Feature preparation|83-94}}
 
 The mobile candidate did not activate because VM memory failed preflight. Recovery instructions were supplied; recovery success is unconfirmed. This is an operational uncertainty, not failed training. {{evidence:vm}}
