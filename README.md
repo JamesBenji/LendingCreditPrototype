@@ -94,3 +94,7 @@ The root requirements.txt supports research. NumPy, pandas, scikit-learn, XGBoos
 flask_app/requirements.txt adds Flask/flask-cors and shared inference libraries. It lacks a production WSGI server. Node/Vite/Tailwind build the frontend off the VM; a reverse proxy can serve the resulting files without Node. **Do not train or download the dataset on the 1 GB VM.**
 
 Discuss accepted/resolved-loan selection, temporal drift, full-sample EDA, source-field timing, default-filled inputs, unvalidated policy cutoffs, absent fairness evaluation and illustrative lifetime-loss/annual-rate pricing in the defense. Successful code tests do not remove these research limitations.
+
+## Technical research publication
+
+The independent [research site source](https://github.com/JamesBenji/LendingCreditPrototype/tree/feature/technical-research-site/research_site) presents 34 technical chapters, linked evidence, a field audit and the experiment/limitations registers. Its expected [GitHub Pages URL](https://jamesbenji.github.io/LendingCreditPrototype/) becomes available after the dedicated Pages workflow is enabled and deployed. It does not change the Flask/React product or VM release package. See the [site build and deployment guide](https://github.com/JamesBenji/LendingCreditPrototype/blob/feature/technical-research-site/research_site/README.md).

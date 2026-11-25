@@ -1,0 +1,79 @@
+---
+import SourceLink from "./SourceLink.astro";
+---
+
+<figure class="reasoning-diagram">
+  <figcaption>
+    <strong
+      >Temporal CV trains on earlier blocks and validates on the next block</strong
+    ><p>
+      Schematic equal-sized blocks within the oldest training partition. Three
+      expanding folds follow the notebook’s TimeSeriesSplit. No exact fold dates
+      are invented. Later validation and final test are outside these folds.
+    </p><SourceLink
+      id="notebook"
+      label="Inspect TimeSeriesSplit — cell 24, CMoSPKcQbFyL"
+    />
+  </figcaption>
+  <div
+    class="diagram-scroll"
+    tabindex="0"
+    role="region"
+    aria-label="Temporal cross-validation windows"
+  >
+    <svg viewBox="0 0 720 270" role="img" aria-labelledby="cv-title"
+      ><title id="cv-title">
+        Three expanding temporal folds. Fold one trains on the first block and
+        validates on the second. Fold two trains on the first two and validates
+        on the third. Fold three trains on the first three and validates on the
+        fourth.
+      </title>
+      <text x="115" y="25" font-size="16">Older training loans</text><text
+        x="530"
+        y="25"
+        font-size="16">Newer training loans →</text
+      >
+      {
+        [0, 1, 2].map((f) => (
+          <g>
+            <text x="12" y={75 + f * 62} font-size="16">
+              Fold {f + 1}
+            </text>
+            {[0, 1, 2, 3].map((b) => (
+              <g>
+                <rect
+                  x={115 + b * 145}
+                  y={48 + f * 62}
+                  width="135"
+                  height="42"
+                  class={
+                    b <= f
+                      ? "node-green"
+                      : b === f + 1
+                        ? "node-purple"
+                        : "node-neutral"
+                  }
+                />
+                <text
+                  x={182 + b * 145}
+                  y={74 + f * 62}
+                  text-anchor="middle"
+                  font-size="13"
+                >
+                  {b <= f
+                    ? "Train"
+                    : b === f + 1
+                      ? "Fold validation"
+                      : "Not used yet"}
+                </text>
+              </g>
+            ))}
+          </g>
+        ))
+      }
+      <text x="115" y="255" font-size="15"
+        >All preprocessing is fitted again within each fold’s training window.</text
+      >
+    </svg>
+  </div>
+</figure>

@@ -1,0 +1,106 @@
+---
+import Publication from "../layouts/Publication.astro";
+import chapters from "../data/chapters.json";
+import { base } from "../lib/registers.mjs";
+---
+
+<Publication
+  title="Search the research record"
+  summary="Search chapter text, saved outputs, field records, evidence and limitations locally."
+  headings={[]}
+>
+  <form id="search-form" data-base={base} role="search">
+    <label for="query">Search the complete publication</label><div
+      class="search-controls"
+    >
+      <input
+        id="query"
+        name="q"
+        type="search"
+        placeholder="Try calibration, loan_status or serving defaults"
+      /><button type="submit">Search</button>
+    </div>
+  </form>
+  <p id="search-status" role="status">
+    Search becomes available in a production build or preview.
+  </p><ol id="search-results" class="search-results"></ol>
+  <noscript
+    ><p>
+      Full-text search needs JavaScript. All chapters remain readable; use the
+      chapter list below or your browser’s Find command.
+    </p></noscript
+  >
+  <h2 id="browse">
+    Browse chapters<a
+      href="#browse"
+      class="header-anchor"
+      aria-label="Link to chapter browser">#</a
+    >
+  </h2><ul>
+    {
+      chapters.map((c) => (
+        <li>
+          <a href={base + "chapters/" + c.slug + "/"}>{c.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+  <script>
+    const form = document.querySelector("#search-form");
+    const input = document.querySelector("#query");
+    const status = document.querySelector("#search-status");
+    const list = document.querySelector("#search-results");
+    let pagefind;
+    let generation = 0;
+    async function search() {
+      const current = ++generation;
+      const query = input.value.trim();
+      list.replaceChildren();
+      if (!query) {
+        status.textContent = "Enter a word or phrase.";
+        return;
+      }
+      status.textContent = "Searching…";
+      try {
+        const moduleURL = form.dataset.base + "pagefind/pagefind.js";
+        pagefind ||= await import(/* @vite-ignore */ moduleURL);
+        await pagefind.options({ baseUrl: form.dataset.base });
+        const results = await pagefind.search(query);
+        const data = await Promise.all(
+          results.results.slice(0, 30).map((r) => r.data()),
+        );
+        if (current !== generation) return;
+        for (const result of data) {
+          const item = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = result.url;
+          a.textContent = result.meta.title;
+          const p = document.createElement("p");
+          const template = document.createElement("template");
+          template.innerHTML = result.excerpt;
+          p.textContent = template.content.textContent;
+          item.append(a, p);
+          list.append(item);
+        }
+        status.textContent =
+          results.results.length +
+          " results" +
+          (results.results.length > 30 ? " (first 30 shown)" : "");
+        history.replaceState(null, "", "?q=" + encodeURIComponent(query));
+      } catch {
+        status.textContent =
+          "Search index is unavailable. Build and preview the site, or browse the chapters below.";
+      }
+    }
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      search();
+    });
+    const q = new URL(location.href).searchParams.get("q");
+    if (q) {
+      input.value = q;
+      search();
+    } else
+      status.textContent = "Enter a word or phrase to search all chapters.";
+  </script>
+</Publication>

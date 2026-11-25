@@ -1,0 +1,202 @@
+---
+import chapters from "../data/chapters.json";
+import info from "../data/build-info.json";
+import { base } from "../lib/registers.mjs";
+import { commitURL } from "../lib/sources.mjs";
+import "../styles/publication.css";
+import "katex/dist/katex.min.css";
+const { title, summary, headings = [], chapter } = Astro.props;
+const current = Astro.url.pathname;
+const extras = [
+  ["evidence", "Evidence register"],
+  ["limitations", "Limitations"],
+  ["timeline", "Experiment ledger"],
+  ["fields", "Field audit"],
+  ["glossary", "Glossary"],
+  ["sources", "Source map"],
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head
+    ><meta charset="utf-8" /><meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    /><meta name="description" content={summary} /><meta
+      name="color-scheme"
+      content="light"
+    /><title>{title} · Credit risk research record</title><link
+      rel="canonical"
+      href={"https://jamesbenji.github.io" + current}
+    /></head
+  >
+  <body>
+    <a class="skip-link" href="#main">Skip to chapter</a>
+    <header class="masthead">
+      <a class="brand" href={base}>LendingClub <span>Research record</span></a
+      ><nav aria-label="Publication tools">
+        <a href={base + "search/"}>Search</a><a href={base + "evidence/"}
+          >Evidence</a
+        ><a href={base + "glossary/"}>Glossary</a>
+      </nav>
+    </header>
+    <div class="publication">
+      <aside class="chapter-sidebar" aria-label="Publication navigation">
+        <details class="chapter-menu" open>
+          <summary>Chapters and registers</summary><nav aria-label="Chapters">
+            <ol>
+              {
+                chapters.map((c) => (
+                  <li>
+                    <a
+                      href={base + "chapters/" + c.slug + "/"}
+                      aria-current={
+                        chapter?.slug === c.slug ? "page" : undefined
+                      }
+                    >
+                      <span>{String(c.number).padStart(2, "0")}</span> {c.title}
+                    </a>
+                  </li>
+                ))
+              }
+            </ol><ul>
+              {
+                extras.map(([slug, label]) => (
+                  <li>
+                    <a
+                      href={base + slug + "/"}
+                      aria-current={
+                        current === base + slug + "/" ? "page" : undefined
+                      }
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+        </details>
+      </aside>
+      <main id="main" tabindex="-1" data-pagefind-body>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href={base}>Research record</a><span aria-hidden="true">/</span
+          ><span>{chapter ? "Chapter " + chapter.number : title}</span>
+        </nav>
+        {
+          chapter && (
+            <p class="eyebrow">
+              Technical dossier / Chapter{" "}
+              {String(chapter.number).padStart(2, "0")}
+            </p>
+          )
+        }
+        <h1>{title}</h1><p class="standfirst">{summary}</p>
+        <slot />
+        <footer class="chapter-footer" data-pagefind-ignore>
+          {
+            chapter && (
+              <nav class="previous-next" aria-label="Chapter sequence">
+                {chapter.number > 1 && (
+                  <a
+                    rel="prev"
+                    href={
+                      base +
+                      "chapters/" +
+                      chapters[chapter.number - 2].slug +
+                      "/"
+                    }
+                  >
+                    ← {chapters[chapter.number - 2].title}
+                  </a>
+                )}
+                {chapter.number < 34 && (
+                  <a
+                    rel="next"
+                    href={
+                      base + "chapters/" + chapters[chapter.number].slug + "/"
+                    }
+                  >
+                    {chapters[chapter.number].title} →
+                  </a>
+                )}
+              </nav>
+            )
+          }
+          <p>
+            Last generated from <a
+              href={commitURL(info.commit)}
+              target="_blank"
+              rel="noopener noreferrer">commit {info.commit.slice(0, 12)} ↗</a
+            >. Recorded frozen-model evidence refers to <a
+              href={commitURL(info.evidenceCommit)}
+              target="_blank"
+              rel="noopener noreferrer"
+              >research commit {info.evidenceCommit.slice(0, 12)} ↗</a
+            >.
+          </p>
+          <p>
+            Static research publication. Only PD is predicted; policy and price
+            remain illustrative.
+          </p>
+        </footer>
+      </main>
+      <aside class="local-toc">
+        <nav aria-label="On this page">
+          <p class="eyebrow">On this page</p><ul>
+            {
+              headings.map((h) => (
+                <li class={h.level === "h3" ? "subheading" : ""}>
+                  <a href={"#" + h.id}>{h.label}</a>
+                </li>
+              ))
+            }
+          </ul><a href="#main">Back to top ↑</a>
+        </nav>
+      </aside>
+    </div>
+    <script>
+      if (window.matchMedia("(max-width:760px)").matches)
+        document.querySelector(".chapter-menu").open = false;
+      document.querySelectorAll("[data-register]").forEach((register) => {
+        register.querySelector(".filters")?.removeAttribute("hidden");
+        const input = register.querySelector("input");
+        const select = register.querySelector("select");
+        const rows = Array.from(register.querySelectorAll("tbody tr"));
+        const update = () => {
+          const query = (input?.value || "").trim().toLowerCase();
+          let count = 0;
+          rows.forEach((row) => {
+            row.hidden =
+              !row.textContent.toLowerCase().includes(query) ||
+              !!(select?.value && row.dataset.group !== select.value);
+            if (!row.hidden) count++;
+          });
+          register.querySelector("[data-count]").textContent =
+            count + " of " + rows.length + " records";
+        };
+        input?.addEventListener("input", update);
+        select?.addEventListener("change", update);
+      });
+      document.querySelectorAll("pre").forEach((pre) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "copy-code";
+        button.textContent = "Copy";
+        button.setAttribute("aria-label", "Copy code or saved output");
+        button.addEventListener("click", async () => {
+          try {
+            const copy = pre.cloneNode(true);
+            copy.querySelectorAll(".external").forEach((el) => el.remove());
+            await navigator.clipboard.writeText(copy.textContent);
+            button.textContent = "Copied";
+          } catch {
+            button.textContent = "Select text to copy";
+          }
+        });
+        pre.before(button);
+      });
+    </script>
+  </body>
+</html>

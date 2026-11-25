@@ -1,0 +1,96 @@
+---
+import Publication from "../layouts/Publication.astro";
+import SourceLink from "../components/SourceLink.astro";
+import Diagram from "../components/Diagram.astro";
+import chapters from "../data/chapters.json";
+import { base } from "../lib/registers.mjs";
+---
+
+<Publication
+  title="Credit risk: the complete research record"
+  summary="A technical dossier of the lending decision, model experiments, evidence, serving design and unfinished work."
+  headings={[
+    { id: "decision", label: "Start with the lending decision" },
+    { id: "read", label: "Read the record" },
+    { id: "audit", label: "Audit the evidence" },
+  ]}
+>
+  <section class="prose">
+    <h2 id="decision">
+      Start with the lending decision<a
+        class="header-anchor"
+        href="#decision"
+        aria-label="Link to lending decision">#</a
+      >
+    </h2><p>
+      A lender needs to estimate loan risk before committing principal. The
+      project predicts the probability of charge-off from a borrower profile,
+      then uses measured loss severity and assumed costs to illustrate price.
+    </p><p>
+      This publication explains why each decision was made, how it was
+      implemented, what its evidence supports and what would invalidate it. It
+      uses the <SourceLink id="notebook" label="research notebook" />, <SourceLink
+        id="defense"
+        label="defense guide"
+      /> and <SourceLink id="evidence-dir" label="recorded evidence" /> as sources.
+    </p>
+  </section>
+  <aside class="callout limitation">
+    <strong>The serving gap is central</strong><p>
+      Full-feature notebook performance does not validate the browser form. That
+      form defaults 40 model inputs. XGBoost’s small gain over logistic
+      regression is also inconclusive, and the price rule remains illustrative.
+    </p><a href={base + "chapters/training-serving/"}
+      >Read training versus serving →</a
+    >
+  </aside>
+  <Diagram id="business" />
+  <section>
+    <h2 id="read">
+      Read the record<a
+        class="header-anchor"
+        href="#read"
+        aria-label="Link to chapter list">#</a
+      >
+    </h2><ol class="chapter-index">
+      {
+        chapters.map((c) => (
+          <li>
+            <a href={base + "chapters/" + c.slug + "/"}>
+              <>
+                <span class="chapter-number">
+                  {String(c.number).padStart(2, "0")}
+                </span>
+                <span>
+                  <>
+                    <strong>{c.title}</strong>
+                    <small>{c.summary}</small>
+                  </>
+                </span>
+              </>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+  <section class="prose">
+    <h2 id="audit">
+      Audit the evidence<a
+        class="header-anchor"
+        href="#audit"
+        aria-label="Link to evidence tools">#</a
+      >
+    </h2><p>
+      Use the <a href={base + "evidence/"}>evidence register</a>, <a
+        href={base + "fields/"}>field audit</a
+      >, <a href={base + "timeline/"}>decision ledger</a>, <a
+        href={base + "limitations/"}>limitations register</a
+      > and <a href={base + "sources/"}>source map</a>. Recorded reproduction
+      and saved notebook output have distinct labels.
+    </p><p>
+      The complete text and registers are static HTML. JavaScript adds local
+      search, filters and copy controls. This site needs no model server.
+    </p>
+  </section>
+</Publication>

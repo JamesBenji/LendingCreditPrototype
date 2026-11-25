@@ -1,0 +1,134 @@
+---
+import diagrams from "../data/diagrams.json";
+import { evidenceLink } from "../lib/render.mjs";
+const { id } = Astro.props;
+const d = diagrams[id];
+if (!d) throw new Error("Unknown diagram " + id);
+const branched = !!d.positions;
+const positions = d.positions || d.nodes.map((n, i) => [0, i]);
+const nodeWidth = branched ? 286 : 556;
+const svgWidth = 680;
+const step = branched ? 140 : 106;
+const height = (Math.max(...positions.map((p) => p[1])) + 1) * step + 36;
+const point = (i) => ({
+  x: branched ? 32 + positions[i][0] * 328 : 62,
+  y: positions[i][1] * step + 24,
+});
+const edges = d.edges || d.nodes.slice(1).map((n, i) => [i, i + 1]);
+function lines(s, length) {
+  const words = s.split(" "),
+    result = [];
+  let line = "";
+  for (const word of words) {
+    if ((line + " " + word).length > length && line) {
+      result.push(line);
+      line = word;
+    } else line += (line ? " " : "") + word;
+  }
+  if (line) result.push(line);
+  return result;
+}
+function edge(a, b) {
+  const from = point(a),
+    to = point(b);
+  if (from.y === to.y)
+    return "M" + (from.x + nodeWidth) + " " + (from.y + 42) + " H" + (to.x - 8);
+  return (
+    "M" +
+    (from.x + nodeWidth / 2) +
+    " " +
+    (from.y + 86) +
+    " L" +
+    (to.x + nodeWidth / 2) +
+    " " +
+    (to.y - 8)
+  );
+}
+---
+
+<figure class="reasoning-diagram">
+  <figcaption><strong>{d.title}</strong><p>{d.caption}</p></figcaption>
+  <div class="diagram-scroll" tabindex="0" role="region" aria-label={d.title}>
+    <svg
+      viewBox={"0 0 " + svgWidth + " " + height}
+      role="img"
+      aria-labelledby={"diagram-" + id}
+    >
+      <title id={"diagram-" + id}>{d.title}. {d.caption}</title>
+      <defs
+        ><marker
+          id={"arrow-" + id}
+          markerWidth="8"
+          markerHeight="8"
+          refX="6"
+          refY="3"
+          orient="auto"
+          ><path
+            d="M0 0 L6 3 L0 6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"></path></marker
+        ></defs
+      >
+      <rect
+        x="10"
+        y="8"
+        width="660"
+        height={height - 16}
+        rx="10"
+        fill="none"
+        stroke="currentColor"
+        stroke-dasharray="6 6"></rect>
+      {
+        edges.map(([a, b]) => (
+          <path
+            d={edge(a, b)}
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            marker-end={"url(#arrow-" + id + ")"}
+          />
+        ))
+      }
+      {
+        d.nodes.map((node, i) => {
+          const p = point(i);
+          return (
+            <g>
+              <rect
+                class={"node-" + node.tone}
+                x={p.x}
+                y={p.y}
+                width={nodeWidth}
+                height="86"
+                rx="5"
+              />
+              {lines(node.title, branched ? 32 : 50).map((line, j) => (
+                <text
+                  x={p.x + nodeWidth / 2}
+                  y={p.y + 25 + j * 19}
+                  text-anchor="middle"
+                  font-size={branched ? "15" : "19"}
+                  font-weight="650"
+                >
+                  {line}
+                </text>
+              ))}
+              {lines(node.subtitle, branched ? 37 : 54).map((line, j) => (
+                <text
+                  x={p.x + nodeWidth / 2}
+                  y={p.y + 62 + j * 16}
+                  text-anchor="middle"
+                  font-size={branched ? "12" : "15"}
+                >
+                  {line}
+                </text>
+              ))}
+            </g>
+          );
+        })
+      }
+    </svg>
+  </div>
+  <p set:html={evidenceLink(d.evidence)} />
+</figure>

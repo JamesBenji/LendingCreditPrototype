@@ -1,0 +1,6 @@
+---
+import { sourceLink } from "../lib/sources.mjs";
+const { id, label, commit, lines } = Astro.props;
+---
+
+<Fragment set:html={sourceLink(id, label, { commit, lines })} />
