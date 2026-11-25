@@ -2,6 +2,12 @@
 
 A university research prototype for estimating loan charge-off risk and demonstrating illustrative lending decisions, pricing and repayments with synthetic applications.
 
+## Quick links
+
+- [Learn how we reasoned through the project](https://jamesbenji.github.io/LendingCreditPrototype/)
+- [Try the lending prototype](https://eab-credit.preview.james-benjamin.com)
+- [Explore how we built it](https://github.com/JamesBenji/LendingCreditPrototype/tree/main/flask_app)
+
 The React frontend collects application and credit information. Flask validates it, prepares the saved model’s 56-feature input, runs an XGBoost pipeline and a Platt calibrator, and returns risk, expected loss and a fixed-payment schedule. **Only default probability is directly predicted.** Interest, repayment and loss amounts are calculations; “Profit (Before Costs)” is gross interest income.
 
 ## Study and defend the project
