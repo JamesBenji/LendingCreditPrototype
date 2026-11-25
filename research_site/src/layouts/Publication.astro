@@ -3,17 +3,20 @@ import chapters from "../data/chapters.json";
 import info from "../data/build-info.json";
 import { base } from "../lib/registers.mjs";
 import { commitURL } from "../lib/sources.mjs";
+import { readerText } from "../lib/labels.mjs";
+import { pageNavigation } from "../lib/navigation.mjs";
 import "../styles/publication.css";
 import "katex/dist/katex.min.css";
 const { title, summary, headings = [], chapter } = Astro.props;
 const current = Astro.url.pathname;
+const navigation = pageNavigation(current);
 const extras = [
-  ["evidence", "Evidence register"],
+  ["evidence", "Evidence"],
   ["limitations", "Limitations"],
-  ["timeline", "Experiment ledger"],
-  ["fields", "Field audit"],
+  ["timeline", "Decisions and experiments"],
+  ["fields", "Fields"],
   ["glossary", "Glossary"],
-  ["sources", "Source map"],
+  ["sources", "Sources"],
 ];
 ---
 
@@ -23,19 +26,20 @@ const extras = [
     ><meta charset="utf-8" /><meta
       name="viewport"
       content="width=device-width, initial-scale=1"
-    /><meta name="description" content={summary} /><meta
+    /><meta name="description" content={readerText(summary)} /><meta
       name="color-scheme"
       content="light"
-    /><title>{title} · Credit risk research record</title><link
+    /><title>{readerText(title)} · EAB Credit</title><link
       rel="canonical"
       href={"https://jamesbenji.github.io" + current}
     /></head
   >
   <body>
-    <a class="skip-link" href="#main">Skip to chapter</a>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="masthead">
-      <a class="brand" href={base}>LendingClub <span>Research record</span></a
-      ><nav aria-label="Publication tools">
+      <a class="brand" href={base}>EAB Credit (LendingClub)</a><nav
+        aria-label="Publication tools"
+      >
         <a href={base + "search/"}>Search</a><a href={base + "evidence/"}
           >Evidence</a
         ><a href={base + "glossary/"}>Glossary</a>
@@ -44,7 +48,7 @@ const extras = [
     <div class="publication">
       <aside class="chapter-sidebar" aria-label="Publication navigation">
         <details class="chapter-menu" open>
-          <summary>Chapters and registers</summary><nav aria-label="Chapters">
+          <summary>Explore our work</summary><nav aria-label="Parts">
             <ol>
               {
                 chapters.map((c) => (
@@ -55,7 +59,8 @@ const extras = [
                         chapter?.slug === c.slug ? "page" : undefined
                       }
                     >
-                      <span>{String(c.number).padStart(2, "0")}</span> {c.title}
+                      <span>{String(c.number).padStart(2, "0")}</span>
+                      {readerText(c.title)}
                     </a>
                   </li>
                 ))
@@ -81,64 +86,60 @@ const extras = [
       </aside>
       <main id="main" tabindex="-1" data-pagefind-body>
         <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <a href={base}>Research record</a><span aria-hidden="true">/</span
-          ><span>{chapter ? "Chapter " + chapter.number : title}</span>
+          <a href={base}>Our Work</a><span aria-hidden="true">/</span><span
+            >{chapter ? "Part " + chapter.number : readerText(title)}</span
+          >
         </nav>
         {
           chapter && (
             <p class="eyebrow">
-              Technical dossier / Chapter{" "}
-              {String(chapter.number).padStart(2, "0")}
+              Our Work / Part {String(chapter.number).padStart(2, "0")}
             </p>
           )
         }
-        <h1>{title}</h1><p class="standfirst">{summary}</p>
+        <h1>{readerText(title)}</h1><p class="standfirst">
+          {readerText(summary)}
+        </p>
         <slot />
-        <footer class="chapter-footer" data-pagefind-ignore>
+        <nav
+          class="previous-next body-navigation"
+          aria-label="Previous and next pages"
+          data-pagefind-ignore
+        >
           {
-            chapter && (
-              <nav class="previous-next" aria-label="Chapter sequence">
-                {chapter.number > 1 && (
-                  <a
-                    rel="prev"
-                    href={
-                      base +
-                      "chapters/" +
-                      chapters[chapter.number - 2].slug +
-                      "/"
-                    }
-                  >
-                    ← {chapters[chapter.number - 2].title}
-                  </a>
-                )}
-                {chapter.number < 34 && (
-                  <a
-                    rel="next"
-                    href={
-                      base + "chapters/" + chapters[chapter.number].slug + "/"
-                    }
-                  >
-                    {chapters[chapter.number].title} →
-                  </a>
-                )}
-              </nav>
+            navigation.previous ? (
+              <a
+                class="reading-button"
+                rel="prev"
+                href={navigation.previous.path}
+              >
+                ← Previous
+              </a>
+            ) : (
+              <button class="reading-button" disabled>
+                ← Previous
+              </button>
             )
           }
+          {
+            navigation.next ? (
+              <a class="reading-button" rel="next" href={navigation.next.path}>
+                Next →
+              </a>
+            ) : (
+              <button class="reading-button" disabled>
+                Next →
+              </button>
+            )
+          }
+        </nav>
+        <footer class="chapter-footer" data-pagefind-ignore>
           <p>
-            Last generated from <a
+            Last updated from <a
               href={commitURL(info.commit)}
               target="_blank"
               rel="noopener noreferrer">commit {info.commit.slice(0, 12)} ↗</a
-            >. Recorded frozen-model evidence refers to <a
-              href={commitURL(info.evidenceCommit)}
-              target="_blank"
-              rel="noopener noreferrer"
-              >research commit {info.evidenceCommit.slice(0, 12)} ↗</a
             >.
-          </p>
-          <p>
-            Static research publication. Only PD is predicted; policy and price
-            remain illustrative.
           </p>
         </footer>
       </main>
@@ -148,7 +149,7 @@ const extras = [
             {
               headings.map((h) => (
                 <li class={h.level === "h3" ? "subheading" : ""}>
-                  <a href={"#" + h.id}>{h.label}</a>
+                  <a href={"#" + h.id}>{readerText(h.label)}</a>
                 </li>
               ))
             }

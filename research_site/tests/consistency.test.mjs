@@ -88,3 +88,49 @@ test("Source-linked code preserves the original copyable filename", () => {
   $("pre .external").remove();
   assert.equal($("pre").text().trim(), "open('flask_app/predictor.py')");
 });
+
+test("Reader labels keep filenames and source routes intact", async () => {
+  const { readerText } = await import("../src/lib/labels.mjs");
+  assert.equal(
+    readerText("Technical dossier / Chapter 10"),
+    "Our Work / Part 10",
+  );
+  assert.equal(readerText("Chapters and registers"), "Explore our work");
+  assert.equal(readerText("Cell 10 · NIRO3uBSbFyJ"), "Cell 10");
+  assert.equal(
+    readerText("research_site/src/data/chapters.json"),
+    "research_site/src/data/chapters.json",
+  );
+  assert.equal(
+    readerText("/LendingCreditPrototype/chapters/target/"),
+    "/LendingCreditPrototype/chapters/target/",
+  );
+});
+
+test("Evidence links explain what they open", async () => {
+  const { evidenceLink } = await import("../src/lib/render.mjs");
+  const code = load(evidenceLink("serving"));
+  assert.equal(code("a").text().replace(" ↗", ""), "CODE");
+  const notebook = load(evidenceLink("comparisons"));
+  assert.equal(notebook("a").text().replace(" ↗", ""), "Notebook");
+  assert(notebook("a").attr("href").includes("Lending_project_v2"));
+  const pricing = load(evidenceLink("cost"));
+  assert.equal(pricing("a").text(), "Pricing inputs");
+  assert.equal(
+    pricing("a").attr("href"),
+    "/LendingCreditPrototype/chapters/loss-price/#combine-probability-and-severity",
+  );
+});
+
+test("Reading navigation covers every static page without changing routes", async () => {
+  const { readingOrder, pageNavigation } = await import(
+    "../src/lib/navigation.mjs"
+  );
+  assert.equal(readingOrder.length, 42);
+  assert.equal(new Set(readingOrder.map((p) => p.path)).size, 42);
+  for (let index = 0; index < readingOrder.length; index++) {
+    const navigation = pageNavigation(readingOrder[index].path);
+    assert.equal(navigation.previous, readingOrder[index - 1] || null);
+    assert.equal(navigation.next, readingOrder[index + 1] || null);
+  }
+});

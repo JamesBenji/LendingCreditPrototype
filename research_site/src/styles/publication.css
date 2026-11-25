@@ -780,3 +780,34 @@ code {
     min-width: 0;
   }
 }
+.body-navigation {
+  margin: 3rem 0 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.body-navigation .reading-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.7rem 1.25rem;
+  background: var(--green);
+  color: white;
+  border-radius: 3px;
+  text-decoration: none;
+  font-weight: 600;
+  flex: 0 1 auto;
+}
+.body-navigation button:disabled {
+  background: #e5e9e1;
+  color: #58665c;
+  cursor: default;
+}
+@media (max-width: 760px) {
+  .body-navigation {
+    flex-direction: row;
+  }
+  .body-navigation .reading-button {
+    max-width: 48%;
+  }
+}

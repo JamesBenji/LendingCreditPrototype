@@ -59,6 +59,17 @@ try {
       assert.equal(r.status(), 200);
       await page.waitForLoadState("domcontentloaded");
       assert.equal(await page.locator("h1").count(), 1);
+      assert.equal(
+        await page
+          .locator(".body-navigation > a,.body-navigation > button")
+          .count(),
+        2,
+      );
+      assert.equal(
+        await page.locator(".masthead .brand").textContent(),
+        "EAB Credit (LendingClub)",
+      );
+
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth > innerWidth + 1,
       );
@@ -142,10 +153,23 @@ try {
   await page.keyboard.press("Tab");
   assert.equal(
     await page.evaluate(() => document.activeElement.textContent),
-    "Skip to chapter",
+    "Skip to content",
   );
   await page.keyboard.press("Enter");
   assert.equal(await page.evaluate(() => document.activeElement.id), "main");
+  assert.equal(
+    await page.locator('.body-navigation a[rel="prev"]').getAttribute("href"),
+    "/LendingCreditPrototype/",
+  );
+  await page.locator('.body-navigation a[rel="next"]').click();
+  await page.waitForURL("**/chapters/chronology/");
+  assert(
+    (await page.locator(".eyebrow").allTextContents()).some((text) =>
+      text.includes("Part 02"),
+    ),
+  );
+  await page.locator('.body-navigation a[rel="prev"]').click();
+  await page.waitForURL("**/chapters/lending-decision/");
   await page.emulateMedia({ media: "print" });
   assert.equal(await page.locator(".chapter-sidebar").isVisible(), false);
   await page.emulateMedia({ media: "screen" });

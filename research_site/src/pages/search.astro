@@ -6,7 +6,7 @@ import { base } from "../lib/registers.mjs";
 
 <Publication
   title="Search the research record"
-  summary="Search chapter text, saved outputs, field records, evidence and limitations locally."
+  summary="Search part text, saved outputs, field records, evidence and limitations locally."
   headings={[]}
 >
   <form id="search-form" data-base={base} role="search">
@@ -26,15 +26,15 @@ import { base } from "../lib/registers.mjs";
   </p><ol id="search-results" class="search-results"></ol>
   <noscript
     ><p>
-      Full-text search needs JavaScript. All chapters remain readable; use the
-      chapter list below or your browser’s Find command.
+      Full-text search needs JavaScript. All parts remain readable; use the
+      parts below or your browser’s Find command.
     </p></noscript
   >
   <h2 id="browse">
-    Browse chapters<a
+    Browse parts<a
       href="#browse"
       class="header-anchor"
-      aria-label="Link to chapter browser">#</a
+      aria-label="Link to parts">#</a
     >
   </h2><ul>
     {
@@ -89,7 +89,7 @@ import { base } from "../lib/registers.mjs";
         history.replaceState(null, "", "?q=" + encodeURIComponent(query));
       } catch {
         status.textContent =
-          "Search index is unavailable. Build and preview the site, or browse the chapters below.";
+          "Search index is unavailable. Build and preview the site, or browse the parts below.";
       }
     }
     form.addEventListener("submit", (e) => {
@@ -100,7 +100,6 @@ import { base } from "../lib/registers.mjs";
     if (q) {
       input.value = q;
       search();
-    } else
-      status.textContent = "Enter a word or phrase to search all chapters.";
+    } else status.textContent = "Enter a word or phrase to search all parts.";
   </script>
 </Publication>

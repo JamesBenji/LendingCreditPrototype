@@ -2,7 +2,7 @@
 
 Every repository citation uses the central source registry. File links use blob; directory links use tree. Links are pinned to inspected commits. Evidence reports may discuss an older research commit while the report file itself was committed later. The source link and the report’s inspected-commit field serve different purposes. {{source:overview|Repository overview}} {{source:evidence-dir|Evidence directory}}
 
-Notebook citations use zero-based cell index and saved cell ID. GitHub notebook line anchors are unreliable, so they are not invented. The extraction preserves source text and textual output separately. It labels saved output rather than treating it as execution. {{source:notebook|Research notebook}} {{source:notebook-outputs|Saved output extraction}}
+Notebook references show the cell number. Cell numbers start at 0 and match the saved notebook. GitHub notebook line anchors are unreliable, so they are not invented. The extraction preserves source text and textual output separately. It labels saved output rather than treating it as execution. {{source:notebook|Research notebook}} {{source:notebook-outputs|Saved output extraction}}
 
 ## Appendix index
 
@@ -12,9 +12,9 @@ The field catalogue and model-input register include every evidenced loaded fiel
 
 The evidence register below is also a claim matrix: each record states the supported claim, evidence class, locator and limitation. The source map lists all files and directories read. Recorded artifact hashes and data hashes are shown in reproducibility. Nothing in the publication requires model serving or a private raw dataset. {{evidence:frozen}} {{evidence:artifact}}
 
-## Reading evidence classes
+## What the links open
 
-REPRODUCED means an existing recorded frozen-model or local audit result. It does not mean this site reran the audit. NOTEBOOK OUTPUT means saved output. CODE-VERIFIED means directly inspected implementation. OWNER-REPORTED means recorded owner deployment information. ASSUMPTION, LIMITATION, PROPOSED and UNRESOLVED preserve uncertainty rather than promoting it to a result.
+Notebook links open the saved research notebook. CODE links show the implementation. Results links open recorded model evaluations and local checks; they do not mean this site reran those evaluations. Pricing inputs links explain the funding cost and margin used in the rate calculation. Deployment notes record what the operator reported. Limitations, open questions and next steps explain what remains uncertain or unfinished.
 
 ## Open the full appendices
 

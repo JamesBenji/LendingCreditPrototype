@@ -1,3 +1,4 @@
+import { readerText, evidenceName } from "./labels.mjs";
 import MarkdownIt from "markdown-it";
 import anchor from "markdown-it-anchor";
 import texmath from "markdown-it-texmath";
@@ -37,9 +38,14 @@ export function evidenceLink(id) {
     '<span class="evidence" data-evidence="' +
     id +
     '">' +
-    sourceLink(e.source, e.status) +
+    (e.status === "ASSUMPTION"
+      ? '<a href="/LendingCreditPrototype/chapters/loss-price/#combine-probability-and-severity" class="source-link">Pricing inputs</a>'
+      : sourceLink(
+          e.status === "NOTEBOOK OUTPUT" ? "notebook" : e.source,
+          evidenceName(e.status),
+        )) +
     '<span class="evidence-context"> — ' +
-    escape(e.label) +
+    escape(readerText(e.label)) +
     "</span></span>"
   );
 }
@@ -56,8 +62,11 @@ export function render(text) {
     if (node.type === "tag" && ["a", "svg", "math"].includes(node.name)) return;
     if (node.type === "tag" && $(node).hasClass("katex")) return;
     if (node.type === "text") {
-      const raw = node.data,
+      const raw = $(node).parents("pre,code").length
+          ? node.data
+          : readerText(node.data),
         hits = [];
+      node.data = raw;
       for (const s of known) {
         let start = 0;
         while ((start = raw.indexOf(s.path, start)) !== -1) {
@@ -115,7 +124,7 @@ export function render(text) {
 
   $("table").each((i, el) =>
     $(el).wrap(
-      '<div class="table-scroll" tabindex="0" role="region" aria-label="Chapter data table"></div>',
+      '<div class="table-scroll" tabindex="0" role="region" aria-label="Part data table"></div>',
     ),
   );
   $(".katex-display").each((i, el) =>

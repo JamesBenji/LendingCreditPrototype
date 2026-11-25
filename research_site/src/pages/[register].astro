@@ -6,7 +6,7 @@ import { getRegisters } from "../lib/registers.mjs";
 export function getStaticPaths() {
   const registers = {
     evidence: [
-      "Evidence register",
+      "Evidence",
       "Every claim keeps its evidence class, source locator and limitation.",
     ],
     fields: [
@@ -14,11 +14,11 @@ export function getStaticPaths() {
       "64 loaded fields and three engineered fields. Missing authoritative definitions and timing stay explicit.",
     ],
     limitations: [
-      "Limitations register",
+      "Limitations",
       "Affected claims, severity, bias, mitigation and unresolved work.",
     ],
     timeline: [
-      "Experiment ledger",
+      "Decisions and experiments",
       "Ordered questions, evidence, decisions, consequences and uncertainty.",
     ],
     sources: [
@@ -27,7 +27,7 @@ export function getStaticPaths() {
     ],
     glossary: [
       "Glossary",
-      "Plain definitions and links to chapters that explain them.",
+      "Plain definitions and links to the parts that explain them.",
     ],
   };
   return Object.entries(registers).map(([register, [title, summary]]) => ({
@@ -52,12 +52,12 @@ const tables = getRegisters(register);
     register === "evidence" && (
       <aside class="callout">
         <>
-          <strong>Recorded reproduction is not a new site audit</strong>
+          <strong>Where the evidence comes from</strong>
           <p>
-            REPRODUCED refers to committed frozen-model and local verification
-            reports. This site reads those reports without training or serving a
-            model. Notebook comparisons remain saved output; deployment reports
-            remain owner-reported.
+            Results link to recorded model evaluations and local checks.
+            Notebook links open the saved research notebook. Code links show the
+            implementation. Deployment notes record what the operator reported;
+            unconfirmed outcomes remain clearly described.
           </p>
         </>
       </aside>

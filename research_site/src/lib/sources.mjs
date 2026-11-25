@@ -1,3 +1,4 @@
+import { readerText } from "./labels.mjs";
 import sources from "../data/sources.json" with { type: "json" };
 export const repository =
   "https://github.com/JamesBenji/LendingCreditPrototype";
@@ -44,7 +45,7 @@ export function sourceLink(id, label, options) {
     '" href="' +
     sourceURL(id, options) +
     '" target="_blank" rel="noopener noreferrer">' +
-    escape(label || s.label) +
+    escape(readerText(label || s.label)) +
     '<span class="external" aria-label=" (GitHub)"> ↗</span></a>'
   );
 }
