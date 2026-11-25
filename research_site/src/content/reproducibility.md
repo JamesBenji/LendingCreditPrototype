@@ -1,6 +1,6 @@
 ## Three reproducibility levels
 
-This site extracts committed notebook source/output, metadata and all JSON evidence deterministically. It does not run Python, load joblib, read the private raw CSV or retrain models. {{source:notebook|Export — cell 37}} {{source:reproduce|Frozen-evaluation script}}
+A frozen-model evaluation asks whether the saved pipeline produces the recorded predictions on the reconstructed loans. Retraining asks whether the full data preparation, search and calibration process can produce a comparable model again. Those are different tests. The recorded audit performs the first without fitting new estimators. {{source:reproduce|Frozen-evaluation method}}
 
 Frozen-model reproduction reconstructs the sampled/cleaned split and evaluates saved artifacts. The recorded method calls no estimator fit. Retraining would rerun parameter search, baselines, calibration and export. Complete experiment reproduction would additionally reproduce all data sourcing, EDA, comparison intervals and loss studies in a locked environment. Only the frozen XGBoost evaluation is recorded as reproduced here. {{evidence:frozen}} {{evidence:comparisons}}
 
@@ -20,10 +20,6 @@ The repository provides frozen evaluation and runtime inspection scripts. They n
 .venv/bin/python scripts/reproduce_saved_model.py /path/to/accepted_2007_to_2018Q4.csv.gz
 ```
 
-The notebook was not retrained for this site. Changes in source or evidence should regenerate extracted records, fail consistency checks and receive an editorial review rather than silently upgrading evidence labels.
+## What a matching hash does and does not establish
 
-## Rebuild this independent publication
-
-The static site has its own checks. {{source:site-guide|View the local build and evidence-update guide}} {{source:site-test|Open the content-consistency tests}} {{source:site-extract|Inspect deterministic extraction}} {{source:site-browser|Open responsive and accessibility checks}} {{source:pages-workflow|View the dedicated Pages workflow}}
-
-These checks validate publication content, links, counts and reading behaviour. They do not retrain the notebook or establish new model-performance evidence. {{evidence:frozen}}
+Matching artifact and dataset hashes establishes file identity. Reproducing predictions also checks the loaded runtime behaviour. Neither reconstructs undocumented training conditions or newly fits the logistic and combined comparison models. The frozen result is therefore a useful narrower verification; completing the whole experiment requires the original data process, environment and model-selection steps to be repeatable. {{source:reproduced-metrics|Dataset hash, artifact hashes and method}} {{evidence:artifact}}

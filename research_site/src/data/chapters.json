@@ -12,8 +12,8 @@
   {
     "number": 2,
     "slug": "chronology",
-    "title": "Project chronology and experiment ledger",
-    "summary": "Follow the questions, evidence, decisions and unfinished work in their recorded order.",
+    "title": "How the evidence changed our decisions",
+    "summary": "The results changed the questions about model complexity, calibration, pricing and serving.",
     "sources": ["notebook", "deployment-log", "predictor"],
     "cells": [],
     "diagram": "chronology",
@@ -32,8 +32,8 @@
   {
     "number": 4,
     "slug": "field-audit",
-    "title": "Complete field-disposition audit",
-    "summary": "Audit all evidenced fields and show why a full 151-field audit remains blocked by missing source material.",
+    "title": "Which fields can the model use?",
+    "summary": "Separate information available before pricing from incumbent decisions, targets and later outcomes.",
     "sources": ["notebook", "metadata", "runtime-inspection"],
     "cells": [],
     "diagram": "fields",
@@ -47,13 +47,13 @@
     "sources": ["notebook", "schema", "metadata"],
     "cells": [],
     "diagram": null,
-    "register": "loaded-fields"
+    "register": "working-groups"
   },
   {
     "number": 6,
     "slug": "leakage",
-    "title": "Leakage policy and prediction-time availability",
-    "summary": "Availability is measured against the lending decision, not against the final dataset snapshot.",
+    "title": "What the lender could know before pricing",
+    "summary": "Eligibility depends on the decision point, even when later information would improve the score.",
     "sources": ["notebook", "metadata"],
     "cells": [],
     "diagram": "timing",
@@ -62,8 +62,8 @@
   {
     "number": 7,
     "slug": "target",
-    "title": "Target construction",
-    "summary": "Charge-off is the positive outcome proxy; active loans are excluded.",
+    "title": "What counts as a bad loan?",
+    "summary": "The charge-off label defines the population and outcome that the probability can describe.",
     "sources": ["notebook", "reproduced-metrics"],
     "cells": [10],
     "diagram": null,
@@ -82,8 +82,8 @@
   {
     "number": 9,
     "slug": "eda",
-    "title": "EDA as methodological evidence",
-    "summary": "Connect each inspection to a later decision and keep the holdout-access caveat visible.",
+    "title": "What the data changed",
+    "summary": "Drift, missingness and borrower patterns motivated choices while exposing weaknesses in the experiment.",
     "sources": ["notebook", "notebook-outputs"],
     "cells": [12, 13],
     "diagram": "eda",
@@ -112,18 +112,18 @@
   {
     "number": 12,
     "slug": "selection",
-    "title": "Feature-selection honesty",
-    "summary": "The 64-to-56 transition is explicit; the 151-to-64 screening record is incomplete.",
+    "title": "How features were selected",
+    "summary": "The final list is explicit; the original field screening still needs a defensible record.",
     "sources": ["notebook"],
     "cells": [],
     "diagram": null,
-    "register": "fields"
+    "register": null
   },
   {
     "number": 13,
     "slug": "temporal-design",
-    "title": "Temporal experimental design",
-    "summary": "Earlier loans train the model; later loans test it, with maturity and boundary caveats.",
+    "title": "Testing on later loans",
+    "summary": "Chronological evaluation reveals transfer problems that a mixed random split can conceal.",
     "sources": ["notebook", "reproduced-metrics"],
     "cells": [],
     "diagram": "split",
@@ -132,8 +132,8 @@
   {
     "number": 14,
     "slug": "preprocessing",
-    "title": "Preprocessing and transformed feature space",
-    "summary": "Learn medians, scales and category groups inside training; reuse them on later data.",
+    "title": "Preparing inputs for the models",
+    "summary": "Imputation and encoding make inputs usable without establishing that their information is valid.",
     "sources": ["notebook", "predictor", "runtime-inspection"],
     "cells": [20],
     "diagram": "preprocessing",
@@ -142,8 +142,8 @@
   {
     "number": 15,
     "slug": "baselines",
-    "title": "Baselines and model hierarchy",
-    "summary": "Each model tests a particular claim about information or complexity.",
+    "title": "What each model comparison tests",
+    "summary": "Separate the value of information, model complexity and probability calibration.",
     "sources": ["notebook", "notebook-outputs"],
     "cells": [22],
     "diagram": "models",
@@ -172,7 +172,7 @@
     ],
     "cells": [],
     "diagram": null,
-    "register": "parameters"
+    "register": null
   },
   {
     "number": 18,
@@ -273,8 +273,8 @@
   {
     "number": 27,
     "slug": "engineering-trace",
-    "title": "Request-to-response engineering trace",
-    "summary": "Inspect the deployed application as evidence without calling or importing it.",
+    "title": "How an application becomes a result",
+    "summary": "Trace where the system predicts, calculates, defaults information and applies policy.",
     "sources": [
       "react-app",
       "form",
@@ -314,8 +314,8 @@
   {
     "number": 29,
     "slug": "operations",
-    "title": "Deployment and operational history",
-    "summary": "Separate local checks, recorded owner output and live-state uncertainty.",
+    "title": "Getting the model into a running service",
+    "summary": "A reproducible prediction, an active release and a valid lending model require different evidence.",
     "sources": [
       "deployment",
       "deployment-log",
@@ -333,12 +333,12 @@
   {
     "number": 30,
     "slug": "hardships",
-    "title": "Hardships, corrections and methodological debt",
-    "summary": "Keep difficulties visible rather than rewriting the work as an inevitable success.",
+    "title": "What the corrections did not solve",
+    "summary": "Each correction changed one failure mode; it did not validate the next stage automatically.",
     "sources": ["deployment-log", "notebook", "reproduced-metrics"],
     "cells": [],
     "diagram": null,
-    "register": "hardships"
+    "register": null
   },
   {
     "number": 31,
@@ -353,8 +353,8 @@
   {
     "number": 32,
     "slug": "limitations",
-    "title": "Limitations and failure conditions",
-    "summary": "An auditable register states when each conclusion becomes unsafe to transfer.",
+    "title": "When the results stop being reliable",
+    "summary": "Check the conditions behind a claim before transferring it to new applicants or decisions.",
     "sources": ["reproduced-metrics", "deployment-log"],
     "cells": [],
     "diagram": null,
@@ -363,21 +363,21 @@
   {
     "number": 33,
     "slug": "next-experiments",
-    "title": "Open questions and next experiments",
-    "summary": "Each next experiment needs an explicit question, evaluation boundary and rejection condition.",
+    "title": "Which experiments matter next?",
+    "summary": "Resolve population and serving gaps before spending effort on further model complexity.",
     "sources": ["notebook", "reproduced-metrics", "deployment-log"],
     "cells": [],
     "diagram": null,
-    "register": "limitations"
+    "register": null
   },
   {
     "number": 34,
     "slug": "appendices",
-    "title": "Appendices and source map",
-    "summary": "Trace claims to evidence, source cells, formulas and structured registers.",
+    "title": "Checking the evidence",
+    "summary": "Find the record that answers your question and judge whether it supports the conclusion.",
     "sources": ["overview", "notebook", "notebook-outputs", "evidence-dir"],
     "cells": [],
     "diagram": null,
-    "register": "appendices"
+    "register": null
   }
 ]

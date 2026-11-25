@@ -11,3 +11,7 @@ loan_status reveals the answer. Payments, recoveries and later credit scores occ
 ## Limits of the guard
 
 The assertion catches listed direct leakage. It cannot prove every bureau snapshot is from application time. It also cannot prevent analyst exposure to test outcomes in full-sample EDA. A confirmed post-application field would invalidate the clean application-only interpretation and require reevaluation. {{source:notebook|EDA, feature engineering and split — cells 12–18}} {{evidence:timing}}
+
+## Adding incumbent pricing changes the claim
+
+An application-only model asks whether the borrower profile contains independent ranking information. A combined model asks whether that information improves on the incumbent assessment. Both can be useful experiments, but they support different deployment situations. An applicant workflow that has no LC grade or rate cannot claim the combined model's performance. {{source:notebook|Separate and combined models — cells 22–26}} {{evidence:comparisons}}

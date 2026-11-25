@@ -1,6 +1,10 @@
 ## Numerical pipeline
 
-Median imputation uses add*indicator=True. Standardisation follows. An observed value becomes $(x-\mu*{train})/s\_{train}$. Scaling gives regularised logistic inputs more comparable penalties across units. Indicators preserve missingness seen during fit. {{source:notebook|make_preprocess — cell 20, izmmPQzWbFyL}} {{evidence:pipeline}}
+Median imputation adds missingness indicators, then standardisation puts numeric inputs on training-fitted scales:
+
+$$x_{scaled}=\frac{x-\mu_{train}}{s_{train}}$$
+
+The mean and standard deviation are learned from the training data. This gives regularised logistic inputs more comparable penalties across units. Indicators preserve missingness seen during fit. {{source:notebook|make_preprocess — cell 20, izmmPQzWbFyL}} {{evidence:pipeline}}
 
 ## Categorical pipeline
 
@@ -19,3 +23,7 @@ cat = Pipeline([("imp", SimpleImputer(strategy="most_frequent")),
 ```
 
 Trees are less scale-sensitive but share this pipeline. Encoding and indicators expand inputs to 124 saved columns. Default-filled serving values appear observed, so missingness indicators do not fully reveal uncollected form fields. {{evidence:artifact}} {{evidence:gap}}
+
+## Default filling bypasses the meaning of missingness
+
+The research pipeline can distinguish a genuinely missing value from an observed value because the imputer adds indicators. The API instead fills uncollected fields with training defaults before the pipeline sees them. A default-filled balance then looks observed, even though no applicant supplied it. This can erase information about noncollection while creating a financially inconsistent profile. Correct preprocessing dimensions do not resolve that problem. {{source:predictor|Defaults merged before prediction|83-94}} {{evidence:gap}}

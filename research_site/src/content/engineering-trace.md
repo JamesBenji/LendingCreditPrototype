@@ -21,3 +21,7 @@ $$M=\frac{Pr}{1-(1+r)^{-n}},\qquad r=\frac{annual\_rate\_pct}{1200}$$
 At zero rate, $M=P/n$. Decimal arithmetic rounds each regular payment and interest amount to cents. The final payment clears the residual balance. Total repayment is $(n-1)$ regular rounded payments plus final payment; interest is total minus principal. No default, fee or prepayment is simulated. {{source:repayment|Amortisation|4-38}}
 
 The API returns risk, recommendation, loss, price, payments and indicators. The UI renders them and can reset the assessment. A declined case still has a hypothetical schedule; it is not a loan offer. Gross interest does not equal net profit. {{source:result|Response rendering}} {{evidence:serving}}
+
+## The calculation boundary determines what a check can prove
+
+Validation can prove that a supplied DTI is finite and within range. The server cannot verify its underlying debt total because the browser does not send that total. Repayment can prove that rounded instalments clear a hypothetical balance, but it does not model whether those payments will arrive. These boundaries show why a correct request/response trace must still distinguish input validity, probability accuracy and economic meaning. {{source:dti|Client DTI calculation}} {{source:schema|Numeric validation|5-16}} {{source:repayment|Repayment calculation|4-38}}

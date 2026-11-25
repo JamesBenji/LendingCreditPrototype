@@ -38,4 +38,8 @@ This rule combines lifetime loss with annual-looking cost terms. It is not a val
 
 A useful model must rank risk, estimate probabilities, transfer to later cohorts and compare with LendingClub’s own assessment. Accuracy alone cannot answer those questions. Pricing needs calibrated probabilities, not just rankings.
 
-The evidence supports historical comparisons and a synthetic engineering trace. It does not establish lawful policy, fairness, profit, reject-inference validity or reduced-form performance. The publication follows the implemented research question in {{source:notebook|Research question — cell 0}}; it does not establish an approved thesis specification. {{evidence:fairness}}
+The evidence supports historical comparisons and a synthetic engineering trace. It does not establish lawful policy, fairness, profit, reject-inference validity or reduced-form performance. {{evidence:fairness}}
+
+## A price inherits every assumption behind PD
+
+A calibrated PD can still lead to a poor price if loss severity or the time horizon is wrong. Multiplying by LGD transfers the training severity assumption into every applicant's estimate; adding funding and margin transfers financial assumptions too. The business question therefore needs separate checks on probability, severity and cash-flow timing. One good ranking metric cannot establish that whole chain. {{source:notebook|Calibration and pricing — cells 28–35}} {{evidence:pricing}}

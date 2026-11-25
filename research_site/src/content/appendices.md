@@ -1,26 +1,22 @@
-## One-click source tracing
+## Trace the conclusion, not just the filename
 
-Every repository citation uses the central source registry. File links use blob; directory links use tree. Links are pinned to inspected commits. Evidence reports may discuss an older research commit while the report file itself was committed later. The source link and the report’s inspected-commit field serve different purposes. {{source:overview|Repository overview}} {{source:evidence-dir|Evidence directory}}
+Start with the claim you want to check. A ranking claim needs predictions and outcomes from the same evaluation loans. A probability claim also needs calibration evidence. A price claim adds measured severity and cost assumptions. A serving claim needs the exact collected-input workflow. Finding code that returns a number is not enough to support all four. {{source:notebook|Evaluation and pricing — cells 20–35}} {{evidence:frozen}}
 
-Notebook references show the cell number. Cell numbers start at 0 and match the saved notebook. GitHub notebook line anchors are unreliable, so they are not invented. The extraction preserves source text and textual output separately. It labels saved output rather than treating it as execution. {{source:notebook|Research notebook}} {{source:notebook-outputs|Saved output extraction}}
+## Use the detailed tables where they answer your question
 
-## Appendix index
+- [Field catalogue](/LendingCreditPrototype/fields/): which values were loaded, used, excluded or derived, and which definitions remain unconfirmed.
+- [All model inputs](/LendingCreditPrototype/chapters/model-inputs/): the 56 conceptual inputs and why they differ from encoded columns.
+- [Metric definitions](/LendingCreditPrototype/chapters/metrics/) and [paired comparisons](/LendingCreditPrototype/chapters/comparisons/): what was measured and which differences were demonstrated.
+- [Search space](/LendingCreditPrototype/chapters/hyperparameters/): what the tuning result was allowed to choose.
+- [Loss and price](/LendingCreditPrototype/chapters/loss-price/) and [back-test](/LendingCreditPrototype/chapters/pricing-backtest/): measured loss, assumptions and the mismatch with realised outcomes.
+- [Artifacts and reproduction](/LendingCreditPrototype/chapters/reproducibility/) and [request trace](/LendingCreditPrototype/chapters/engineering-trace/): which state was saved and what serving does with it.
 
-The field catalogue and model-input register include every evidenced loaded field and all final conceptual inputs. The metric chapter defines formulas. Search-space and selected-value tables are in the XGBoost and search chapters. Comparison tables show all five paired questions. The glossary defines terms; the evidence, limitations and ledger pages can be filtered. Each source cell and numeric result has a provenance action.
+## Keep evidence strength separate from presentation
 
-## Claim-to-evidence matrix
+Notebook links show saved output. RESULTS links show recorded frozen-model or local evaluations; this publication did not rerun the notebook. CODE links show implementation. PRICING INPUTS links explain the cost assumptions. None of these substitutes for the missing study described by an OPEN QUESTION or NEXT STEPS link. {{source:notebook|Research notebook}} {{source:reproduced-metrics|Frozen-model evaluation}}
 
-The evidence register below is also a claim matrix: each record states the supported claim, evidence class, locator and limitation. The source map lists all files and directories read. Recorded artifact hashes and data hashes are shown in reproducibility. Nothing in the publication requires model serving or a private raw dataset. {{evidence:frozen}} {{evidence:artifact}}
+The [evidence table](/LendingCreditPrototype/evidence/) connects claims to records and limits. The [source map](/LendingCreditPrototype/sources/) identifies the inspected file revision. A report can discuss an older model commit while existing at a later documentation commit; those identities answer different reproducibility questions. {{evidence:artifact}}
 
-## What the links open
+## Decide what would make you stop trusting the result
 
-Notebook links open the saved research notebook. CODE links show the implementation. Results links open recorded model evaluations and local checks; they do not mean this site reran those evaluations. Pricing inputs links explain the funding cost and margin used in the rate calculation. Deployment notes record what the operator reported. Limitations, open questions and next steps explain what remains uncertain or unfinished.
-
-## Open the full appendices
-
-- [Complete evidenced field catalogue](/LendingCreditPrototype/fields/) and [all 56 conceptual inputs](/LendingCreditPrototype/chapters/model-inputs/).
-- [Formulas and metric definitions](/LendingCreditPrototype/chapters/metrics/) and [PD, LGD and price derivation](/LendingCreditPrototype/chapters/loss-price/).
-- [Search space and selected parameters](/LendingCreditPrototype/chapters/hyperparameters/).
-- [Seven-model experiment table](/LendingCreditPrototype/chapters/baselines/) and [five paired comparisons](/LendingCreditPrototype/chapters/comparisons/).
-- [Experiment ledger](/LendingCreditPrototype/timeline/), [evidence registry and claim matrix](/LendingCreditPrototype/evidence/), [limitations register](/LendingCreditPrototype/limitations/), [glossary](/LendingCreditPrototype/glossary/) and [repository source map](/LendingCreditPrototype/sources/).
-- [Artifact hashes, versions and reproduction boundaries](/LendingCreditPrototype/chapters/reproducibility/) and [component request trace](/LendingCreditPrototype/chapters/engineering-trace/).
+Use the [limitations](/LendingCreditPrototype/limitations/) to check population changes, unavailable inputs, drift, unsupported policy and pricing assumptions. Use the [decision ledger](/LendingCreditPrototype/timeline/) to see how those problems changed the work, and the [glossary](/LendingCreditPrototype/glossary/) for unfamiliar terms. A conclusion remains conditional until the relevant next experiment has new evidence. {{evidence:future}}

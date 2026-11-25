@@ -11,3 +11,7 @@ The deployed rule approves PD below 15%, refers PD from 15% to below 30%, and de
 ## What approval would require
 
 Costs of errors, capacity for review, applicant rights and regulation must be validated separately. A high-risk flag is not a justified adverse-action reason. Neither this experiment nor the prototype establishes an approved lending policy. {{evidence:fairness}}
+
+## The recall target does not determine an approval policy
+
+The validation cutoff asks which loans to flag to catch a chosen share of charge-offs. Its 66.1% achieved test recall shows that the target did not transfer unchanged. The serving approve/refer/decline rule instead assigns actions at fixed probability levels. Converting either rule into underwriting would require the cost of missed losses, the burden of false flags and the capacity for review. A recall target alone cannot choose that trade-off. {{evidence:operating}} {{source:predictor|Hand-set actions|214-222}}

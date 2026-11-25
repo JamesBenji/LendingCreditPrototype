@@ -1,47 +1,31 @@
-## Year drift → chronological split
+## Changing default rates made a random split less convincing
 
-Question: is risk stable by issue year? Saved full-sample output gives counts and default shares. Rates rise from 15.2% in 2013 to 23.4% in 2016 and 23.5% in 2017, then fall to 16.2% in the selected 2018 slice. The consequence is temporal evaluation, not random mixing. The latest drop does not prove safer lending because maturity selection remains. {{source:notebook|Year table — cell 12, ce0OOCCdbFyK}} {{evidence:eda}}
+The saved sample's default share rises from 15.2% in 2013 to 23.4% in 2016 and 23.5% in 2017. A random split would mix these lending conditions across training and evaluation, making transfer to a later cohort harder to see. This observation supports the chronological split. {{source:notebook|Issue-year default table — cell 12}} {{evidence:eda}}
 
-## LC grade, FICO, DTI and term
+The 2018 share falls to 16.2%, but only resolved loans are present. That fall cannot by itself establish safer lending: outcome maturity and selection also changed. Counts matter too. The saved table has 30,029 loans in 2015, compared with 24 in 2007 and 4,537 in 2018. The annual rates therefore have very different support. {{source:notebook|Issue-year counts — cell 12}}
 
-The saved six-panel figure inspects LC grade, FICO bands, clipped DTI quintiles and term against default. LC grade motivates an incumbent benchmark. FICO motivates a one-score reference. DTI and term motivate burden and horizon hypotheses. Exact bar heights are not printed as tables, so no numeric values are invented here. Inspect the original axes in {{source:notebook|Saved EDA figure — cell 12}}. These are associations, not causal evidence. {{evidence:eda}}
+## Missingness can describe the collection process
 
-## Missingness → indicators
+Recent-inquiry months are missing for 13.1% of the sample and for all sampled loans from 2007 through 2011. Other bureau fields also have year-specific gaps. Replacing each missing value with a median would erase that absence pattern, so the numerical pipeline adds indicators. {{source:notebook|Missingness by field and year — cell 13}}
 
-Saved missing rates are 13.1% for recent-inquiry months, 8.7% for num_tl_120dpd_2m and 5.8% for employment length. Some bureau columns are fully absent in early years. Recent-inquiry months are 100% missing from 2007 through 2011. Median imputation plus indicators preserves that absence pattern. It may encode collection era rather than stable borrower risk. {{source:notebook|Missingness — cell 13, lOX_SssWbFyK}}
+This is a useful modelling response, but an ambiguous risk signal. An indicator can identify a data-collection era rather than a borrower characteristic. If collection changes in a new cohort, the relationship may disappear. Missingness indicators preserve information; they do not prove that the information is stable. {{evidence:pipeline}}
 
-## FICO redundancy → midpoint; price association → benchmark
+## The incumbent already contains useful risk information
 
-FICO bounds correlate at 1.0 to four decimals. Their midpoint avoids near duplication. Midpoint FICO and LC rate correlate at −0.4 in saved output. LC already prices part of this signal, so price must be benchmarked separately. {{source:notebook|Correlation — cells 10 and 13}}
+The saved grade bars rise from A through G. Higher observed FICO bands have lower charge-off shares, and midpoint FICO correlates with LC interest rate at −0.4. These patterns explain why a FICO-only reference and an LC-pricing benchmark are needed. A model must be compared with the information already used to price loans, not only with a weak reference. {{source:notebook|Grade, FICO and rate inspections — cells 12–13}} {{evidence:eda}}
 
-## Extreme values and purpose
+The two FICO bounds correlate at 1.0 to four decimals, supporting their consolidation into a midpoint. Empty plotted bars in the lowest FICO intervals do not establish zero risk or validate the form's broader allowed score range. {{source:notebook|FICO consolidation and bands — cells 10–12}}
 
-The saved sample has 39 DTI values above 100 and 45 incomes below 5,000. DTI is clipped only for the EDA grouping. Saved purpose output shows 1,251 small-business loans at 30.5% default versus 23,506 credit-card loans at 16.9%. Population, term and other factors can confound that comparison. {{source:notebook|Anomalies and purpose — cell 13}} {{evidence:eda}}
+## Burden and term suggest hypotheses, not causal effects
 
-## Analyst leakage limits the result
+Default shares rise across plotted DTI quintiles, and the 60-month term bar is higher than the 36-month bar. These observations support retaining burden and horizon information and investigating loan-to-income. They do not show that changing a borrower's term or DTI alone would cause the observed risk change. Borrower selection, other characteristics and time to resolve can differ. {{source:notebook|DTI and term figures — cell 12}}
 
-All these inspections use labels from the full frame before splitting. Training-only preprocessing prevents fitted-state leakage, but analyst choices have seen holdout patterns. A stronger protocol would freeze hypotheses from training-only EDA and use a new untouched cohort. {{source:notebook|Full-sample EDA before splitting — cells 12–18}} {{evidence:future}}
+The sample also retains 39 DTI values above 100 and 45 incomes below 5,000. Clipping DTI for a plot only makes the picture readable; it does not repair those model inputs. The API later excludes some of these values, creating a research-to-serving mismatch that needs its own evaluation. {{source:notebook|Extreme values — cell 13}} {{source:schema|Serving ranges|5-16}}
 
-## Loan counts show unequal cohort support
+## Purpose changes the population being compared
 
-Question: which years dominate the evidence? The saved year table peaks at 30,029 sampled loans in 2015, compared with 24 in 2007 and 4,537 in 2018. The sample reads every chunk, but that does not give equal support to every year. A small early-cohort rate is much less stable than a large middle-cohort rate. The consequence is to carry counts alongside rates and avoid treating all years as equally precise. Sampling and final-outcome selection still limit population claims. {{source:notebook|Counts by issue year — cell 12}} {{evidence:eda}}
+Debt consolidation accounts for 62,291 loans in the saved purpose table. Small business has a 30.5% charge-off share, compared with 16.9% for credit card. Purpose is therefore a useful description of borrowing context. Those group shares are not proof of subgroup model quality: a model can rank well overall while making poor decisions within a smaller purpose group. {{source:notebook|Purpose counts and rates — cell 13}} {{evidence:eda}}
 
-## LC grade separates observed risk
+## The exploration also weakens the test boundary
 
-Question: does incumbent grade already rank risk? The saved full-sample grade bars rise from A through G. This supports using LC assessment as a serious benchmark. It does not prove that the independent application model beats that assessment. The decision is to fit a separate sub-grade-plus-rate benchmark and keep those fields outside the application-only model. Grade differences are descriptive; selection, maturity and LC’s own underwriting are part of the association. {{source:notebook|Grade figure — cell 12; benchmark — cell 22}} {{evidence:eda}}
-
-## Higher observed FICO bands have lower default shares
-
-Question: does one score provide a useful simple reference? The drawn FICO-band bars decline across the higher observed bands. The decision is to retain a FICO-only logistic baseline and consolidate the two score bounds into one midpoint. Empty bars in the lowest intervals must not be read as zero default risk. The figure does not validate performance for those applicants, and the form’s broader allowed FICO range is a separate serving concern. {{source:notebook|FICO-band figure — cell 12; FICO reference — cell 22}} {{evidence:eda}}
-
-## Higher plotted DTI groups have higher default shares
-
-Question: does existing debt burden relate to the outcome? The saved clipped-DTI quintile bars rise across groups. This supports investigating burden variables, including loan-to-income, which describes proposed exposure rather than existing monthly debt. The DTI clipping is a plotting decision and is not fitted model preprocessing. Quantile association is not causality, and source debt definitions still need confirmation. {{source:notebook|DTI quintile figure — cell 12; feature engineering — cell 16}} {{evidence:eda}}
-
-## Longer term is associated with more charge-offs
-
-Question: does the repayment horizon matter? The saved 60-month term bar is higher than the 36-month bar. Keeping term lets models use an exposure-horizon signal. It also motivates checking model performance by term in a future study. The figure is not a controlled estimate of term’s causal effect: borrowers and loan sizes can differ, and longer loans have different time to resolve. {{source:notebook|Term figure — cell 12}} {{evidence:eda}}
-
-## Purpose changes both sample mix and observed risk
-
-Question: is the sample mainly one borrowing purpose? The saved purpose table has 62,291 debt-consolidation loans, the largest printed group. Small business has a higher observed charge-off share than credit card in the same table. Retaining purpose preserves a meaningful borrowing context, but group prevalence is not subgroup model performance. A proposed error analysis must evaluate fixed-threshold errors and calibration within purpose, with sample support and uncertainty. {{source:notebook|Purpose counts and default shares — cell 13}} {{evidence:eda}} {{evidence:future}}
+These findings came from the full outcome-labelled frame before splitting. Training-fitted preprocessing avoids one form of leakage, but the analyst has already seen later-loan patterns when motivating features. The right correction is to freeze hypotheses using earlier data and evaluate on a genuinely new cohort. Repeating the same test after seeing its patterns would not restore that independence. {{source:notebook|EDA before the split — cells 12–18}} {{evidence:future}}

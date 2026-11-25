@@ -8,4 +8,10 @@ Search varies tree count, depth, learning rate, row/column sampling, child weigh
 
 ## Result and doubt
 
-Frozen test AUC is 0.6828235319536293. Saved XGBoost-minus-logistic difference is 0.0029 with interval −0.0014 to 0.0073. No stronger-model gain was demonstrated. Exporting XGBoost is the project’s implemented choice, not proof that its complexity was necessary. Changed cohorts or default-filled serving inputs may alter the comparison. {{evidence:frozen}} {{evidence:comparisons}}
+Frozen test AUC is approximately 0.6828. Saved XGBoost-minus-logistic difference is 0.0029 with interval −0.0014 to 0.0073. No stronger-model gain was demonstrated. Exporting XGBoost is the project’s implemented choice, not proof that its complexity was necessary. Changed cohorts or default-filled serving inputs may alter the comparison. {{evidence:frozen}} {{evidence:comparisons}}
+
+## Regularisation does not insure against drift
+
+Depth and penalties restrict how closely trees fit the training sample. They cannot make a changed cohort behave like that sample, or restore bureau information missing from a reduced form. The selected parameters answer a fitting question inside the recorded search. Later-cohort and exact-form evaluations answer whether the fitted model remains useful. Keeping those questions separate prevents a successful tuning run from being treated as deployment validation. {{source:notebook|Training-only parameter search — cell 24}} {{evidence:gap}}
+
+The [parameter-search part](/LendingCreditPrototype/chapters/hyperparameters/) records the candidate values and selected configuration.

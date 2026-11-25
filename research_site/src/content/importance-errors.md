@@ -15,3 +15,7 @@ Evaluate false-positive/negative rates, AP, calibration and sample support by te
 ## UI indicators are heuristic
 
 The serving code compares selected values with training medians using hand-set risk directions. These indicators are neither permutation importance nor local tree explanations. Rounded input and median can look equal while an unrounded difference triggers an indicator. {{source:predictor|Heuristic indicators|98-173}}
+
+## A global ranking of fields cannot explain one rejection
+
+Permutation importance asks what happens when a field's information is disrupted across many loans. A local explanation asks why this applicant received this score relative to a relevant alternative. Those are different comparisons. A large global term importance does not establish that term caused a particular rejection, and median-deviation indicators do not recover the tree's reasoning. The next error study must examine actual prediction failures and subgroup support, not relabel global importance as individual justification. {{evidence:importance}} {{source:predictor|Median-deviation indicators|98-173}}

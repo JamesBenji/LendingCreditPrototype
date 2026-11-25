@@ -13,3 +13,7 @@ A scaled coefficient concerns a standardised unit. One-hot coding, correlation a
 ## Result
 
 Saved application-logistic test AUC is 0.6800, close to XGBoost’s 0.6828. The paired difference interval includes zero. Logistic remains a credible simple reference. Transparency alone does not establish calibration or fairness. {{evidence:test-table}} {{evidence:comparisons}}
+
+## Simplicity remains a practical candidate
+
+With no demonstrated XGBoost ranking gain, an additive model remains a reasonable candidate for a future serving study. Its simpler structure could make inspection easier, but the current record does not compare operational cost or provide approved applicant explanations. Those are further reasons to evaluate a simpler model, not evidence that logistic regression is automatically the correct deployment choice. {{evidence:comparisons}} {{evidence:future}}

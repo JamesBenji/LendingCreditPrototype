@@ -135,7 +135,7 @@ try {
   await page.locator("[data-filter]").fill("Serving gap");
   assert.equal(await page.locator("tbody tr:visible").count(), 1);
   await page.goto(base + "timeline/");
-  await page.locator("[data-filter]").fill("Memory failure");
+  await page.locator("[data-filter]").fill("Serving information");
   assert.equal(await page.locator("tbody tr:visible").count(), 1);
   await page.goto(base + "search/");
   await page.locator("#query").fill("calibration");

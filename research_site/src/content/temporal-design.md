@@ -11,3 +11,7 @@ Training fits preprocessing and estimators; temporal CV chooses XGBoost paramete
 ## Chronological does not mean unbiased
 
 Shared boundary months show index slicing rather than month-disjoint partitions. Repeated borrower overlap is not audited. Full-sample EDA has already seen test labels, weakening untouched-test language. Censoring, accepted-loan selection and changing underwriting remain. A stricter next study needs mature fixed-window outcomes and entity-aware disjoint periods. {{source:notebook|Ordered split — cell 18}} {{evidence:future}}
+
+## A harder test gives a more useful failure
+
+The later-cohort test exposes a base-rate shift that a mixed random test could partly conceal. Validation default share is 25.03%, while test is 21.49%. A probability correction or cutoff chosen for validation is consequently tested under a different outcome frequency. This is useful evidence about transfer even when it makes the final result less flattering. It still cannot separate all genuine risk change from resolved-loan maturity effects. {{evidence:sample}} {{evidence:frozen}}

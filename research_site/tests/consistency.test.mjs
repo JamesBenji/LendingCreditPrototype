@@ -156,3 +156,52 @@ test("Evidence tags are uppercase, have no subtitles and exclude the defense gui
     assert(!$.html().includes("DEFENSE_GUIDE"));
   }
 });
+
+test("Editorial content removes deployment dates and protects the scaling equation", async () => {
+  const fs = await import("node:fs");
+  const parts = JSON.parse(
+    fs.readFileSync(
+      new URL("../src/data/chapters.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  assert.equal(parts[3].title, "Which fields can the model use?");
+  assert.equal(parts[1].title, "How the evidence changed our decisions");
+  const chronology = fs.readFileSync(
+    new URL("../src/content/chronology.md", import.meta.url),
+    "utf8",
+  );
+  assert(!chronology.includes("An ordered record"));
+  const operations = fs.readFileSync(
+    new URL("../src/content/operations.md", import.meta.url),
+    "utf8",
+  );
+  assert(!/\b\d{1,2} November\b|November 2026/.test(operations));
+  const timeline = fs.readFileSync(
+    new URL("../src/data/timeline.json", import.meta.url),
+    "utf8",
+  );
+  assert(!timeline.includes("November"));
+  const preprocessing = fs.readFileSync(
+    new URL("../src/content/preprocessing.md", import.meta.url),
+    "utf8",
+  );
+  const $ = load(render(preprocessing).html);
+  assert(
+    $("annotation")
+      .toArray()
+      .some((el) =>
+        $(el).text().includes("x_{scaled}=\\frac{x-\\mu_{train}}{s_{train}}"),
+      ),
+  );
+});
+
+test("Working groups and serving views keep the complete feature record", () => {
+  const groups = getRegisters("working-groups")[0];
+  assert.equal(groups.rows.length, 6);
+  assert.equal(
+    groups.rows.reduce((total, row) => total + row.count, 0),
+    64,
+  );
+  assert.equal(getRegisters("serving-fields")[0].rows.length, 56);
+});
