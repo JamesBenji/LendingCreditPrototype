@@ -24,6 +24,29 @@ for (const file of html) {
   const $ = load(fs.readFileSync(file, "utf8"));
   assert.equal($("h1").length, 1, "Exactly one primary heading");
   assert($("html").attr("lang") === "en");
+  assert.equal($(".masthead .brand").text().trim(), "EAB Credit (LendingClub)");
+  assert.equal($(".chapter-menu > summary").text(), "Explore our work");
+  assert.equal($(".sources-used").length, 0, "Redundant end-of-part sources");
+  assert.equal(
+    $("footer .previous-next").length,
+    0,
+    "Reading buttons belong in the body",
+  );
+  assert.equal(
+    $(".body-navigation > a,.body-navigation > button").length,
+    2,
+    "Every page needs previous and next controls",
+  );
+  assert($(".body-navigation").parent().is("main"));
+  assert(!$("footer").text().includes("Project chronology"));
+  assert(!$("footer").text().includes("Static research publication"));
+  assert(
+    !/Technical dossier|Chapters and registers|Sources used in this chapter/.test(
+      $("body").text(),
+    ),
+    "Outdated reader labels",
+  );
+
   const ids = $("[id]")
     .toArray()
     .map((el) => $(el).attr("id"));

@@ -1,3 +1,4 @@
+import { readerText, evidenceName } from "./labels.mjs";
 import fields from "../data/fields.json" with { type: "json" };
 import experiments from "../data/experiments.json" with { type: "json" };
 import evidence from "../data/evidence.json" with { type: "json" };
@@ -12,7 +13,22 @@ import { escape, sourceLink, commitURL } from "./sources.mjs";
 import { evidenceLink } from "./render.mjs";
 export const base = "/LendingCreditPrototype/";
 const ev = (id) => evidenceLink(id);
-const table = (id, title, columns, rows) => ({ id, title, columns, rows });
+const table = (id, title, columns, rows) => ({
+  id,
+  title: readerText(title),
+  columns,
+  rows: rows.map((row) => ({
+    ...row,
+    ...Object.fromEntries(
+      columns.map((column) => [
+        column.key,
+        typeof row[column.key] === "string"
+          ? readerText(row[column.key])
+          : row[column.key],
+      ]),
+    ),
+  })),
+});
 const c = (key, label) => ({ key, label });
 const fieldTable = (mode) =>
   table(
@@ -44,7 +60,7 @@ const fieldTable = (mode) =>
           "<p>" +
           escape(f.rationale) +
           "</p><small>" +
-          escape(f.definitionStatus) +
+          escape(readerText(f.definitionStatus)) +
           "</small>",
         role:
           escape(f.role) +
@@ -70,7 +86,7 @@ const fieldTable = (mode) =>
                     ? escape(v) +
                       " " +
                       sourceLink("metadata", "Training default")
-                    : escape(v === null ? "Not applicable" : v)) +
+                    : escape(readerText(v === null ? "Not applicable" : v))) +
                 "</dd>",
             )
             .join("") +
@@ -94,7 +110,7 @@ export function getRegisters(mode) {
     return [
       table(
         "timeline",
-        "Experiment and decision ledger",
+        "Decisions and experiments",
         [
           c("stage", "Stage"),
           c("question", "Question"),
@@ -166,7 +182,7 @@ export function getRegisters(mode) {
     return [
       table(
         "limitations",
-        "Limitations and hardship register",
+        "Limitations and difficulties",
         [
           c("problem", "Problem / status"),
           c("claim", "Affected claim"),
@@ -201,9 +217,9 @@ export function getRegisters(mode) {
     return [
       table(
         "evidence",
-        "Evidence registry and claim matrix",
+        "Evidence behind our work",
         [
-          c("id", "ID / class"),
+          c("id", "Evidence / source"),
           c("claim", "Supported claim"),
           c("locator", "Source locator"),
           c("limitation", "Evidence limit"),
@@ -215,12 +231,18 @@ export function getRegisters(mode) {
             '<span id="' +
             e.id +
             '"></span>' +
-            escape(e.id) +
+            escape(readerText(e.label)) +
             "<p>" +
-            escape(e.status) +
+            escape(evidenceName(e.status)) +
             "</p>",
+          locator: readerText(e.locator),
           link:
-            sourceLink(e.source, "View evidence") +
+            (e.status === "ASSUMPTION"
+              ? '<a href="/LendingCreditPrototype/chapters/loss-price/#combine-probability-and-severity">Read about pricing inputs</a>'
+              : sourceLink(
+                  e.status === "NOTEBOOK OUTPUT" ? "notebook" : e.source,
+                  "View " + evidenceName(e.status).toLowerCase(),
+                )) +
             "<p>" +
             escape(e.label) +
             "</p>",
@@ -265,11 +287,7 @@ export function getRegisters(mode) {
           ...g,
           term: '<span id="' + g.id + '"></span>' + escape(g.term),
           chapter:
-            '<a href="' +
-            base +
-            "chapters/" +
-            g.chapter +
-            '/">Read chapter</a>',
+            '<a href="' + base + "chapters/" + g.chapter + '/">Read part</a>',
         })),
       ),
     ];

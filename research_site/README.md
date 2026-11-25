@@ -103,3 +103,9 @@ Known gaps remain visible: the 151-field screening record, authoritative definit
 [browser]: https://github.com/JamesBenji/LendingCreditPrototype/blob/feature/technical-research-site/research_site/scripts/browser-check.mjs
 [frontend]: https://github.com/JamesBenji/LendingCreditPrototype/tree/main/flask_app/frontend
 [packager]: https://github.com/JamesBenji/LendingCreditPrototype/blob/main/scripts/package_release.py
+
+## Reading labels and navigation
+
+The header reads EAB Credit (LendingClub). The site uses Our Work and Part labels, with Explore our work as the navigation title. Notebook references show cell numbers and open the GitHub notebook view. Source and evidence identifiers remain in the data for validation; readers see descriptive links instead of raw classification names or cell IDs. Pricing inputs links open the explanation of funding cost and margin.
+
+Every page ends its body with Previous and Next controls. The first and last controls are disabled at the reading boundaries. These links work without JavaScript. Per-part source lists and repeated footer statements are removed; inline citations and the dedicated source map remain available.

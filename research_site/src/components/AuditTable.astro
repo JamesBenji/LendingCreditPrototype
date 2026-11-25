@@ -1,4 +1,5 @@
 ---
+import { readerText, evidenceName } from "../lib/labels.mjs";
 const { table } = Astro.props;
 const choices = [
   ...new Set(
@@ -9,7 +10,7 @@ const choices = [
 
 <section class="audit-register" data-register={table.id}>
   <h2 id={table.id}>
-    {table.title}<a
+    {readerText(table.title)}<a
       href={"#" + table.id}
       class="header-anchor"
       aria-label={"Link to " + table.title}>#</a
@@ -17,20 +18,20 @@ const choices = [
   </h2>
   <div class="filters" hidden>
     <label
-      >Filter {table.title}<input
+      >Filter {readerText(table.title)}<input
         type="search"
         data-filter
-        placeholder="Search this register"
+        placeholder="Search this table"
       /></label
     >
     {
       choices.length > 0 && (
         <label>
-          Group or evidence class
+          Show
           <select data-group>
             <option value="">All</option>
             {choices.map((c) => (
-              <option value={c}>{c}</option>
+              <option value={c}>{evidenceName(c)}</option>
             ))}
           </select>
         </label>
@@ -38,10 +39,16 @@ const choices = [
     }
     <p role="status" data-count>{table.rows.length} records</p>
   </div>
-  <div class="table-scroll" tabindex="0" role="region" aria-label={table.title}>
+  <div
+    class="table-scroll"
+    tabindex="0"
+    role="region"
+    aria-label={readerText(table.title)}
+  >
     <table>
       <caption
-        >{table.title} — source-linked records; scroll horizontally for all columns.</caption
+        >{readerText(table.title)} — source-linked records; scroll horizontally for
+        all columns.</caption
       >
       <thead
         ><tr>{table.columns.map((c) => <th scope="col">{c.label}</th>)}</tr

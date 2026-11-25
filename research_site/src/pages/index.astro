@@ -2,16 +2,17 @@
 import Publication from "../layouts/Publication.astro";
 import SourceLink from "../components/SourceLink.astro";
 import Diagram from "../components/Diagram.astro";
+import { readerText } from "../lib/labels.mjs";
 import chapters from "../data/chapters.json";
 import { base } from "../lib/registers.mjs";
 ---
 
 <Publication
-  title="Credit risk: the complete research record"
-  summary="A technical dossier of the lending decision, model experiments, evidence, serving design and unfinished work."
+  title="Our Work"
+  summary="How we developed and evaluated this credit-risk project, from the lending decision to its models, evidence and deployment."
   headings={[
     { id: "decision", label: "Start with the lending decision" },
-    { id: "read", label: "Read the record" },
+    { id: "read", label: "Explore our work" },
     { id: "audit", label: "Audit the evidence" },
   ]}
 >
@@ -47,10 +48,10 @@ import { base } from "../lib/registers.mjs";
   <Diagram id="business" />
   <section>
     <h2 id="read">
-      Read the record<a
+      Explore our work<a
         class="header-anchor"
         href="#read"
-        aria-label="Link to chapter list">#</a
+        aria-label="Link to parts">#</a
       >
     </h2><ol class="chapter-index">
       {
@@ -63,8 +64,8 @@ import { base } from "../lib/registers.mjs";
                 </span>
                 <span>
                   <>
-                    <strong>{c.title}</strong>
-                    <small>{c.summary}</small>
+                    <strong>{readerText(c.title)}</strong>
+                    <small>{readerText(c.summary)}</small>
                   </>
                 </span>
               </>
@@ -82,14 +83,14 @@ import { base } from "../lib/registers.mjs";
         aria-label="Link to evidence tools">#</a
       >
     </h2><p>
-      Use the <a href={base + "evidence/"}>evidence register</a>, <a
+      Use the <a href={base + "evidence/"}>evidence</a>, <a
         href={base + "fields/"}>field audit</a
       >, <a href={base + "timeline/"}>decision ledger</a>, <a
-        href={base + "limitations/"}>limitations register</a
+        href={base + "limitations/"}>limitations</a
       > and <a href={base + "sources/"}>source map</a>. Recorded reproduction
       and saved notebook output have distinct labels.
     </p><p>
-      The complete text and registers are static HTML. JavaScript adds local
+      The complete text and tables are static HTML. JavaScript adds local
       search, filters and copy controls. This site needs no model server.
     </p>
   </section>
