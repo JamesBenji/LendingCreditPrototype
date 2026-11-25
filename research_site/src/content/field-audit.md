@@ -1,15 +1,17 @@
-## What is auditable now
+## A field must answer the decision-time question
 
-The catalogue contains all 64 loaded fields and three engineered fields. Each record gives its role, model use, timing, exclusion reason, definition status, transformation and source. A code-verified role does not prove an authoritative definition. {{evidence:pipeline}}
+Before admitting a field, ask whether the lender could know its value before setting the price. A payment total may predict charge-off strongly, but it answers a question using events that happened after lending. A higher score obtained that way would not help an actual applicant decision. {{source:notebook|Leakage policy — cell 4}} {{evidence:pipeline}}
 
-For many bureau fields the repository gives only a name and a numeric-candidate role. Those definitions remain unresolved. Business hypotheses are interpretations, not invented dictionary entries. {{evidence:timing}}
+The catalogue therefore separates borrower information, LendingClub's own assessment, the target and loss measurement. These are different sources of knowledge. Mixing them would make it unclear whether the model learned borrower risk, copied the incumbent or read the outcome. {{source:notebook|Loaded field groups — cell 6}}
+
+## Why loaded columns are not all predictors
+
+The working file needs loan_status to build the answer, dates to order the experiment, and principal/recovery fields to measure loss. Those columns belong in the research data without belonging in the application PD model. LendingClub grade and rate are kept for separate benchmarks so the independent-information question can still be tested. {{evidence:pipeline}}
+
+The documented transition is 64 loaded fields to 56 conceptual model inputs. Imputation indicators and category encoding then expand the fitted representation to 124 columns. The extra columns describe the same collected information; they do not create new borrower measurements. {{evidence:artifact}}
 
 ## What prevents a complete 151-field audit
 
-Saved output counts 151 columns but does not list all names. Neither the complete raw header nor an authoritative version-matched LendingClub dictionary is committed. No per-field record explains all exclusions. Fabricating 87 missing names would defeat auditability. {{source:notebook|Raw width and candidate list — cells 5–6}} {{evidence:screening}}
+The notebook reports 151 raw columns but records only the selected working list. The full header, authoritative definitions and per-field exclusions are missing. This matters because a retained bureau field could be a later update, or an excluded field could contain useful eligible information. The gap limits both the leakage claim and the completeness of feature selection. {{source:notebook|Raw width and manual selection — cells 5–6}} {{evidence:screening}}
 
-Completion requires the exact version-3 accepted-file header, authoritative definitions with units and event windows, and collection-time records. Then record a disposition for each original field. A license record and extraction snapshot are also absent. These are unresolved source requirements.
-
-## Keep the count boundaries visible
-
-151 reported raw fields → 64 loaded working fields → 56 conceptual model inputs → 124 saved transformed columns. The first narrowing is partly documented; the second is explicit. The final width comes from recorded artifact inspection. {{evidence:artifact}}
+The exact dataset header and version-matched dictionary are needed to finish that assessment. Until then, the table distinguishes inspected code roles from unconfirmed meanings and timing. A field name alone cannot resolve either question. {{evidence:timing}}

@@ -296,14 +296,14 @@
   {
     "id": "L22",
     "problem": "Dataset provenance",
-    "description": "License, exact timing definitions and formal objectives are absent.",
+    "description": "Authoritative field meanings and collection-time records are absent.",
     "evidence": "timing",
-    "claim": "Source and research framing",
+    "claim": "Source identity and field interpretation",
     "severity": "High",
-    "detected": "No authoritative dictionary or approved specification is included in the inspected source record.",
+    "detected": "The loader records a file and column list but not an authoritative dictionary or collection-time record.",
     "bias": "Unknown source/target interpretation.",
     "mitigation": "Hashes and explicit draft objectives.",
-    "nextStep": "Obtain authoritative documentation and approved objectives.",
+    "nextStep": "Obtain version-matched field definitions and source collection-time documentation.",
     "resolved": false,
     "status": "UNRESOLVED"
   }

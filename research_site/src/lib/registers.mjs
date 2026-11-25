@@ -102,6 +102,95 @@ const fieldTable = (mode) =>
   );
 export function getRegisters(mode) {
   if (!mode) return [];
+  if (mode === "working-groups") {
+    const purposes = {
+      numeric: [
+        "Numeric borrower information",
+        "Exposure, income, burden and credit history; two FICO bounds become one midpoint.",
+        "47 retained raw inputs; two FICO bounds become one midpoint. Source timing still needs confirmation.",
+      ],
+      categorical: [
+        "Borrower and loan context",
+        "Term, employment, housing, verification, purpose and application type.",
+        "Six conceptual inputs; encoding expands their representation.",
+      ],
+      date: [
+        "Dates for design and history",
+        "Order cohorts and calculate elapsed credit history.",
+        "Used for splitting or engineering; not raw PD predictors.",
+      ],
+      target: [
+        "Final outcome",
+        "Construct the answer that the model learns to estimate.",
+        "Never a predictor.",
+      ],
+      benchmark: [
+        "Incumbent assessment",
+        "Compare application information with LendingClub pricing; grade also groups results.",
+        "Separate benchmark/combined models, outside the served application-only model.",
+      ],
+      outcome: [
+        "Principal loss measurement",
+        "Use funded principal, repayments and recoveries to measure training LGD.",
+        "LGD-only; funded amount is known at origination but grouped here by its loss-measurement role.",
+      ],
+    };
+    return [
+      table(
+        "working-groups",
+        "Why the working file contains 64 columns",
+        [
+          c("name", "Information group"),
+          c("count", "Fields"),
+          c("purpose", "Why it is loaded"),
+          c("model", "Does it enter application PD?"),
+          c("names", "Exact names"),
+          c("evidence", "Source"),
+        ],
+        Object.entries(x.groups).map(([group, names]) => ({
+          name: purposes[group][0],
+          count: names.length,
+          purpose: purposes[group][1],
+          model: purposes[group][2],
+          names:
+            "<details><summary>Show field names</summary><ul>" +
+            names.map((name) => "<li>" + escape(name) + "</li>").join("") +
+            "</ul></details>",
+          evidence: ev("pipeline"),
+          group,
+        })),
+      ),
+    ];
+  }
+  if (mode === "serving-fields")
+    return [
+      table(
+        "fields-serving-fields",
+        "What serving actually supplies",
+        [
+          c("field", "Model input"),
+          c("collection", "How it is supplied"),
+          c("default", "Saved training default"),
+          c("used", "Used in saved tree splits?"),
+          c("evidence", "Source"),
+        ],
+        fields
+          .filter((f) => f.modelInput)
+          .map((f) => ({
+            field: escape(f.field),
+            collection:
+              f.serving === "browser input"
+                ? "Form"
+                : f.serving === "backend derived"
+                  ? "Calculated from current inputs"
+                  : "Training default",
+            default: escape(f.default ?? "Not available"),
+            used: x.runtime.used_raw_features.includes(f.field) ? "Yes" : "No",
+            evidence: ev("artifact") + " " + sourceLink("metadata", "DEFAULTS"),
+            group: f.serving,
+          })),
+      ),
+    ];
   if (
     ["fields", "loaded-fields", "model-fields", "serving-fields"].includes(mode)
   )
@@ -342,15 +431,17 @@ export function getRegisters(mode) {
           c("brier", "Brier"),
           c("ece", "ECE"),
           c("mean", "Mean PD"),
+          c("observed", "Observed defaults"),
           c("evidence", "Provenance"),
         ],
         Object.entries(x.metrics.metrics.test).map(([model, r]) => ({
           model,
-          auc: r.roc_auc,
-          ap: r.average_precision,
-          brier: r.brier,
-          ece: r.ece_10_quantile_bins,
-          mean: r.mean_predicted_pd,
+          auc: r.roc_auc.toFixed(4),
+          ap: r.average_precision.toFixed(4),
+          brier: r.brier.toFixed(6),
+          ece: r.ece_10_quantile_bins.toFixed(4),
+          mean: (r.mean_predicted_pd * 100).toFixed(2) + "%",
+          observed: (x.metrics.splits.test.default_rate * 100).toFixed(2) + "%",
           evidence: ev("frozen"),
         })),
       ),

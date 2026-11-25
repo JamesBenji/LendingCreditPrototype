@@ -6,7 +6,7 @@ $$LGD=\frac{\sum_{i:Y_i=1} NetLoss_i}{\sum_{i:Y_i=1} Funded_i}$$
 
 Funded principal comes from funded_amnt, principal repaid from total_rec_prncp and recoveries from recoveries. This is exposure-weighted severity among training charge-offs. It is not the mean of per-loan LGDs and not a predicted LGD for each borrower. {{source:notebook|Loss measurement — cell 34, qOsJma-tbFyM}}
 
-Saved gross LGD is about 67.2%; measured net LGD is 0.5898284294117135 in exported metadata. Deducting recoveries reduces principal loss. The timing and cost of collection are not valued. {{evidence:pricing}} {{source:metadata|Measured net LGD}}
+Saved gross LGD is about 67.2%; measured net LGD is approximately 0.5898 in exported metadata. Deducting recoveries reduces principal loss. The timing and cost of collection are not valued. {{evidence:pricing}} {{source:metadata|Measured net LGD}}
 
 ## Combine probability and severity
 
@@ -20,3 +20,7 @@ Funding is assumed 4%; margin is assumed 2.5%. PD is calibrated model output. LG
 The rule omits interest received before default, prepayment, time value of money, collection costs, capital charge, liquidity premium, acquisition cost, tax, regulatory constraints and competitive demand response. It combines lifetime loss with annual-looking funding and margin terms. A fixed aggregate LGD also misses borrower, term and cohort variation. {{source:notebook|Simplified pricing rule — cell 34}}
 
 These omissions can move price in different directions. The rule is illustrative, not a verified profit-maximising or production-ready price. A financially consistent alternative needs default timing, cash flows, discounting, recoveries and costs over the same horizon. {{evidence:future}}
+
+## Mean PD and principal loss use different weights
+
+Each loan counts once when reporting a default share, but a larger principal counts more in the aggregate loss ratio. Using one training LGD for every applicant also assumes severity does not change with risk or term. A later group with a different exposure mix or recovery pattern can therefore have acceptable probability estimates but poor loss estimates. This is why PD validation must be followed by a separate severity and exposure-weighting check. {{source:notebook|Aggregate LGD and realised-loss ratios — cell 34}} {{evidence:pricing}}

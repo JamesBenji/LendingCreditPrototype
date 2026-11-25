@@ -13,3 +13,7 @@ Combined XGBoost versus LC logistic changes both fields and estimator. It cannot
 ## What the hierarchy cannot prove
 
 The model ladder tests information and complexity in one selected historical population. It is not a claim that an algorithm is always best. Training, calibration and policy answer different questions; keep their evidence separate when choosing a model for a new cohort. {{evidence:comparisons}}
+
+## The constant baseline tests a different kind of usefulness
+
+A constant forecast can be close to the average event share and still give every borrower the same score. It therefore cannot prioritise risk. The FICO and LC benchmarks test how much ranking comes from a single familiar signal or the incumbent's assessment. The full models must justify what they add beyond those references; beating a constant forecast alone would be a weak claim for lending usefulness. {{source:notebook|Baselines and constant Brier reference — cell 22}}

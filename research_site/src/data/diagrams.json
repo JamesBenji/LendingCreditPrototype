@@ -34,7 +34,7 @@
         "tone": "neutral"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "caption": "A useful price inherits the probability target, severity estimate and cost assumptions. Each needs its own validation.",
     "edges": [
       [0, 1],
       [1, 2],
@@ -76,59 +76,49 @@
         "tone": "purple"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+    "caption": "Loaded research columns, conceptual predictors and encoded columns serve different purposes. More encoded columns do not add borrower information."
   },
   "chronology": {
     "title": "The questions changed the method",
     "evidence": "pipeline",
     "nodes": [
       {
-        "title": "Lending decision",
-        "subtitle": "Risk before committing principal",
+        "title": "Decision-time information",
+        "subtitle": "Define the population and eligible borrower profile",
         "tone": "neutral"
       },
       {
-        "title": "Field policy",
-        "subtitle": "Application versus outcome information",
-        "tone": "neutral"
-      },
-      {
-        "title": "EDA evidence",
-        "subtitle": "Year drift and missingness",
+        "title": "Drift and missingness",
+        "subtitle": "Later loans and data collection differ",
         "tone": "purple"
       },
       {
-        "title": "Features and split",
-        "subtitle": "History, burden, later cohorts",
+        "title": "Time-based evaluation",
+        "subtitle": "Expose transfer rather than mix cohorts",
         "tone": "green"
       },
       {
-        "title": "Baselines and XGBoost",
-        "subtitle": "Test complexity and incumbent information",
+        "title": "Model comparison",
+        "subtitle": "Small XGBoost gain is not conclusive",
         "tone": "purple"
       },
       {
-        "title": "Paired comparisons",
-        "subtitle": "No conclusive simple-model gain",
+        "title": "Calibration transfer",
+        "subtitle": "Better validation fit still misses test levels",
+        "tone": "purple"
+      },
+      {
+        "title": "Loss back-test",
+        "subtitle": "Probability and loss errors can disagree",
         "tone": "neutral"
       },
       {
-        "title": "Calibration and pricing",
-        "subtitle": "Probability correction and loss caveats",
-        "tone": "neutral"
-      },
-      {
-        "title": "Serving audit",
-        "subtitle": "15 raw + 1 derived + 40 defaults",
-        "tone": "neutral"
-      },
-      {
-        "title": "VM memory gate",
-        "subtitle": "Prepared candidate not activated",
+        "title": "Serving information",
+        "subtitle": "Default filling does not validate the reduced form",
         "tone": "neutral"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+    "caption": "The results exposed separate questions about transfer, complexity, probability levels, loss severity and serving inputs."
   },
   "timing": {
     "title": "Field timing around origination",
@@ -165,7 +155,7 @@
         "tone": "neutral"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+    "caption": "Information is eligible only if it belongs to the pricing decision point. A later value can improve a score while invalidating that interpretation."
   },
   "eda": {
     "title": "EDA evidence \u2192 methodological consequence",
@@ -212,7 +202,7 @@
         "tone": "green"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "caption": "A finding matters when it changes a decision. The same inspection can also expose a limit, such as data-era missingness or holdout access.",
     "edges": [
       [0, 1],
       [2, 3],
@@ -240,7 +230,7 @@
         "tone": "neutral"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+    "caption": "Later-cohort evaluation exposes transfer errors, but shared boundary months and outcome maturity still limit the test."
   },
   "cv": {
     "title": "Temporal CV inside the oldest 70%",
@@ -277,7 +267,7 @@
         "tone": "neutral"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "caption": "Temporal folds select parameters within training. They do not validate a changed applicant population or reduced serving form.",
     "edges": [
       [0, 1],
       [1, 2],
@@ -321,7 +311,7 @@
         "tone": "green"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "caption": "Fitted preprocessing makes measurements usable. It cannot verify their collection time or recover fields that the form never collected.",
     "edges": [
       [0, 1],
       [2, 3],
@@ -373,7 +363,7 @@
         "tone": "purple"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "caption": "Each branch tests a different source of usefulness: minimum probability reference, risk information, complexity or calibration.",
     "edges": [
       [0, 2],
       [1, 4],
@@ -420,7 +410,7 @@
         "tone": "green"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "caption": "Keep loans and relevant modelling choices matched so the difference can be attributed to the factor being tested.",
     "edges": []
   },
   "bootstrap": {
@@ -453,7 +443,7 @@
         "tone": "neutral"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+    "caption": "Pairing controls resampled-loan difficulty. These intervals describe the observed test sample, not future cohort changes."
   },
   "calibration": {
     "title": "Validation fits calibration; test checks transfer",
@@ -490,7 +480,7 @@
         "tone": "neutral"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+    "caption": "The adjustment transfers validation information into test. Preserving rank does not establish that probability levels will transfer."
   },
   "pricing": {
     "title": "Predicted PD, measured LGD, assumed costs",
@@ -527,7 +517,7 @@
         "tone": "neutral"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "caption": "Probability can overpredict while loss underpredicts when severity and exposure weights differ. The price also needs a consistent time horizon.",
     "edges": [
       [0, 3],
       [1, 2],
@@ -594,7 +584,7 @@
         "tone": "neutral"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+    "caption": "A correct response still combines predicted probability, default-filled information, calculated quantities and hand-set policy."
   },
   "serving-gap": {
     "title": "Research inputs versus browser form",
@@ -631,7 +621,7 @@
         "tone": "neutral"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+    "caption": "The missing information changes the prediction problem even when the resulting row has the correct number of columns."
   },
   "deployment": {
     "title": "Product VM and separate Pages publication",
@@ -668,7 +658,7 @@
         "tone": "green"
       }
     ],
-    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "caption": "Correct local predictions, adequate update headroom and verified release activation are separate checks.",
     "edges": [
       [0, 1],
       [1, 2],

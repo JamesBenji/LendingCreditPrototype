@@ -22,17 +22,17 @@ const contentFiles = import.meta.glob("../../content/*.md", {
 });
 const content = render(contentFiles["../../content/" + chapter.slug + ".md"]);
 const registers = getRegisters(chapter.register);
+const records = chapter.cells
+  .map((i) => extracted.cells.find((c) => c.index === i))
+  .filter((c) => c?.text);
 const headings = [
   ...content.headings,
   ...(chapter.diagram ? [{ id: "reasoning", label: "Reasoning diagram" }] : []),
   ...registers.map((t) => ({ id: t.id, label: t.title })),
-  ...(chapter.cells.length
+  ...(records.length
     ? [{ id: "notebook-record", label: "Notebook cells" }]
     : []),
 ];
-const records = chapter.cells.map((i) =>
-  extracted.cells.find((c) => c.index === i),
-);
 ---
 
 <Publication
@@ -118,31 +118,35 @@ const records = chapter.cells.map((i) =>
           Extracted committed notebook records, not a new execution. Text
           retains saved rounding. Missing plot values are not invented.
         </p>
-        {records.map((c) => (
-          <section class="cell-record">
-            <h3 id={"cell-" + c.index + "-" + c.id}>
-              <SourceLink id="notebook" label={"Cell " + c.index} />
-              <a
-                class="header-anchor"
-                href={"#cell-" + c.index + "-" + c.id}
-                aria-label={"Link to cell " + c.index}
-              >
-                #
-              </a>
-            </h3>
-            {c.text && (
-              <div
-                class="notebook-output"
-                set:html={render("~~~text\n" + c.text + "\n~~~").html}
-              />
-            )}
-            {!c.text && <p>No textual output is stored in this cell.</p>}
-            <details>
-              <summary>View code for this cell</summary>
-              <div set:html={render("~~~python\n" + c.source + "\n~~~").html} />
-            </details>
-          </section>
-        ))}
+        <details class="saved-records">
+          <summary>Inspect the saved notebook output</summary>
+          {records.map((c) => (
+            <section class="cell-record">
+              <h3 id={"cell-" + c.index + "-" + c.id}>
+                <SourceLink id="notebook" label={"Cell " + c.index} />
+                <a
+                  class="header-anchor"
+                  href={"#cell-" + c.index + "-" + c.id}
+                  aria-label={"Link to cell " + c.index}
+                >
+                  #
+                </a>
+              </h3>
+              {c.text && (
+                <div
+                  class="notebook-output"
+                  set:html={render("~~~text\n" + c.text + "\n~~~").html}
+                />
+              )}
+              <details>
+                <summary>View code for this cell</summary>
+                <div
+                  set:html={render("~~~python\n" + c.source + "\n~~~").html}
+                />
+              </details>
+            </section>
+          ))}
+        </details>
       </section>
     )
   }

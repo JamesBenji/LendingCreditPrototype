@@ -15,3 +15,9 @@ The saved grid varies LGD by ±10 percentage points and funding from 3% to 5%, h
 The derivatives explain why assumptions matter: $\partial Rate/\partial Funding=1$, $\partial Rate/\partial Margin=1$, and $\partial Rate/\partial LGD=PD$. A one-point margin increase shifts every uncapped rate by one point. No saved operating-margin grid is present; this derivative is algebra, not a newly run simulation. {{evidence:cost}}
 
 The back-test is descriptive test evidence; the sensitivity grid is an illustrative scenario simulation. Neither establishes applicant demand, approval utility or net lending returns. {{evidence:pricing}}
+
+## Overpredicted default can coexist with underpredicted loss
+
+The highest-risk decile predicts 53.3% charge-off against 44.5% observed, yet predicts 31.4% principal loss against 37.7% realised. There is no contradiction once probability, severity and exposure weights are separated. The current fixed training LGD and the different averaging schemes do not reproduce that group's realised loss. The tables alone do not identify how much each factor contributes. {{source:notebook|Calibration and loss deciles — cells 28 and 34}} {{evidence:pricing}}
+
+Simply lowering PD to improve reliability would also lower PD × LGD if LGD stayed fixed. That could make the loss underestimate worse. The next study must reconcile probabilities and losses on consistent weights and horizons before treating recalibration as a pricing fix. {{evidence:future}}

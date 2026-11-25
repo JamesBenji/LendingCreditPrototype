@@ -111,3 +111,5 @@ The header reads EAB Credit (LendingClub). The site uses Our Work and Part label
 Every page ends its body with Previous and Next controls. The first and last controls are disabled at the reading boundaries. These links work without JavaScript. Per-part source lists and repeated footer statements are removed; inline citations and the dedicated source map remain available.
 
 The defense guide is not included in the publication’s links or source map. Public claims use notebook, implementation and recorded-result references. Evidence tags are uppercase and have no explanatory suffix.
+
+The main reading flow explains what evidence changed and what each correction still leaves unresolved. Repeated field, parameter and limitations tables are linked to their detailed views; saved notebook output is available in an expandable section. Deployment calendar dates are omitted from the narrative, while issue-cohort dates remain because they affect the experimental design.

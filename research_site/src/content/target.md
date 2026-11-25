@@ -11,3 +11,7 @@ The full sample contains 21,521 charge-offs among 107,625 loans, about 20.00%. T
 ## Failure conditions
 
 A new applicant population, changed selection rule, changed status policy or shorter outcome window can change what PD means. A mature fixed-window cohort would support a clearer probability target. Until then, results refer to the recorded resolved accepted-loan design. {{evidence:future}}
+
+## The filter changes the estimated probability
+
+The experiment estimates charge-off among accepted loans whose outcomes were resolved at the snapshot. That conditioning matters. A recent borrower still making payments is not a proven non-default; excluding that borrower also changes the population represented by the labels. A fixed-window study would make the horizon common and let incomplete follow-up be handled explicitly. Until then, the target supports a selected historical charge-off probability, not a universal applicant default probability. {{source:notebook|Resolved-outcome filter — cells 7–10}} {{evidence:sample}}

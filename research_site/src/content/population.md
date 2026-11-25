@@ -19,3 +19,7 @@ There is no common follow-up horizon. Accepted-loan selection prevents claims ab
 ## Cohorts
 
 The ordered split uses the oldest 70% for training, next 15% for validation and newest 15% for test. Shared boundary months reflect row-index slicing, not disjoint month groups. Exact cohort sizes and rates are below. {{evidence:sample}}
+
+## More rows do not repair selection
+
+Sampling every chunk helps preserve the records that are in the file. It cannot recover rejected applicants or unresolved outcomes that were excluded first. Increasing the row cap would reduce some sampling uncertainty while leaving that selection intact. The useful question is therefore whether the sampled loans represent the decision population, not simply whether the sample is large. {{source:notebook|Filtering before sampling — cell 8}} {{evidence:sample}}

@@ -1,21 +1,19 @@
-## Source and target experiments
+## First define the population and decision-time information
 
-Complete the 151-field audit from the exact raw header and authoritative dictionary. Confirm every source timestamp. Define a fixed outcome window with mature cohorts and censoring handling. Reject application-only claims if retained fields are later snapshots. {{evidence:timing}} {{evidence:screening}}
+Obtain the raw header and authoritative timing definitions, then set a common outcome window on mature cohorts. This comes first because later model comparisons would be answering the wrong question if the labels or inputs describe different information windows. Keep screening and EDA inside the earlier training period. The study fails its application-only claim if a retained field contains later updates. {{evidence:timing}} {{evidence:screening}}
 
-## Reproducible model comparisons
+## Then test the exact serving form
 
-Lock the retraining environment and data identity. Freeze training-only EDA and fields. Use disjoint cohort and entity boundaries. Compare interpretable alternatives only when a stated hypothesis justifies them. Add matched LC-only XGBoost or paired combined-logistic comparisons to isolate feature value. Reject extra complexity when out-of-time benefit is uncertain or operational cost outweighs it. {{evidence:comparisons}} {{evidence:future}}
+Run eligible historical profiles through the same rounding, DTI calculation, default filling and feature preparation as the browser/API. Compare that result with the full-feature and current masking variants on the same later loans. Also test a model trained specifically on the collected inputs. Report paired ranking differences, calibration and subgroup errors. This would show whether retraining the reduced model is better than invoking a richer model with missing information disguised as typical values. {{evidence:gap}} {{source:predictor|Serving preparation|83-94}}
 
-## Exact serving validation
+## Resolve complexity and incremental information with matched comparisons
 
-Run a cohort through the exact form mapping, eligibility, rounding, DTI and defaults. Compare full, masked, exact-form and retrained reduced-feature models. Measure paired ranking differences, probability gaps and subgroup performance. Do not approve a reduced-form performance claim based only on the current masking diagnostic. {{evidence:gap}}
+Compare LC-only and combined models using the same estimator, and compare logistic and XGBoost using the same eligible fields. Freeze selection before the new test cohort. The result should show whether the gain comes from added information or added model complexity. If the interval remains inconclusive, deployment complexity needs a justification beyond a slightly higher point estimate. {{evidence:comparisons}}
 
-## Probability, fairness and pricing
+## Diagnose probability and loss errors separately
 
-Assess drift and recalibrate using mature later outcomes with separate evaluation. Test protected-class and proxy fairness. Model severity variation and construct cash-flow-consistent annualised prices, including capital, operating and collection costs, default timing and prepayment. Reject a price rule that cannot reconcile loss horizon and rate horizon. {{evidence:fairness}} {{evidence:pricing}}
+Evaluate calibration on mature later cohorts, then assess severity and exposure weighting within those same risk groups. The current back-test can overpredict default probability and still underpredict loss. A future price model must put default timing, recoveries, prepayment, funding, capital and operating costs on a common cash-flow horizon. Success means reconciling predicted and realised discounted loss, not only producing a smoother reliability curve. {{evidence:frozen}} {{evidence:pricing}}
 
-## Operations
+## Validate decisions before real use
 
-Add outcome monitoring, versioned artifact compatibility checks, recorded VM resources and hosted parity/restart evidence. Confirm certificate renewal and recovery before closing the operational incident. Every item here is proposed or unresolved, not already completed. {{evidence:future}} {{evidence:vm}}
-
-These proposed studies follow the evidence gaps in {{source:notebook|Research questions and limitations — cells 0 and 39}} and {{source:deployment-log|Deployment record — outstanding verification}}. Their completion requires new results linked to new commits, not changing historical evidence labels.
+Test subgroup outcomes, proxy effects, adverse-action explanations and human-review policy under appropriate governance. Monitor mature outcomes, input collection and calibration after any controlled deployment. Hosted parity, resource measurements and recovery checks separately establish whether the intended release is running. These studies are proposed; none is a completed fairness, pricing or live-performance validation. {{evidence:fairness}} {{evidence:future}} {{evidence:vm}}

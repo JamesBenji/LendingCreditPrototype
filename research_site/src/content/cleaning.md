@@ -11,3 +11,7 @@ Medians, category modes, encoding groups and scaling parameters learn from a dis
 ## Outliers remain a limitation
 
 DTI is clipped for plots, not model inputs. Scaling does not remove extreme values. The research sample keeps low-income and high-DTI cases that the API may reject. This is a serving-population mismatch, not a successful outlier fix. {{source:notebook|Cleaning and EDA — cells 10–13}} {{source:schema|Numeric rules|5-16}}
+
+## Missing is not the same as corrected
+
+Coercing an invalid date or percentage to missing prevents an unusable value from entering a calculation. It does not discover the true value. Later imputation supplies a typical training replacement, so a parsing problem can become a plausible-looking input. The unchanged row count only shows that issue-date dropping did not reduce this recorded sample; it does not establish that all fields were clean. {{source:notebook|Coercion and row cleaning — cell 10}} {{evidence:pipeline}}

@@ -47,3 +47,7 @@ This helper scans the evaluated set. It is a descriptive comparison, not a deplo
 ## Pricing utility is a separate test
 
 AUC and AP rank risk. Brier, ECE and mean gaps assess probability levels. Precision/recall describe a policy operating point. None alone proves financially valid pricing. Pricing additionally needs correct severity, timing, costs and outcomes. {{evidence:pricing}}
+
+## Read disagreements between metrics
+
+The masking diagnostic loses AUC and AP while its ECE improves. That disagreement is informative: the default-filled scores can become closer to the cohort's average event rate while becoming less useful at ordering individual loans. Ranking and calibration are different properties. Selecting whichever metric improved would conceal the other failure, so the project reports both. {{source:reproduced-metrics|Full-feature and default-filling metrics}} {{evidence:gap}}
