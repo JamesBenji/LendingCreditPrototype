@@ -1,0 +1,189 @@
+[
+  {
+    "id": "stage-1",
+    "stage": "1",
+    "title": "Lending decision",
+    "question": "Can application data support risk-based pricing?",
+    "evidence": "pipeline",
+    "decision": "Estimate charge-off probability separately from policy and price.",
+    "consequence": "Sets PD as the ML quantity.",
+    "uncertainty": "No approved thesis objectives document.",
+    "source": "notebook"
+  },
+  {
+    "id": "stage-2",
+    "stage": "2",
+    "title": "Data and selection",
+    "question": "Which loans and fields can support the decision?",
+    "evidence": "screening",
+    "decision": "Load 64 named fields and filter resolved statuses.",
+    "consequence": "Creates accepted resolved-loan sample.",
+    "uncertainty": "Missing raw-field audit and source timing.",
+    "source": "notebook"
+  },
+  {
+    "id": "stage-3",
+    "stage": "3",
+    "title": "EDA",
+    "question": "Does risk or missingness change with issue year?",
+    "evidence": "eda",
+    "decision": "Use chronological evaluation and numeric missingness indicators.",
+    "consequence": "Exposes drift and data-era gaps.",
+    "uncertainty": "EDA uses full-sample labels.",
+    "source": "notebook"
+  },
+  {
+    "id": "stage-4",
+    "stage": "4",
+    "title": "Features",
+    "question": "Does history or burden show a risk pattern?",
+    "evidence": "eda",
+    "decision": "Add midpoint FICO, history years and loan-to-income.",
+    "consequence": "56 conceptual inputs.",
+    "uncertainty": "Monotonicity rule is not enforced.",
+    "source": "notebook"
+  },
+  {
+    "id": "stage-5",
+    "stage": "5",
+    "title": "Experimental design",
+    "question": "Can training transfer through time?",
+    "evidence": "sample",
+    "decision": "Oldest 70% training, next 15% validation, newest 15% test.",
+    "consequence": "Later-cohort evaluation.",
+    "uncertainty": "Boundary months overlap; censoring remains.",
+    "source": "reproduced-metrics"
+  },
+  {
+    "id": "stage-6",
+    "stage": "6",
+    "title": "Baselines",
+    "question": "How much do FICO, application information and LC pricing explain?",
+    "evidence": "test-table",
+    "decision": "Fit logistic reference models on training.",
+    "consequence": "Defines minimum complexity and incumbent references.",
+    "uncertainty": "Baseline reproduction not recorded.",
+    "source": "notebook-outputs"
+  },
+  {
+    "id": "stage-7",
+    "stage": "7",
+    "title": "Search",
+    "question": "Do nonlinear interactions help?",
+    "evidence": "search",
+    "decision": "18 random candidates in 3 temporal folds.",
+    "consequence": "Selected regularised XGBoost configuration.",
+    "uncertainty": "Finite search; complexity gain inconclusive.",
+    "source": "notebook"
+  },
+  {
+    "id": "stage-8",
+    "stage": "8",
+    "title": "Comparisons",
+    "question": "Are improvements demonstrated?",
+    "evidence": "comparisons",
+    "decision": "Use paired test AUC bootstrap differences.",
+    "consequence": "Two combined-XGBoost intervals exclude zero.",
+    "uncertainty": "Some comparisons change model and fields.",
+    "source": "notebook-outputs"
+  },
+  {
+    "id": "stage-9",
+    "stage": "9",
+    "title": "Calibration",
+    "question": "Are raw probabilities suitable for loss calculations?",
+    "evidence": "frozen",
+    "decision": "Fit Platt scaling on validation.",
+    "consequence": "Lower test ECE; remaining overprediction.",
+    "uncertainty": "Temporal calibration transfer imperfect.",
+    "source": "reproduced-metrics"
+  },
+  {
+    "id": "stage-10",
+    "stage": "10",
+    "title": "Thresholds",
+    "question": "How many defaults can a review flag catch?",
+    "evidence": "operating",
+    "decision": "Select \u226570% recall cutoff on validation.",
+    "consequence": "Measure fixed-threshold test precision/recall.",
+    "uncertainty": "Recall falls below target on test.",
+    "source": "notebook-outputs"
+  },
+  {
+    "id": "stage-11",
+    "stage": "11",
+    "title": "Pricing",
+    "question": "What severity and rate follow from PD?",
+    "evidence": "pricing",
+    "decision": "Measure training net LGD and assume funding/margin.",
+    "consequence": "Illustrative expected loss and rate back-test.",
+    "uncertainty": "Lifetime/annual rate mismatch.",
+    "source": "notebook-outputs"
+  },
+  {
+    "id": "stage-12",
+    "stage": "12",
+    "title": "Artifact export",
+    "question": "Can the model be invoked consistently?",
+    "evidence": "artifact",
+    "decision": "Export pipeline, calibrator and defaults.",
+    "consequence": "Frozen artifact with hashes and 124 transformed columns.",
+    "uncertainty": "Version-sensitive; original training runtime not locked.",
+    "source": "runtime-inspection"
+  },
+  {
+    "id": "stage-13",
+    "stage": "13",
+    "title": "Serving",
+    "question": "What does the browser actually supply?",
+    "evidence": "serving",
+    "decision": "Validate 15 inputs, derive LTI, fill 40 defaults.",
+    "consequence": "Synthetic request/response workflow.",
+    "uncertainty": "Full-feature metrics do not validate reduced form.",
+    "source": "predictor"
+  },
+  {
+    "id": "stage-14",
+    "stage": "14",
+    "title": "Audit",
+    "question": "Can frozen metrics be reconstructed?",
+    "evidence": "frozen",
+    "decision": "Reconstruct sampling and score without fitting.",
+    "consequence": "Reproduced XGBoost and separate masking diagnostic.",
+    "uncertainty": "Other models/intervals remain saved output.",
+    "source": "reproduced-metrics"
+  },
+  {
+    "id": "stage-15",
+    "stage": "15",
+    "title": "Initial deployment \u2014 23\u201324 November 2026",
+    "question": "Can the owner activate the release?",
+    "evidence": "vm",
+    "decision": "Build locally and upload an integrity-checked tar.",
+    "consequence": "Owner records initial release active.",
+    "uncertainty": "Hosted parity/renewal records incomplete.",
+    "source": "deployment-log"
+  },
+  {
+    "id": "stage-16",
+    "stage": "16",
+    "title": "Memory failure \u2014 24 November 2026",
+    "question": "Why did the mobile update not appear?",
+    "evidence": "vm",
+    "decision": "Stop activation below 350 MB available preflight memory.",
+    "consequence": "Old release remained selected.",
+    "uncertainty": "Exact free memory and recovery outcome absent.",
+    "source": "deployment-log"
+  },
+  {
+    "id": "stage-17",
+    "stage": "17",
+    "title": "Next study",
+    "question": "What evidence would close the main gaps?",
+    "evidence": "future",
+    "decision": "Validate exact serving form, timing, fairness and cash flows.",
+    "consequence": "Concrete proposed experiments.",
+    "uncertainty": "Work not completed.",
+    "source": "defense"
+  }
+]

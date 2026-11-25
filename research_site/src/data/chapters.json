@@ -1,0 +1,401 @@
+[
+  {
+    "number": 1,
+    "slug": "lending-decision",
+    "title": "Research question and lending decision",
+    "summary": "Estimate charge-off probability before money is committed. Keep prediction, policy and calculation separate.",
+    "sources": ["notebook", "defense", "predictor", "metadata"],
+    "cells": [],
+    "diagram": "business",
+    "register": null
+  },
+  {
+    "number": 2,
+    "slug": "chronology",
+    "title": "Project chronology and experiment ledger",
+    "summary": "Follow the questions, evidence, decisions and unfinished work in their recorded order.",
+    "sources": ["notebook", "defense", "deployment-log", "predictor"],
+    "cells": [],
+    "diagram": "chronology",
+    "register": "timeline"
+  },
+  {
+    "number": 3,
+    "slug": "population",
+    "title": "Data source, population and sampling",
+    "summary": "The sample covers accepted loans with resolved outcomes, sampled from every chunk.",
+    "sources": ["notebook", "reproduced-metrics", "reproduce", "defense"],
+    "cells": [5, 8, 18],
+    "diagram": null,
+    "register": "splits"
+  },
+  {
+    "number": 4,
+    "slug": "field-audit",
+    "title": "Complete field-disposition audit",
+    "summary": "Audit all evidenced fields and show why a full 151-field audit remains blocked by missing source material.",
+    "sources": ["notebook", "metadata", "runtime-inspection", "defense"],
+    "cells": [],
+    "diagram": "fields",
+    "register": "fields"
+  },
+  {
+    "number": 5,
+    "slug": "working-dataset",
+    "title": "The 64-column working dataset",
+    "summary": "Six loaded groups have different modelling and business roles.",
+    "sources": ["notebook", "defense", "schema", "metadata"],
+    "cells": [],
+    "diagram": null,
+    "register": "loaded-fields"
+  },
+  {
+    "number": 6,
+    "slug": "leakage",
+    "title": "Leakage policy and prediction-time availability",
+    "summary": "Availability is measured against the lending decision, not against the final dataset snapshot.",
+    "sources": ["notebook", "defense", "metadata"],
+    "cells": [],
+    "diagram": "timing",
+    "register": null
+  },
+  {
+    "number": 7,
+    "slug": "target",
+    "title": "Target construction",
+    "summary": "Charge-off is the positive outcome proxy; active loans are excluded.",
+    "sources": ["notebook", "reproduced-metrics", "defense"],
+    "cells": [10],
+    "diagram": null,
+    "register": null
+  },
+  {
+    "number": 8,
+    "slug": "cleaning",
+    "title": "Cleaning before modelling",
+    "summary": "Keep deterministic parsing separate from training-fitted transformations.",
+    "sources": ["notebook", "defense", "schema"],
+    "cells": [10, 20],
+    "diagram": null,
+    "register": null
+  },
+  {
+    "number": 9,
+    "slug": "eda",
+    "title": "EDA as methodological evidence",
+    "summary": "Connect each inspection to a later decision and keep the holdout-access caveat visible.",
+    "sources": ["notebook", "notebook-outputs", "defense"],
+    "cells": [12, 13],
+    "diagram": "eda",
+    "register": null
+  },
+  {
+    "number": 10,
+    "slug": "engineering",
+    "title": "Feature engineering",
+    "summary": "Three domain hypotheses become inputs; the stated admission rule is not enforced.",
+    "sources": ["notebook", "predictor", "defense"],
+    "cells": [16],
+    "diagram": null,
+    "register": null
+  },
+  {
+    "number": 11,
+    "slug": "model-inputs",
+    "title": "The final 56 conceptual model inputs",
+    "summary": "Conceptual inputs and transformed columns are different counts.",
+    "sources": ["notebook", "metadata", "runtime-inspection"],
+    "cells": [],
+    "diagram": "fields",
+    "register": "model-fields"
+  },
+  {
+    "number": 12,
+    "slug": "selection",
+    "title": "Feature-selection honesty",
+    "summary": "The 64-to-56 transition is explicit; the 151-to-64 screening record is incomplete.",
+    "sources": ["notebook", "defense"],
+    "cells": [],
+    "diagram": null,
+    "register": "fields"
+  },
+  {
+    "number": 13,
+    "slug": "temporal-design",
+    "title": "Temporal experimental design",
+    "summary": "Earlier loans train the model; later loans test it, with maturity and boundary caveats.",
+    "sources": ["notebook", "reproduced-metrics", "defense"],
+    "cells": [],
+    "diagram": "split",
+    "register": "splits"
+  },
+  {
+    "number": 14,
+    "slug": "preprocessing",
+    "title": "Preprocessing and transformed feature space",
+    "summary": "Learn medians, scales and category groups inside training; reuse them on later data.",
+    "sources": ["notebook", "predictor", "runtime-inspection", "defense"],
+    "cells": [20],
+    "diagram": "preprocessing",
+    "register": null
+  },
+  {
+    "number": 15,
+    "slug": "baselines",
+    "title": "Baselines and model hierarchy",
+    "summary": "Each model tests a particular claim about information or complexity.",
+    "sources": ["notebook", "notebook-outputs", "defense"],
+    "cells": [22],
+    "diagram": "models",
+    "register": "experiments"
+  },
+  {
+    "number": 16,
+    "slug": "logistic",
+    "title": "Why logistic regression",
+    "summary": "A simple probability model supplies a credible reference for extra complexity.",
+    "sources": ["notebook", "notebook-outputs", "defense"],
+    "cells": [],
+    "diagram": null,
+    "register": null
+  },
+  {
+    "number": 17,
+    "slug": "xgboost",
+    "title": "Why XGBoost",
+    "summary": "Nonlinear interactions may help, but later-cohort evidence must justify complexity.",
+    "sources": [
+      "notebook",
+      "runtime-inspection",
+      "reproduced-metrics",
+      "notebook-outputs"
+    ],
+    "cells": [],
+    "diagram": null,
+    "register": "parameters"
+  },
+  {
+    "number": 18,
+    "slug": "hyperparameters",
+    "title": "Hyperparameter selection",
+    "summary": "Temporal cross-validation selects parameters within training.",
+    "sources": ["notebook", "defense", "notebook-outputs"],
+    "cells": [24],
+    "diagram": "cv",
+    "register": "parameters"
+  },
+  {
+    "number": 19,
+    "slug": "metrics",
+    "title": "Evaluation metrics from first principles",
+    "summary": "Separate ranking, probability error and threshold behaviour from pricing utility.",
+    "sources": ["notebook", "notebook-outputs", "reproduced-metrics"],
+    "cells": [],
+    "diagram": null,
+    "register": "metrics"
+  },
+  {
+    "number": 20,
+    "slug": "comparisons",
+    "title": "Controlled comparisons and uncertainty",
+    "summary": "Five paired questions test model strength and incremental information.",
+    "sources": ["notebook", "notebook-outputs", "defense"],
+    "cells": [26],
+    "diagram": "bootstrap",
+    "register": "comparisons"
+  },
+  {
+    "number": 21,
+    "slug": "calibration",
+    "title": "Calibration",
+    "summary": "Pricing consumes probabilities, so ranking alone is not enough.",
+    "sources": [
+      "notebook",
+      "runtime-inspection",
+      "reproduced-metrics",
+      "defense"
+    ],
+    "cells": [28],
+    "diagram": "calibration",
+    "register": "results"
+  },
+  {
+    "number": 22,
+    "slug": "thresholds",
+    "title": "Operating point and threshold policy",
+    "summary": "A score does not approve a loan. Cutoffs need a separate decision rule.",
+    "sources": ["notebook", "notebook-outputs", "predictor", "defense"],
+    "cells": [30],
+    "diagram": null,
+    "register": null
+  },
+  {
+    "number": 23,
+    "slug": "importance-errors",
+    "title": "Feature importance and error analysis",
+    "summary": "Predictive reliance is not causality, fairness or a local explanation.",
+    "sources": ["notebook", "notebook-outputs", "predictor", "defense"],
+    "cells": [32],
+    "diagram": null,
+    "register": null
+  },
+  {
+    "number": 24,
+    "slug": "loss-price",
+    "title": "From PD to LGD to price",
+    "summary": "Loss severity is measured; funding and margin are assumed; price is calculated.",
+    "sources": [
+      "notebook",
+      "notebook-outputs",
+      "metadata",
+      "predictor",
+      "defense"
+    ],
+    "cells": [34],
+    "diagram": "pricing",
+    "register": null
+  },
+  {
+    "number": 25,
+    "slug": "pricing-backtest",
+    "title": "Pricing back-test",
+    "summary": "Compare predicted loss with realised principal loss; do not confuse a simulation with a valid offer.",
+    "sources": ["notebook", "notebook-outputs", "defense", "metadata"],
+    "cells": [34, 35],
+    "diagram": null,
+    "register": null
+  },
+  {
+    "number": 26,
+    "slug": "training-serving",
+    "title": "Training versus serving reality",
+    "summary": "Full-feature research metrics do not validate the reduced browser form.",
+    "sources": [
+      "overview",
+      "predictor",
+      "schema",
+      "runtime-inspection",
+      "reproduced-metrics",
+      "defense"
+    ],
+    "cells": [],
+    "diagram": "serving-gap",
+    "register": "serving-fields"
+  },
+  {
+    "number": 27,
+    "slug": "engineering-trace",
+    "title": "Request-to-response engineering trace",
+    "summary": "Inspect the deployed application as evidence without calling or importing it.",
+    "sources": [
+      "react-app",
+      "form",
+      "dti",
+      "api",
+      "schema",
+      "predictor",
+      "repayment",
+      "result"
+    ],
+    "cells": [],
+    "diagram": "trace",
+    "register": "trace"
+  },
+  {
+    "number": 28,
+    "slug": "reproducibility",
+    "title": "Reproducibility and artifacts",
+    "summary": "Reading recorded evidence, evaluating a frozen artifact and retraining are different activities.",
+    "sources": [
+      "notebook",
+      "model",
+      "calibrator",
+      "metadata",
+      "inspect",
+      "reproduce",
+      "requirements",
+      "runtime-inspection",
+      "python313-compatibility",
+      "api-tests",
+      "dti-test"
+    ],
+    "cells": [37],
+    "diagram": null,
+    "register": "artifacts"
+  },
+  {
+    "number": 29,
+    "slug": "operations",
+    "title": "Deployment and operational history",
+    "summary": "Separate local checks, recorded owner output and live-state uncertainty.",
+    "sources": [
+      "deployment",
+      "deployment-log",
+      "handoff",
+      "wsgi",
+      "systemd",
+      "nginx",
+      "installer",
+      "package"
+    ],
+    "cells": [],
+    "diagram": "deployment",
+    "register": null
+  },
+  {
+    "number": 30,
+    "slug": "hardships",
+    "title": "Hardships, corrections and methodological debt",
+    "summary": "Keep difficulties visible rather than rewriting the work as an inevitable success.",
+    "sources": ["defense", "deployment-log", "notebook", "reproduced-metrics"],
+    "cells": [],
+    "diagram": null,
+    "register": "hardships"
+  },
+  {
+    "number": 31,
+    "slug": "governance",
+    "title": "Fairness, governance and responsible use",
+    "summary": "No completed fairness study or approved underwriting policy is evidenced.",
+    "sources": ["defense", "predictor", "handoff"],
+    "cells": [],
+    "diagram": null,
+    "register": null
+  },
+  {
+    "number": 32,
+    "slug": "limitations",
+    "title": "Limitations and failure conditions",
+    "summary": "An auditable register states when each conclusion becomes unsafe to transfer.",
+    "sources": ["defense", "reproduced-metrics", "deployment-log"],
+    "cells": [],
+    "diagram": null,
+    "register": "limitations"
+  },
+  {
+    "number": 33,
+    "slug": "next-experiments",
+    "title": "Open questions and next experiments",
+    "summary": "Each next experiment needs an explicit question, evaluation boundary and rejection condition.",
+    "sources": ["defense", "notebook", "reproduced-metrics", "deployment-log"],
+    "cells": [],
+    "diagram": null,
+    "register": "limitations"
+  },
+  {
+    "number": 34,
+    "slug": "appendices",
+    "title": "Appendices and source map",
+    "summary": "Trace claims to evidence, source cells, formulas and structured registers.",
+    "sources": [
+      "overview",
+      "notebook",
+      "notebook-outputs",
+      "evidence-dir",
+      "defense"
+    ],
+    "cells": [],
+    "diagram": null,
+    "register": "appendices"
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "pd",
+    "term": "PD",
+    "name": "Probability of default",
+    "definition": "Model probability of the recorded charge-off target.",
+    "chapter": "lending-decision"
+  },
+  {
+    "id": "lgd",
+    "term": "LGD",
+    "name": "Loss given default",
+    "definition": "Principal-loss fraction conditional on charge-off.",
+    "chapter": "loss-price"
+  },
+  {
+    "id": "dti",
+    "term": "DTI",
+    "name": "Debt-to-income ratio",
+    "definition": "Existing debt payments relative to income; source debt definition needs confirmation.",
+    "chapter": "engineering"
+  },
+  {
+    "id": "roc-auc",
+    "term": "ROC-AUC",
+    "name": "Receiver operating characteristic area under the curve",
+    "definition": "Probability a positive ranks above a negative, with half credit for ties.",
+    "chapter": "metrics"
+  },
+  {
+    "id": "pr-auc",
+    "term": "PR-AUC",
+    "name": "Precision\u2013recall area under the curve",
+    "definition": "Here reported as average precision, not trapezoidal PR area.",
+    "chapter": "metrics"
+  },
+  {
+    "id": "ap",
+    "term": "AP",
+    "name": "Average precision",
+    "definition": "Recall-weighted precision summary.",
+    "chapter": "metrics"
+  },
+  {
+    "id": "ece",
+    "term": "ECE",
+    "name": "Expected calibration error",
+    "definition": "Weighted absolute predicted/observed gap across probability bins.",
+    "chapter": "metrics"
+  },
+  {
+    "id": "cv",
+    "term": "CV",
+    "name": "Cross-validation",
+    "definition": "Repeated training/validation folds used inside training for selection.",
+    "chapter": "hyperparameters"
+  },
+  {
+    "id": "fico",
+    "term": "FICO",
+    "name": "Fair Isaac Corporation score",
+    "definition": "Reported credit-score range is consolidated to its midpoint.",
+    "chapter": "engineering"
+  },
+  {
+    "id": "lti",
+    "term": "LTI",
+    "name": "Loan-to-income ratio",
+    "definition": "Requested principal divided by annual income.",
+    "chapter": "engineering"
+  },
+  {
+    "id": "calibration",
+    "term": "Calibration",
+    "name": "Probability agreement",
+    "definition": "Predicted probabilities agree with event frequencies in relevant groups.",
+    "chapter": "calibration"
+  },
+  {
+    "id": "censoring",
+    "term": "Censoring",
+    "name": "Incomplete outcome observation",
+    "definition": "Final outcomes are unknown for some loans at the dataset snapshot.",
+    "chapter": "population"
+  },
+  {
+    "id": "discrimination",
+    "term": "Discrimination",
+    "name": "Risk ranking",
+    "definition": "How well a model orders positive outcomes above negative outcomes.",
+    "chapter": "metrics"
+  },
+  {
+    "id": "platt-scaling",
+    "term": "Platt scaling",
+    "name": "Logistic score calibration",
+    "definition": "A validation-fitted logistic transform of raw score log-odds.",
+    "chapter": "calibration"
+  },
+  {
+    "id": "bootstrap",
+    "term": "Bootstrap",
+    "name": "Resampling for uncertainty",
+    "definition": "Sample loan indices with replacement; paired comparisons reuse the same indices.",
+    "chapter": "comparisons"
+  },
+  {
+    "id": "gross-interest",
+    "term": "Gross interest",
+    "name": "Scheduled interest before costs",
+    "definition": "Total repayment minus principal under the no-default repayment schedule. Not net profit.",
+    "chapter": "engineering-trace"
+  }
+]

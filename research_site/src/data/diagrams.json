@@ -1,0 +1,687 @@
+{
+  "business": {
+    "title": "Lending decision \u2192 PD \u2192 illustrative price",
+    "evidence": "pricing",
+    "nodes": [
+      {
+        "title": "Commit principal",
+        "subtitle": "Before repayment is known",
+        "tone": "neutral"
+      },
+      {
+        "title": "Application X",
+        "subtitle": "Eligible decision-time information",
+        "tone": "green"
+      },
+      {
+        "title": "Predict PD",
+        "subtitle": "Probability of charge-off",
+        "tone": "purple"
+      },
+      {
+        "title": "Measure LGD",
+        "subtitle": "Training charge-off severity",
+        "tone": "neutral"
+      },
+      {
+        "title": "Expected loss",
+        "subtitle": "PD \u00d7 LGD",
+        "tone": "green"
+      },
+      {
+        "title": "Illustrative rate",
+        "subtitle": "Add assumed funding and margin",
+        "tone": "neutral"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "edges": [
+      [0, 1],
+      [1, 2],
+      [2, 4],
+      [3, 4],
+      [4, 5]
+    ],
+    "positions": [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+      [1, 2],
+      [0.5, 3],
+      [0.5, 4]
+    ]
+  },
+  "fields": {
+    "title": "Raw, conceptual and transformed counts",
+    "evidence": "artifact",
+    "nodes": [
+      {
+        "title": "151 raw fields",
+        "subtitle": "Header not committed",
+        "tone": "neutral"
+      },
+      {
+        "title": "64 loaded fields",
+        "subtitle": "49 numeric + 6 categorical + 9 other",
+        "tone": "neutral"
+      },
+      {
+        "title": "56 conceptual inputs",
+        "subtitle": "47 numeric + 6 categorical + 3 derived",
+        "tone": "green"
+      },
+      {
+        "title": "124 transformed columns",
+        "subtitle": "Saved category and missingness expansion",
+        "tone": "purple"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+  },
+  "chronology": {
+    "title": "The questions changed the method",
+    "evidence": "pipeline",
+    "nodes": [
+      {
+        "title": "Lending decision",
+        "subtitle": "Risk before committing principal",
+        "tone": "neutral"
+      },
+      {
+        "title": "Field policy",
+        "subtitle": "Application versus outcome information",
+        "tone": "neutral"
+      },
+      {
+        "title": "EDA evidence",
+        "subtitle": "Year drift and missingness",
+        "tone": "purple"
+      },
+      {
+        "title": "Features and split",
+        "subtitle": "History, burden, later cohorts",
+        "tone": "green"
+      },
+      {
+        "title": "Baselines and XGBoost",
+        "subtitle": "Test complexity and incumbent information",
+        "tone": "purple"
+      },
+      {
+        "title": "Paired comparisons",
+        "subtitle": "No conclusive simple-model gain",
+        "tone": "neutral"
+      },
+      {
+        "title": "Calibration and pricing",
+        "subtitle": "Probability correction and loss caveats",
+        "tone": "neutral"
+      },
+      {
+        "title": "Serving audit",
+        "subtitle": "15 raw + 1 derived + 40 defaults",
+        "tone": "neutral"
+      },
+      {
+        "title": "VM memory gate",
+        "subtitle": "Prepared candidate not activated",
+        "tone": "neutral"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+  },
+  "timing": {
+    "title": "Field timing around origination",
+    "evidence": "timing",
+    "nodes": [
+      {
+        "title": "Before pricing",
+        "subtitle": "Intended application and bureau snapshot",
+        "tone": "green"
+      },
+      {
+        "title": "Eligible X",
+        "subtitle": "Income, burden, history and FICO",
+        "tone": "green"
+      },
+      {
+        "title": "LC underwriting at origination",
+        "subtitle": "grade, sub_grade, int_rate",
+        "tone": "amber"
+      },
+      {
+        "title": "Issue date",
+        "subtitle": "Experimental ordering and history duration",
+        "tone": "neutral"
+      },
+      {
+        "title": "Later payments and recoveries",
+        "subtitle": "LGD measurement only",
+        "tone": "neutral"
+      },
+      {
+        "title": "Final status",
+        "subtitle": "Target source; never a predictor",
+        "tone": "neutral"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+  },
+  "eda": {
+    "title": "EDA evidence \u2192 methodological consequence",
+    "evidence": "eda",
+    "nodes": [
+      {
+        "title": "Year default drift",
+        "subtitle": "Saved cohort table",
+        "tone": "purple"
+      },
+      {
+        "title": "Chronological split",
+        "subtitle": "Test transfer to later loans",
+        "tone": "green"
+      },
+      {
+        "title": "Systematic missingness",
+        "subtitle": "Absent bureau columns by year",
+        "tone": "purple"
+      },
+      {
+        "title": "Missingness indicators",
+        "subtitle": "Preserve missing-value pattern",
+        "tone": "green"
+      },
+      {
+        "title": "LC grade separation",
+        "subtitle": "Strong incumbent assessment",
+        "tone": "amber"
+      },
+      {
+        "title": "LC benchmark",
+        "subtitle": "Test additional application information",
+        "tone": "amber"
+      },
+      {
+        "title": "FICO redundancy",
+        "subtitle": "One underlying reported score range",
+        "tone": "purple"
+      },
+      {
+        "title": "Midpoint and burden features",
+        "subtitle": "Domain hypotheses and quantile checks",
+        "tone": "green"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "edges": [
+      [0, 1],
+      [2, 3],
+      [4, 5],
+      [6, 7]
+    ]
+  },
+  "split": {
+    "title": "Ordered train / validation / test split",
+    "evidence": "sample",
+    "nodes": [
+      {
+        "title": "Train \u2014 75,337 loans",
+        "subtitle": "2007-07 to 2016-04; 18.60% default",
+        "tone": "green"
+      },
+      {
+        "title": "Validation \u2014 16,144",
+        "subtitle": "2016-04 to 2017-02; 25.03% default",
+        "tone": "purple"
+      },
+      {
+        "title": "Test \u2014 16,144",
+        "subtitle": "2017-02 to 2018-12; 21.49% default",
+        "tone": "neutral"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+  },
+  "cv": {
+    "title": "Temporal CV inside the oldest 70%",
+    "evidence": "search",
+    "nodes": [
+      {
+        "title": "Fold 1",
+        "subtitle": "Earlier train \u2192 next training-period block",
+        "tone": "neutral"
+      },
+      {
+        "title": "Fold 2",
+        "subtitle": "Expanded train \u2192 following block",
+        "tone": "neutral"
+      },
+      {
+        "title": "Fold 3",
+        "subtitle": "Expanded train \u2192 newest training block",
+        "tone": "neutral"
+      },
+      {
+        "title": "Search selection",
+        "subtitle": "18 candidates \u00d7 3 folds; average precision",
+        "tone": "purple"
+      },
+      {
+        "title": "Refit selected pipeline",
+        "subtitle": "Full training partition only",
+        "tone": "green"
+      },
+      {
+        "title": "Later validation and test",
+        "subtitle": "Outside parameter search",
+        "tone": "neutral"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "edges": [
+      [0, 1],
+      [1, 2],
+      [2, 3],
+      [3, 4],
+      [4, 5]
+    ]
+  },
+  "preprocessing": {
+    "title": "Two training-fitted preprocessing branches",
+    "evidence": "pipeline",
+    "nodes": [
+      {
+        "title": "Numeric branch \u2014 50 fields",
+        "subtitle": "Median imputation and missing indicators",
+        "tone": "green"
+      },
+      {
+        "title": "Scale numeric branch",
+        "subtitle": "Training mean and standard deviation",
+        "tone": "neutral"
+      },
+      {
+        "title": "Categorical branch \u2014 6 fields",
+        "subtitle": "Most-frequent imputation",
+        "tone": "green"
+      },
+      {
+        "title": "Encode categorical branch",
+        "subtitle": "Rare groups below 20; ignore unknowns",
+        "tone": "neutral"
+      },
+      {
+        "title": "Join transformed branches",
+        "subtitle": "124 saved columns",
+        "tone": "purple"
+      },
+      {
+        "title": "Saved prediction",
+        "subtitle": "No fitted-state update at serving",
+        "tone": "green"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "edges": [
+      [0, 1],
+      [2, 3],
+      [1, 4],
+      [3, 4],
+      [4, 5]
+    ],
+    "positions": [
+      [0, 0],
+      [0, 1],
+      [1, 0],
+      [1, 1],
+      [0.5, 2],
+      [0.5, 3]
+    ]
+  },
+  "models": {
+    "title": "Models answer different questions",
+    "evidence": "test-table",
+    "nodes": [
+      {
+        "title": "Constant and FICO logistic",
+        "subtitle": "Minimum error and one-score reference",
+        "tone": "neutral"
+      },
+      {
+        "title": "LC pricing logistic",
+        "subtitle": "sub_grade + int_rate incumbent bar",
+        "tone": "amber"
+      },
+      {
+        "title": "Application logistic",
+        "subtitle": "Additive application reference",
+        "tone": "green"
+      },
+      {
+        "title": "Application XGBoost",
+        "subtitle": "Nonlinear interactions",
+        "tone": "purple"
+      },
+      {
+        "title": "Application + LC models",
+        "subtitle": "Complementary information",
+        "tone": "amber"
+      },
+      {
+        "title": "Calibrated application XGB",
+        "subtitle": "Exported probability path",
+        "tone": "purple"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "edges": [
+      [0, 2],
+      [1, 4],
+      [2, 3],
+      [2, 4],
+      [3, 5]
+    ],
+    "positions": [
+      [0, 0],
+      [1, 0],
+      [0, 1],
+      [0, 2],
+      [1, 2],
+      [0, 3]
+    ]
+  },
+  "comparisons": {
+    "title": "Five paired comparison questions",
+    "evidence": "comparisons",
+    "nodes": [
+      {
+        "title": "XGBoost \u2212 logistic",
+        "subtitle": "Does complexity earn its place?",
+        "tone": "purple"
+      },
+      {
+        "title": "Logistic \u2212 LC pricing",
+        "subtitle": "Do application fields match incumbent?",
+        "tone": "amber"
+      },
+      {
+        "title": "XGBoost \u2212 LC pricing",
+        "subtitle": "Does application XGB beat LC?",
+        "tone": "amber"
+      },
+      {
+        "title": "Combined \u2212 LC pricing",
+        "subtitle": "Do application fields add value?",
+        "tone": "green"
+      },
+      {
+        "title": "Combined \u2212 application XGB",
+        "subtitle": "Does incumbent pricing add value?",
+        "tone": "green"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "edges": []
+  },
+  "bootstrap": {
+    "title": "Pair the same resampled test loans",
+    "evidence": "comparisons",
+    "nodes": [
+      {
+        "title": "Predict A and B",
+        "subtitle": "Same held-out loans",
+        "tone": "neutral"
+      },
+      {
+        "title": "Resample indices",
+        "subtitle": "With replacement; same indices for both",
+        "tone": "neutral"
+      },
+      {
+        "title": "Compute AUC(A) \u2212 AUC(B)",
+        "subtitle": "Paired metric difference",
+        "tone": "purple"
+      },
+      {
+        "title": "Repeat 500 times",
+        "subtitle": "Skip samples with only one class",
+        "tone": "neutral"
+      },
+      {
+        "title": "2.5th and 97.5th percentiles",
+        "subtitle": "Zero included means no demonstrated gain",
+        "tone": "neutral"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+  },
+  "calibration": {
+    "title": "Validation fits calibration; test checks transfer",
+    "evidence": "frozen",
+    "nodes": [
+      {
+        "title": "Training-fitted XGBoost",
+        "subtitle": "Validation raw PD",
+        "tone": "purple"
+      },
+      {
+        "title": "Clip and transform log-odds",
+        "subtitle": "No learned state in this transform",
+        "tone": "neutral"
+      },
+      {
+        "title": "Fit Platt on validation labels",
+        "subtitle": "Logistic calibration",
+        "tone": "purple"
+      },
+      {
+        "title": "Apply unchanged on test",
+        "subtitle": "No test refit",
+        "tone": "green"
+      },
+      {
+        "title": "Check probabilities and outcomes",
+        "subtitle": "ECE, Brier, mean gap, deciles",
+        "tone": "neutral"
+      },
+      {
+        "title": "Transfer limitation",
+        "subtitle": "24.41% mean PD versus 21.49% observed",
+        "tone": "neutral"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+  },
+  "pricing": {
+    "title": "Predicted PD, measured LGD, assumed costs",
+    "evidence": "pricing",
+    "nodes": [
+      {
+        "title": "Calibrated PD",
+        "subtitle": "Only directly predicted quantity",
+        "tone": "purple"
+      },
+      {
+        "title": "Training charge-offs",
+        "subtitle": "Funded less principal repaid and recoveries",
+        "tone": "neutral"
+      },
+      {
+        "title": "Net LGD",
+        "subtitle": "Aggregate loss / funded principal",
+        "tone": "green"
+      },
+      {
+        "title": "Expected loss",
+        "subtitle": "PD \u00d7 LGD",
+        "tone": "neutral"
+      },
+      {
+        "title": "Funding and margin",
+        "subtitle": "4% + 2.5% assumptions",
+        "tone": "neutral"
+      },
+      {
+        "title": "Illustrative rate",
+        "subtitle": "API caps calculated rate at 40%",
+        "tone": "neutral"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "edges": [
+      [0, 3],
+      [1, 2],
+      [2, 3],
+      [3, 5],
+      [4, 5]
+    ],
+    "positions": [
+      [0, 0],
+      [1, 0],
+      [1, 1],
+      [0.5, 2],
+      [0, 3],
+      [1, 3]
+    ]
+  },
+  "trace": {
+    "title": "Request-to-response product trace",
+    "evidence": "serving",
+    "nodes": [
+      {
+        "title": "React form",
+        "subtitle": "Controlled fields and validation",
+        "tone": "green"
+      },
+      {
+        "title": "Client DTI",
+        "subtitle": "Monthly debt / annual income \u00d7 1200",
+        "tone": "neutral"
+      },
+      {
+        "title": "JSON and Flask",
+        "subtitle": "Content type and schema rules",
+        "tone": "neutral"
+      },
+      {
+        "title": "Feature preparation",
+        "subtitle": "Training defaults plus current values",
+        "tone": "neutral"
+      },
+      {
+        "title": "Backend loan-to-income",
+        "subtitle": "Current principal / income",
+        "tone": "neutral"
+      },
+      {
+        "title": "Saved pipeline and XGBoost",
+        "subtitle": "Raw PD",
+        "tone": "purple"
+      },
+      {
+        "title": "Platt calibrator",
+        "subtitle": "Calibrated PD",
+        "tone": "purple"
+      },
+      {
+        "title": "Loss, policy and price",
+        "subtitle": "Separate calculations and cutoffs",
+        "tone": "neutral"
+      },
+      {
+        "title": "Amortisation and response",
+        "subtitle": "Rounded final payment; UI display",
+        "tone": "neutral"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+  },
+  "serving-gap": {
+    "title": "Research inputs versus browser form",
+    "evidence": "gap",
+    "nodes": [
+      {
+        "title": "Full research profile",
+        "subtitle": "56 conceptual fields",
+        "tone": "green"
+      },
+      {
+        "title": "Browser form",
+        "subtitle": "15 raw fields including DTI",
+        "tone": "neutral"
+      },
+      {
+        "title": "Backend derived feature",
+        "subtitle": "1 current-input loan-to-income",
+        "tone": "neutral"
+      },
+      {
+        "title": "Default-filled features",
+        "subtitle": "40 uncollected fields",
+        "tone": "neutral"
+      },
+      {
+        "title": "Saved 124-column model",
+        "subtitle": "Valid invocation with changed profiles",
+        "tone": "purple"
+      },
+      {
+        "title": "Masking diagnostic",
+        "subtitle": "Lower AUC/AP; exact-form test unresolved",
+        "tone": "neutral"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits."
+  },
+  "deployment": {
+    "title": "Product VM and separate Pages publication",
+    "evidence": "vm",
+    "nodes": [
+      {
+        "title": "Product release tar",
+        "subtitle": "Built React, Flask and model artifacts",
+        "tone": "neutral"
+      },
+      {
+        "title": "Product Nginx and TLS",
+        "subtitle": "Static files and API proxy",
+        "tone": "neutral"
+      },
+      {
+        "title": "Product systemd / Gunicorn",
+        "subtitle": "One VM worker",
+        "tone": "neutral"
+      },
+      {
+        "title": "Separate research source",
+        "subtitle": "Astro chapters and JSON records",
+        "tone": "green"
+      },
+      {
+        "title": "Pages workflow",
+        "subtitle": "Node only; tests and static build",
+        "tone": "neutral"
+      },
+      {
+        "title": "GitHub Pages artifact",
+        "subtitle": "Publication only; no API calls",
+        "tone": "green"
+      }
+    ],
+    "caption": "Read the labelled sequence with the chapter explanation. Dashed boundaries group the project concepts; the linked evidence states the verification limits.",
+    "edges": [
+      [0, 1],
+      [1, 2],
+      [3, 4],
+      [4, 5]
+    ],
+    "positions": [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+      [1, 0],
+      [1, 1],
+      [1, 2]
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "ROC-AUC",
+    "definition": "Probability a positive ranks above a negative, with half credit for ties.",
+    "chapter": "metrics",
+    "source": "notebook",
+    "evidence": "pipeline"
+  },
+  {
+    "name": "PR-AUC",
+    "definition": "Here reported as average precision, not trapezoidal PR area.",
+    "chapter": "metrics",
+    "source": "notebook",
+    "evidence": "pipeline"
+  },
+  {
+    "name": "AP",
+    "definition": "Recall-weighted precision summary.",
+    "chapter": "metrics",
+    "source": "notebook",
+    "evidence": "pipeline"
+  },
+  {
+    "name": "ECE",
+    "definition": "Weighted absolute predicted/observed gap across probability bins.",
+    "chapter": "metrics",
+    "source": "notebook",
+    "evidence": "pipeline"
+  },
+  {
+    "name": "Calibration",
+    "definition": "Predicted probabilities agree with event frequencies in relevant groups.",
+    "chapter": "calibration",
+    "source": "notebook",
+    "evidence": "pipeline"
+  },
+  {
+    "name": "Brier",
+    "definition": "Mean squared error of probability predictions.",
+    "chapter": "metrics",
+    "source": "notebook",
+    "evidence": "pipeline"
+  },
+  {
+    "name": "Lift at 10%",
+    "definition": "Top-tenth default share divided by overall default share.",
+    "chapter": "metrics",
+    "source": "notebook",
+    "evidence": "pipeline"
+  },
+  {
+    "name": "Precision at \u226570% recall",
+    "definition": "Maximum evaluated precision among thresholds meeting target recall.",
+    "chapter": "metrics",
+    "source": "notebook",
+    "evidence": "pipeline"
+  }
+]

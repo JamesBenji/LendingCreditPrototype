@@ -1,0 +1,322 @@
+[
+  {
+    "id": "overview",
+    "label": "README.md",
+    "path": "README.md",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "notebook",
+    "label": "Lending_project_v2 (1).ipynb",
+    "path": "Lending_project_v2 (1).ipynb",
+    "ref": "d8643c8e1f3aa3c34ba95279291706a7ac96d5eb",
+    "type": "file",
+    "description": "Historical research notebook"
+  },
+  {
+    "id": "defense",
+    "label": "docs/DEFENSE_GUIDE.md",
+    "path": "docs/DEFENSE_GUIDE.md",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "handoff",
+    "label": "docs/SESSION_HANDOFF.md",
+    "path": "docs/SESSION_HANDOFF.md",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "deployment",
+    "label": "docs/DEPLOYMENT.md",
+    "path": "docs/DEPLOYMENT.md",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "deployment-log",
+    "label": "docs/DEPLOYMENT_LOG.md",
+    "path": "docs/DEPLOYMENT_LOG.md",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "schema",
+    "label": "flask_app/application_schema.py",
+    "path": "flask_app/application_schema.py",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "predictor",
+    "label": "flask_app/predictor.py",
+    "path": "flask_app/predictor.py",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "repayment",
+    "label": "flask_app/repayment.py",
+    "path": "flask_app/repayment.py",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "api",
+    "label": "flask_app/app.py",
+    "path": "flask_app/app.py",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "frontend",
+    "label": "flask_app/frontend/",
+    "path": "flask_app/frontend",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "directory",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "form",
+    "label": "flask_app/frontend/src/components/LoanForm.jsx",
+    "path": "flask_app/frontend/src/components/LoanForm.jsx",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "result",
+    "label": "flask_app/frontend/src/components/ResultView.jsx",
+    "path": "flask_app/frontend/src/components/ResultView.jsx",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "react-app",
+    "label": "flask_app/frontend/src/App.jsx",
+    "path": "flask_app/frontend/src/App.jsx",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "dti",
+    "label": "flask_app/frontend/src/lib/debt-to-income.js",
+    "path": "flask_app/frontend/src/lib/debt-to-income.js",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "inspect",
+    "label": "scripts/inspect_runtime.py",
+    "path": "scripts/inspect_runtime.py",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "reproduce",
+    "label": "scripts/reproduce_saved_model.py",
+    "path": "scripts/reproduce_saved_model.py",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "package",
+    "label": "scripts/package_release.py",
+    "path": "scripts/package_release.py",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "smoke",
+    "label": "deploy/smoke-fixtures.json",
+    "path": "deploy/smoke-fixtures.json",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "metadata",
+    "label": "lending_artifacts/metadata.json",
+    "path": "lending_artifacts/metadata.json",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "artifacts",
+    "label": "lending_artifacts/",
+    "path": "lending_artifacts",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "directory",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "model",
+    "label": "lending_artifacts/xgb_risk_model.joblib",
+    "path": "lending_artifacts/xgb_risk_model.joblib",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "calibrator",
+    "label": "lending_artifacts/platt_calibrator.joblib",
+    "path": "lending_artifacts/platt_calibrator.joblib",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "nginx",
+    "label": "deploy/nginx.conf",
+    "path": "deploy/nginx.conf",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "systemd",
+    "label": "deploy/eab-credit.service",
+    "path": "deploy/eab-credit.service",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "installer",
+    "label": "deploy/install-vm.sh",
+    "path": "deploy/install-vm.sh",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "runtime-pins",
+    "label": "deploy/requirements.txt",
+    "path": "deploy/requirements.txt",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "requirements",
+    "label": "requirements.txt",
+    "path": "requirements.txt",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "api-tests",
+    "label": "flask_app/tests/",
+    "path": "flask_app/tests",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "directory",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "dti-test",
+    "label": "flask_app/frontend/src/lib/debt-to-income.test.js",
+    "path": "flask_app/frontend/src/lib/debt-to-income.test.js",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "evidence-dir",
+    "label": "docs/evidence/",
+    "path": "docs/evidence",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "directory",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "wsgi",
+    "label": "flask_app/wsgi.py",
+    "path": "flask_app/wsgi.py",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "extracted-bundle-check",
+    "label": "docs/evidence/extracted-bundle-check.json",
+    "path": "docs/evidence/extracted-bundle-check.json",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "linux-wheel-availability",
+    "label": "docs/evidence/linux-wheel-availability.json",
+    "path": "docs/evidence/linux-wheel-availability.json",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "local-wsgi-http-first-start",
+    "label": "docs/evidence/local-wsgi-http-first-start.json",
+    "path": "docs/evidence/local-wsgi-http-first-start.json",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "local-wsgi-http",
+    "label": "docs/evidence/local-wsgi-http.json",
+    "path": "docs/evidence/local-wsgi-http.json",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "notebook-outputs",
+    "label": "docs/evidence/notebook-outputs.json",
+    "path": "docs/evidence/notebook-outputs.json",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "python313-compatibility",
+    "label": "docs/evidence/python313-compatibility.json",
+    "path": "docs/evidence/python313-compatibility.json",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "reproduced-metrics",
+    "label": "docs/evidence/reproduced-metrics.json",
+    "path": "docs/evidence/reproduced-metrics.json",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  },
+  {
+    "id": "runtime-inspection",
+    "label": "docs/evidence/runtime-inspection.json",
+    "path": "docs/evidence/runtime-inspection.json",
+    "ref": "3d0101e9e36f3e92d4fbc4ae6fd465e8fad3d868",
+    "type": "file",
+    "description": "Inspected repository source"
+  }
+]

@@ -1,0 +1,15 @@
+## Same test loans, five questions
+
+The comparison table asks: does XGBoost beat logistic; do application-logistic features match LC pricing; does application XGBoost beat LC pricing; do application fields add to LC pricing; and does LC pricing add to application XGBoost? The exact saved differences and intervals are below. {{source:notebook|Comparisons — cell 26, Im35SAQ9bFyL}} {{evidence:comparisons}}
+
+## Paired bootstrap
+
+Predict both models on the same test loans. Draw loan indices with replacement. Compute both AUCs on the same resampled loans. Subtract B from A. Repeat 500 times with seed 0 in the helper. Skip samples containing only one class. Take the 2.5th and 97.5th percentiles of the differences. {{source:notebook|paired_auc_diff — cell 20}}
+
+Pairing matters because a difficult resampled loan affects both models. Independent resamples would add unrelated sample variation and lose the within-loan comparison.
+
+## Result: complexity did not show a clear gain
+
+Saved XGBoost-minus-logistic AUC difference is 0.0029. Its 95% interval is −0.0014 to 0.0073. XGBoost has a slightly higher point estimate, but the experiment did not demonstrate an improvement. An interval containing zero is not proof of identical models or equivalence. {{evidence:comparisons}}
+
+Only the two combined-XGBoost intervals exclude zero. They support complementary ranking information in this dataset. Combined XGBoost versus LC logistic changes both model and fields. A matched benchmark would isolate field value better. These intervals ignore some temporal dependence, selection and multiple-testing uncertainty. {{source:defense|Controlled comparison caveat}}

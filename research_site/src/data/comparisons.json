@@ -1,0 +1,47 @@
+[
+  {
+    "question": "Does a stronger model beat the simple model?",
+    "A": "Application XGBoost",
+    "B": "Application logistic",
+    "difference": 0.0029,
+    "low": -0.0014,
+    "high": 0.0073,
+    "evidence": "comparisons"
+  },
+  {
+    "question": "Do application features alone match LC pricing?",
+    "A": "Application logistic",
+    "B": "LC pricing logistic",
+    "difference": 0.0039,
+    "low": -0.0051,
+    "high": 0.0126,
+    "evidence": "comparisons"
+  },
+  {
+    "question": "Does application XGBoost beat LC pricing?",
+    "A": "Application XGBoost",
+    "B": "LC pricing logistic",
+    "difference": 0.0068,
+    "low": -0.002,
+    "high": 0.0153,
+    "evidence": "comparisons"
+  },
+  {
+    "question": "Do application features add to LC pricing?",
+    "A": "Combined XGBoost",
+    "B": "LC pricing logistic",
+    "difference": 0.0188,
+    "low": 0.0133,
+    "high": 0.0244,
+    "evidence": "comparisons"
+  },
+  {
+    "question": "Does LC pricing add to application features?",
+    "A": "Combined XGBoost",
+    "B": "Application XGBoost",
+    "difference": 0.012,
+    "low": 0.0075,
+    "high": 0.0166,
+    "evidence": "comparisons"
+  }
+]

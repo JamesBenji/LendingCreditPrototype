@@ -1,0 +1,227 @@
+[
+  {
+    "id": "frozen",
+    "label": "Frozen-model evaluation",
+    "status": "REPRODUCED",
+    "source": "reproduced-metrics",
+    "locator": "metrics.test",
+    "claim": "Saved full-feature XGBoost was evaluated on the reconstructed held-out sample without fitting.",
+    "limitation": "This site reads the recorded result; it does not rerun the model or download the raw data."
+  },
+  {
+    "id": "sample",
+    "label": "Resolved sample and split",
+    "status": "REPRODUCED",
+    "source": "reproduced-metrics",
+    "locator": "rows; splits",
+    "claim": "Sampling and ordered split were reconstructed for the frozen evaluation.",
+    "limitation": "Resolved accepted loans only; boundary months overlap."
+  },
+  {
+    "id": "gap",
+    "label": "Default-filling diagnostic",
+    "status": "REPRODUCED",
+    "source": "reproduced-metrics",
+    "locator": "post_hoc_default_filling_diagnostic",
+    "claim": "Replacing 40 fields with training defaults lowers ranking metrics.",
+    "limitation": "Not an exact browser/API simulation; collected fields retain dataset values and missingness."
+  },
+  {
+    "id": "comparisons",
+    "label": "Paired AUC comparisons",
+    "status": "NOTEBOOK OUTPUT",
+    "source": "notebook-outputs",
+    "locator": "cell 26 / Im35SAQ9bFyL",
+    "claim": "Only the two combined-XGBoost intervals exclude zero.",
+    "limitation": "Baselines and intervals were not freshly reproduced; some comparisons change both features and estimator."
+  },
+  {
+    "id": "eda",
+    "label": "EDA and cohort tables",
+    "status": "NOTEBOOK OUTPUT",
+    "source": "notebook",
+    "locator": "cells 12\u201316",
+    "claim": "Issue-year drift, missingness and engineered-feature patterns informed later choices.",
+    "limitation": "Full-sample outcome-labelled EDA exposed holdout patterns; charts are descriptive."
+  },
+  {
+    "id": "test-table",
+    "label": "Seven-model test evaluation",
+    "status": "NOTEBOOK OUTPUT",
+    "source": "notebook-outputs",
+    "locator": "cell 28 / Mqca_6m_bFyL",
+    "claim": "Saved table compares ranking, probability errors and lift.",
+    "limitation": "Only XGBoost frozen metrics were reproduced later."
+  },
+  {
+    "id": "search",
+    "label": "Search space and choice",
+    "status": "NOTEBOOK OUTPUT",
+    "source": "notebook",
+    "locator": "cell 24 / CMoSPKcQbFyL",
+    "claim": "18 candidates and 3 temporal folds selected the saved configuration.",
+    "limitation": "One finite search does not establish an optimal model."
+  },
+  {
+    "id": "importance",
+    "label": "Permutation importance",
+    "status": "NOTEBOOK OUTPUT",
+    "source": "notebook-outputs",
+    "locator": "cell 32 / YyFadYuCbFyM",
+    "claim": "Term, FICO midpoint and loan-to-income have the largest saved PR-AUC drops.",
+    "limitation": "Not causal, not local explanations, and not a fairness test."
+  },
+  {
+    "id": "operating",
+    "label": "Validation-chosen threshold",
+    "status": "NOTEBOOK OUTPUT",
+    "source": "notebook-outputs",
+    "locator": "cell 30 / vx-KJEY5bFyL",
+    "claim": "Calibrated XGBoost achieved 66.1% test recall at the validation-selected cutoff.",
+    "limitation": "The target was at least 70% on validation, not an approved business policy."
+  },
+  {
+    "id": "pricing",
+    "label": "Loss and pricing back-test",
+    "status": "NOTEBOOK OUTPUT",
+    "source": "notebook-outputs",
+    "locator": "cells 34\u201335",
+    "claim": "Training net LGD and fixed cost assumptions generate illustrative prices.",
+    "limitation": "Lifetime loss and annual-looking rates are not financially consistent cash-flow pricing."
+  },
+  {
+    "id": "pipeline",
+    "label": "Training implementation",
+    "status": "CODE-VERIFIED",
+    "source": "notebook",
+    "locator": "cells 16, 18, 20, 24, 28, 37",
+    "claim": "Named leakage fields are excluded and preprocessing is fitted within train/CV pipelines.",
+    "limitation": "Does not verify all source-field snapshot timing or remove analyst leakage from EDA."
+  },
+  {
+    "id": "serving",
+    "label": "Serving input and response",
+    "status": "CODE-VERIFIED",
+    "source": "predictor",
+    "locator": "lines 83\u201394; 179\u2013254",
+    "claim": "Default filling, recomputed loan-to-income, PD, policy, price and repayment are separate stages.",
+    "limitation": "A valid model invocation is not a validated reduced-input product."
+  },
+  {
+    "id": "schema",
+    "label": "API rules",
+    "status": "CODE-VERIFIED",
+    "source": "schema",
+    "locator": "lines 5\u201316; 63\u2013120",
+    "claim": "Finite values, ranges and category whitelists are checked.",
+    "limitation": "Omitted required keys still default; browser step sizes are not enforced by the API."
+  },
+  {
+    "id": "artifact",
+    "label": "Saved artifact inspection",
+    "status": "REPRODUCED",
+    "source": "runtime-inspection",
+    "locator": "feature_count; transformed_feature_count; model_parameters; artifact_manifest",
+    "claim": "56 conceptual features expand to 124 columns; application_type has no saved-tree split.",
+    "limitation": "Recorded local artifact inspection; no claim of new training or a new environment audit."
+  },
+  {
+    "id": "cost",
+    "label": "Funding and margin",
+    "status": "ASSUMPTION",
+    "source": "metadata",
+    "locator": "FUNDING_COST_assumed; OPERATING_MARGIN_assumed",
+    "claim": "Funding cost is 4%; operating margin is 2.5%.",
+    "limitation": "These are illustrative inputs, not observed costs."
+  },
+  {
+    "id": "timing",
+    "label": "Application-time timing",
+    "status": "UNRESOLVED",
+    "source": "defense",
+    "locator": "Leakage and training-serving audit",
+    "claim": "Source names and code roles cannot prove when every bureau snapshot was captured.",
+    "limitation": "An authoritative version-matched data dictionary and collection-time record are needed."
+  },
+  {
+    "id": "screening",
+    "label": "Raw field-screening record",
+    "status": "LIMITATION",
+    "source": "notebook",
+    "locator": "cells 5\u20136",
+    "claim": "The notebook counts 151 columns but manually lists only the 64 loaded fields.",
+    "limitation": "No complete raw header or authoritative dictionary is committed."
+  },
+  {
+    "id": "fairness",
+    "label": "Fairness evaluation",
+    "status": "UNRESOLVED",
+    "source": "defense",
+    "locator": "Research limitations",
+    "claim": "No completed protected-class, proxy or subgroup fairness audit is recorded.",
+    "limitation": "Functional tests cannot establish fairness or lawful underwriting."
+  },
+  {
+    "id": "future",
+    "label": "Next experiments",
+    "status": "PROPOSED",
+    "source": "defense",
+    "locator": "Leakage and training-serving audit; limitations",
+    "claim": "Direct reduced-form evaluation, timing checks and a consistent cash-flow model are needed.",
+    "limitation": "These are recommendations, not completed experiments."
+  },
+  {
+    "id": "vm",
+    "label": "Deployment history",
+    "status": "OWNER-REPORTED",
+    "source": "deployment-log",
+    "locator": "Setup sequence; mobile update attempt",
+    "claim": "Recorded owner output reports dependency success and a memory-gate stop before activation.",
+    "limitation": "The site has no VM access; recovery, hosted parity and renewal remain unconfirmed."
+  },
+  {
+    "id": "extracted-bundle-check",
+    "label": "Extracted bundle check",
+    "status": "REPRODUCED",
+    "source": "extracted-bundle-check",
+    "locator": "Recorded JSON report",
+    "claim": "Local compatibility, wheel, release or HTTP verification report.",
+    "limitation": "Recorded local checks; not independent proof of the live VM state."
+  },
+  {
+    "id": "linux-wheel-availability",
+    "label": "Linux wheel availability",
+    "status": "REPRODUCED",
+    "source": "linux-wheel-availability",
+    "locator": "Recorded JSON report",
+    "claim": "Local compatibility, wheel, release or HTTP verification report.",
+    "limitation": "Recorded local checks; not independent proof of the live VM state."
+  },
+  {
+    "id": "local-wsgi-http-first-start",
+    "label": "Local wsgi http first start",
+    "status": "REPRODUCED",
+    "source": "local-wsgi-http-first-start",
+    "locator": "Recorded JSON report",
+    "claim": "Local compatibility, wheel, release or HTTP verification report.",
+    "limitation": "Recorded local checks; not independent proof of the live VM state."
+  },
+  {
+    "id": "local-wsgi-http",
+    "label": "Local wsgi http",
+    "status": "REPRODUCED",
+    "source": "local-wsgi-http",
+    "locator": "Recorded JSON report",
+    "claim": "Local compatibility, wheel, release or HTTP verification report.",
+    "limitation": "Recorded local checks; not independent proof of the live VM state."
+  },
+  {
+    "id": "python313-compatibility",
+    "label": "Python313 compatibility",
+    "status": "REPRODUCED",
+    "source": "python313-compatibility",
+    "locator": "Recorded JSON report",
+    "claim": "Local compatibility, wheel, release or HTTP verification report.",
+    "limitation": "Recorded local checks; not independent proof of the live VM state."
+  }
+]
